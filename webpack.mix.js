@@ -11,7 +11,22 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ]);
+ mix
+ /* CSS */
+ .sass('resources/sass/main.scss', 'public/css/oneui.css')
+
+ /* JS */
+ .js('resources/js/app.js', 'public/js/app.js')
+ .js('resources/js/oneui/app.js', 'public/js/oneui.app.js')
+
+ /* Page JS */
+ .js('resources/js/custom/custom_datatables.js', 'public/js/custom/custom_datatables.js')
+
+ /* Tools */
+ .browserSync('localhost:8000')
+ .disableNotifications()
+
+ /* Options */
+ .options({
+     processCssUrls: false
+ });
