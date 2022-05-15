@@ -1,5 +1,8 @@
 <?php
 
 return [
-  'app_name' => 'Quiz system',
+  'app_name' => 'Quiz Management',
+  'auth' => [
+    'expire_time' => '2',  // minutes
+  ]
 ];

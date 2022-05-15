@@ -144,7 +144,8 @@ export default class Template {
               link.setAttribute('aria-expanded', 'false');
             } else {
               // .. else if submenu is closed, close all other (same level) submenus first before open it
-              link.closest('ul').children.forEach(el => {
+              let children = [].slice.call(link.closest('ul').children);
+              children.forEach(el => {
                 el.classList.remove('open');
               })
 

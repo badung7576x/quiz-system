@@ -17,9 +17,17 @@ Route::group([
     'prefix' => 'admin',
     'namespace' => 'App\Http\Controllers\Auth', 'as' => 'admin.'
 ], function () {
-    Route::get('login', 'AuthenticatedSessionController@create')->middleware('guest')->name('login');
-    Route::post('login', 'AuthenticatedSessionController@store')->middleware('guest');
-    Route::post('logout', 'AuthenticatedSessionController@destroy')->middleware('auth')->name('logout');
+    Route::get('login', 'LoginController@create')->middleware('guest')->name('login');
+    Route::post('login', 'LoginController@store')->middleware('guest');
+    Route::post('logout', 'LoginController@destroy')->middleware('auth')->name('logout');
+    Route::get('questions/form', 'QuestionController@renderForm')->name('question.form');
+});
+
+Route::group([
+    'prefix' => 'admin',
+    'namespace' => 'App\Http\Controllers\Admin', 'as' => 'admin.'
+], function () {
+    Route::get('questions/form', 'QuestionController@renderForm')->name('question.form');
 });
 
 Route::group([
@@ -28,10 +36,15 @@ Route::group([
 ], function () {
     Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
 
-    // Class
-    Route::resource('classes', 'ClassController')->names('class');
+    // Subject
+    Route::resource('subjects', 'SubjectController')->names('subject');
 
-    // Student
-    Route::post('{class}/student/import', 'StudentController@importExcel')->name('student.import');
-    Route::resource('classes.students', 'StudentController')->names('student');
+    // Question Set
+    Route::resource('question-sets', 'QuestionSetController')->names('question-set');
+
+    // Teacher
+    Route::resource('teachers', 'TeacherController')->names('teacher');
+
+    // Question
+    Route::resource('questions', 'QuestionController')->names('question');
 });

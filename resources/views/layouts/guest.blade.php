@@ -24,63 +24,15 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
   <link rel="stylesheet" id="css-main" href="{{ mix('/css/oneui.css') }}">
   <link rel="stylesheet" href="{{ asset('js/plugins/sweetalert2/sweetalert2.min.css') }}">
-  <style>
-    .noselect {
-      -webkit-touch-callout: none;
-      /* iOS Safari */
-      -webkit-user-select: none;
-      /* Safari */
-      -khtml-user-select: none;
-      /* Konqueror HTML */
-      -moz-user-select: none;
-      /* Old versions of Firefox */
-      -ms-user-select: none;
-      /* Internet Explorer/Edge */
-      user-select: none;
-      /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
-    }
-
-  </style>
   @yield('css_after')
 
   <!-- Scripts -->
   <script>
     window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
-    // disable right click
-    document.addEventListener('contextmenu', event => event.preventDefault());
-
-    document.onkeydown = function(e) {
-      // disable F12 key
-      if (e.keyCode == 123) {
-        return false;
-      }
-      // disable Enter key
-      if (e.keyCode == 13) {
-        return false;
-      }
-      // disable I key
-      if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
-        return false;
-      }
-      // disable J key
-      if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
-        return false;
-      }
-      // disable U key
-      if (e.ctrlKey && e.keyCode == 85) {
-        return false;
-      }
-
-      // disable Crtl+S key
-      if (e.ctrlKey && e.keyCode == 83) {
-        return false;
-      }
-    }
   </script>
 </head>
 
-<body class="noselect" oncontextmenu="return false;" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false"
-  onDrop="return false">
+<body>
   <div id="page-container">
     <!-- Main Container -->
     <main id="main-container">

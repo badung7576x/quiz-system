@@ -70,4 +70,10 @@ return [
         public_path('storage') => storage_path('app/public'),
     ],
 
+    'image-api' => [
+        'url' => env('IMAGE_API_URL'),
+        'key' => env('IMAGE_API_KEY'),
+        'timeout' => env('IMAGE_API_TIMEOUT', 10),
+    ]
+
 ];

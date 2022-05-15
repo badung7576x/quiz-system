@@ -2,9 +2,14 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Mail\LoginConfirmMail;
+use App\Models\Teacher;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -58,7 +63,8 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
         $credentials = $this->only('email', 'password');
-        if (!Auth::attempt($credentials)) {
+        $credentials['status'] = Teacher::STATUS_ACTIVE;
+        if (!auth()->attempt($credentials)) {
             RateLimiter::hit($this->throttleKey());
             throw ValidationException::withMessages([
                 'error' => __('auth.failed')
@@ -77,7 +83,7 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited()
     {
-        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 4)) {
             return;
         }
 

@@ -7611,7 +7611,8 @@ var Template = /*#__PURE__*/function () {
                 link.setAttribute('aria-expanded', 'false');
               } else {
                 // .. else if submenu is closed, close all other (same level) submenus first before open it
-                link.closest('ul').children.forEach(function (el) {
+                var children = [].slice.call(link.closest('ul').children);
+                children.forEach(function (el) {
                   el.classList.remove('open');
                 });
                 parentLi.classList.add('open');

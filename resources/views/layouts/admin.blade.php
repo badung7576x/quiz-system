@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="{{ asset('js/plugins/datatables-bs5/dataTables.bootstrap5.min.css') }}">
   <link rel="stylesheet" href="{{ asset('js/plugins/datatables-buttons-bs5/buttons.bootstrap5.min.css') }}">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" id="css-main" href="{{ mix('/css/oneui.css') }}">
   <style>
     #sidebar .content-header,
@@ -90,15 +91,63 @@
             <li class="nav-main-item">
               <a class="nav-main-link {{ request()->routeIs('admin.dashboard*') ? 'active' : '' }}" href="{{ route('admin.dashboard.index') }}">
                 <i class="nav-main-link-icon fa fa-chart-pie"></i>
-                <span class="nav-main-link-name">Dashboard</span>
+                <span class="nav-main-link-name">Thống kê</span>
               </a>
             </li>
             <li class="nav-main-item">
-              <a class="nav-main-link {{ request()->routeIs('admin.class*') ? 'active' : '' }}" href="{{ route('admin.class.index') }}">
+              <a class="nav-main-link {{ request()->routeIs('admin.teacher*') ? 'active' : '' }}" href="{{ route('admin.teacher.index') }}">
                 <i class="nav-main-link-icon fa fa-users"></i>
-                <span class="nav-main-link-name">Quản lý lớp và học sinh</span>
+                <span class="nav-main-link-name">Giáo viên</span>
               </a>
             </li>
+            <li class="nav-main-item">
+              <a class="nav-main-link {{ request()->routeIs('admin.subject*') ? 'active' : '' }}" href="{{ route('admin.subject.index') }}">
+                <i class="nav-main-link-icon fa fa-book-reader"></i>
+                <span class="nav-main-link-name">Môn học</span>
+              </a>
+            </li>
+            <li class="nav-main-item">
+              <a class="nav-main-link {{ request()->routeIs('admin.question*') ? 'active' : '' }}" href="{{ route('admin.question.index') }}">
+                <i class="nav-main-link-icon fa fa-question"></i>
+                <span class="nav-main-link-name">Soạn thảo câu hỏi</span>
+              </a>
+            </li>
+            <li class="nav-main-item">
+              <a class="nav-main-link {{ request()->routeIs('admin.class*') ? 'active' : '' }}" href="{{ route('admin.question-set.index') }}">
+                <i class="nav-main-link-icon fa fa-file-archive"></i>
+                <span class="nav-main-link-name">Ngân hàng câu hỏi</span>
+              </a>
+            </li>
+            <li class="nav-main-item">
+              <a class="nav-main-link {{ request()->routeIs('admin.class*') ? 'active' : '' }}" href="{{ route('admin.question-set.index') }}">
+                <i class="nav-main-link-icon fa fa-layer-group"></i>
+                <span class="nav-main-link-name">Bộ đề thi</span>
+              </a>
+            </li>
+            <li class="nav-main-item">
+              <a class="nav-main-link {{ request()->routeIs('admin.class*') ? 'active' : '' }}" href="{{ route('admin.question-set.index') }}">
+                <i class="nav-main-link-icon fa fa-cog"></i>
+                <span class="nav-main-link-name">Cài đặt hệ thống</span>
+              </a>
+            </li>
+            {{-- <li class="nav-main-item">
+              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+                <i class="nav-main-link-icon fa fa-users"></i>
+                <span class="nav-main-link-name">Ngân hàng câu hỏi</span>
+              </a>
+              <ul class="nav-main-submenu">
+                <li class="nav-main-item">
+                  <a class="nav-main-link" href="{{ route('admin.question-set.index') }}">
+                    <span class="nav-main-link-name">Bộ câu hỏi</span>
+                  </a>
+                </li>
+                <li class="nav-main-item">
+                  <a class="nav-main-link" href="#">
+                    <span class="nav-main-link-name">Bộ đề thi</span>
+                  </a>
+                </li>
+              </ul>
+            </li> --}}
           </ul>
         </div>
         <!-- END Side Navigation -->
@@ -136,15 +185,18 @@
           <div class="dropdown d-inline-block ms-2">
             <button type="button" class="btn btn-sm btn-alt-secondary d-flex align-items-center" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">
-              <img class="rounded-circle" src="https://i0.wp.com/www.cssscript.com/wp-content/uploads/2020/12/Customizable-SVG-Avatar-Generator-In-JavaScript-Avataaars.js.png?fit=438%2C408&ssl=1" style="width: 21px;">
-              <span class="d-none d-sm-inline-block ms-2">{{ Auth::user()->name }}</span>
+              <img class="rounded-circle"
+                src="/images/default_avatar.png"
+                style="width: 21px;">
+              <span class="d-none d-sm-inline-block ms-2">{{ auth()->user()->fullname }}</span>
               <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block ms-1 mt-1"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0 border-0" aria-labelledby="page-header-user-dropdown">
               <div class="p-3 text-center bg-body-light border-bottom rounded-top">
-                <img class="img-avatar img-avatar48 img-avatar-thumb" src="https://i0.wp.com/www.cssscript.com/wp-content/uploads/2020/12/Customizable-SVG-Avatar-Generator-In-JavaScript-Avataaars.js.png?fit=438%2C408&ssl=1" alt="">
-                <p class="mt-2 mb-0 fw-medium">{{ Auth::user()->name }}</p>
-                {{-- <p class="mb-0 text-muted fs-sm fw-medium"> Mo ta 1 </p> --}}
+                <img class="img-avatar img-avatar48 img-avatar-thumb"
+                  src="/images/default_avatar.png" alt="">
+                <p class="mt-2 mb-0 fw-medium">{{ auth()->user()->fullname }}</p>
+                <p class="mb-0 text-muted fs-sm fw-medium"> {{ auth()->user()->title }} </p>
               </div>
               <div class="p-2">
                 <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">
