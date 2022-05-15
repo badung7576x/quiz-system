@@ -3,12 +3,12 @@
 return [
   'question_type' => [
     QUESTION_MULTI_CHOICE => 'Trắc nghiệm',
-    QUESTION_SHORT_ANSWER => 'Trả lời ngắn',
-    QUESTION_MATCHING => 'Nối đáp án',
-    QUESTION_TRUE_FALSE => 'Đúng sai'
+    // QUESTION_SHORT_ANSWER => 'Trả lời ngắn',
+    // QUESTION_MATCHING => 'Nối đáp án',
+    // QUESTION_TRUE_FALSE => 'Đúng sai'
   ],
   'question_status' => [
-    QUESTION_STATUS_CREATED => 'Vừa được tạo',
+    QUESTION_STATUS_CREATED => 'Tạo mới',
     QUESTION_STATUS_REVIEWED => 'Đã được duyệt',
     QUESTION_STATUS_REJECTED => 'Bị từ chối',
     QUESTION_STATUS_APPROVED => 'Đã được duyệt',

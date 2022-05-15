@@ -22,7 +22,7 @@ class TeacherSeeder extends Seeder
             'code' => 'AD001',
             'avatar' => '',
             'fullname' => 'Administrator',
-            'email' => 'admin@gmail.com',
+            'email' => 'admin01@gmail.com',
             'password' => Hash::make('123456'),
             'phone_number' => '0987168266',
             'date_of_birth' => '1996-01-01',

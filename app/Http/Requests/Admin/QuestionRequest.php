@@ -29,9 +29,10 @@ class QuestionRequest extends FormRequest
             'level' => 'required',
             'type' => 'required',
             'score' => 'required',
-            'content' => 'required',
-            'answer' => 'required|array',
-            'answer.*' => 'required',
+            'content' => 'required|string',
+            'answers' => 'required|array',
+            'answers.*' => 'required',
+            'correct_answer' => 'required|numeric',
         ];
     }
 
@@ -44,8 +45,9 @@ class QuestionRequest extends FormRequest
             'type' => 'loại câu hỏi',
             'score' => 'điểm',
             'content' => 'nội dung câu hỏi',
-            'answer' => 'các đáp án',
-            'answer.*' => 'đáp án',
+            'answers' => 'các đáp án',
+            'answers.*' => 'đáp án',
+            'correct_answer' => 'đáp án đúng',
         ];
     }
 }

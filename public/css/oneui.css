@@ -28971,3 +28971,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
   background-repeat: no-repeat;
   background-position: center;
 }
+
+p {
+  margin-bottom: 1px !important;
+}

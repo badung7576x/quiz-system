@@ -7,9 +7,13 @@ use App\Http\Requests\Admin\QuestionRequest;
 use App\Services\QuestionService;
 use App\Services\SubjectService;
 use Illuminate\Http\Request;
+use App\Http\Traits\ResponseTrait;
+use App\Models\Question;
+use Illuminate\Support\Facades\Log;
 
 class QuestionController extends Controller
 {
+    use ResponseTrait;
 
     protected $questionService;
     protected $subjectService;
@@ -72,7 +76,7 @@ class QuestionController extends Controller
         try {
             $this->questionService->createQuestion($data);
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
             return $this->redirectError('create');
         }
 
@@ -87,40 +91,56 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Question $question
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Question $question)
     {
-        //
+        $question->load('answers');
+        $subjects = $this->subjectService->subjectWithContents();
+        return view('admin.question.edit', compact('subjects', 'question'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  QuestionRequest $request
+     * @param  Question $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(QuestionRequest $request, Question $question)
     {
-        //
+        $data = $request->validated();
+        try {
+            $this->questionService->updateQuestion($question, $data);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return $this->redirectError('update');
+        }
+
+        return $this->redirectSuccess('admin.question.index', 'update');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Question $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Question $question)
     {
-        //
+        try {
+            $this->questionService->deleteQuestion($question);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return $this->redirectError('delete');
+        }
+
+        return $this->redirectSuccess('admin.question.index', 'delete');
     }
 }

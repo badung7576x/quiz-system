@@ -3,18 +3,19 @@
 @section('title', 'Soạn thảo câu hỏi')
 
 @section('content')
-  <form id="create_question" class="space-y-4" action="{{ route('admin.question.store') }}" method="POST" enctype="multipart/form-data">
+  <form class="space-y-4" action="{{ route('admin.question.update', ['question' => $question->id]) }}" method="POST" enctype="multipart/form-data">
     @csrf
+    @method('PUT')
     <div class="content content-boxed">
       <div class="block block-rounded">
         <div class="block-header block-header-default">
-          <h3 class="block-title">Tạo câu hỏi</h3>
+          <h3 class="block-title">Chỉnh sửa câu hỏi</h3>
           <div class="block-options">
             <a href="{{ route('admin.question.index') }}" class="btn btn-sm btn-secondary">
               <i class="fa fa-arrow-left"></i> Quay lại
             </a>
             <button type="submit" class="btn btn-sm btn-success">
-              <i class="fa fa-save"></i> Tạo mới
+              <i class="fa fa-save"></i> Cập nhật
             </button>
           </div>
         </div>
@@ -26,7 +27,7 @@
                 <div class="col-sm-12">
                   <select id="subject" class="form-select @error('subject_id') is-invalid @enderror" name="subject_id">
                     @foreach ($subjects as $subject)
-                      <option value="{{ $subject->id }}" @selected(old('subject_id') == $subject->id)>{{ $subject->name }}</option>
+                      <option value="{{ $subject->id }}" @selected(old('subject_id', $question->subject_id) == $subject->id)>{{ $subject->name }}</option>
                     @endforeach
                   </select>
                   @error('subject_id')
@@ -56,7 +57,7 @@
                 <div class="col-sm-12">
                   <select class="form-select" name="level">
                     @foreach (config('fixeddata.question_level') as $level => $label)
-                      <option value="{{ $level }}" @selected(old('level') == $level)>{{ $label }}</option>
+                      <option value="{{ $level }}" @selected(old('level', $question->level) == $level)>{{ $label }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -68,7 +69,7 @@
                 <div class="col-sm-12">
                   <select id="question-type" class="form-select" name="type">
                     @foreach (config('fixeddata.question_type') as $type => $label)
-                      <option value="{{ $type }}" @selected(old('type') == $type)>{{ $label }}</option>
+                      <option value="{{ $type }}" @selected(old('level', $question->type) == $type)>{{ $label }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -78,7 +79,7 @@
               <div class="row mb-3">
                 <label class="col-sm-12 col-form-label">Điểm</label>
                 <div class="col-sm-12">
-                  <input type="text" class="form-control" name="score" value="{{ old('score', 1) }}" placeholder="Nhập điểm">
+                  <input type="text" class="form-control" name="score" value="{{ old('score', $question->score) }}" placeholder="Nhập điểm">
                 </div>
               </div>
             </div>
@@ -96,7 +97,7 @@
         </div>
         <div class="block-content block-content-full">
           <div class="row" id="question-form">
-            @include('admin.question._multichoice')
+            @include('admin.question._multichoice-edit')
           </div>
         </div>
       </div>
@@ -167,11 +168,11 @@
       })
     }
 
-    function changeQuestionSetOptions(options, selected = []) {
+    function changeQuestionSetOptions(options, selected) {
       $('#subject-content').empty();
       if (options.length) {
         options.forEach(option => {
-          $('#subject-content').append(`<option value="${option.id}" ${selected?.includes(option.id.toString()) ? 'selected' : ''}>${option.name}</option>`);
+          $('#subject-content').append(`<option value="${option.id}" ${selected == option.id.toString() ? 'selected' : ''}>${option.name}</option>`);
         })
       } else {
         $('#subject-content').append(`<option value="">Môn học chưa có nội dung</option>`);
@@ -185,8 +186,10 @@
     }
 
     function showOldFormValue() {
-      const oldSubjectId = {!! json_encode(old('subject_id')) !!};
-      const oldSubjectContentId = {!! json_encode(old('subject_content_id')) !!};
+      let oldSubjectId = {!! json_encode(old('subject_id')) !!};
+      if (!oldSubjectId) oldSubjectId = {!! json_encode($question->subject_id) !!};
+      let oldSubjectContentId = {!! json_encode(old('subject_content_id')) !!};
+      if (!oldSubjectContentId) oldSubjectContentId = {!! json_encode($question->subject_content_id) !!};
       let subjectContents = oldSubjectId ? subjects.find(item => item.id == oldSubjectId).contents : subjects[0].contents;
       changeQuestionSetOptions(subjectContents, oldSubjectContentId);
     }

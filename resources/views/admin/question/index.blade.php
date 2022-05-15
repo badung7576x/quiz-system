@@ -20,35 +20,35 @@
             <tr style="">
               <th style="width: 6%;" class="text-center">STT</th>
               <th style="width: 10%;" class="text-center">Câu hỏi</th>
-              <th style="width: 25%;" class="text-center">Loại câu hỏi</th>
+              <th style="width: 10%;" class="text-center">Môn học</th>
               <th style="width: 25%;" class="text-center">Trạng thái</th>
-              <th style="width: 10%;" class="text-center">Ngày tạo</th>
+              <th style="width: 10%;" class="text-center">Thời gian tạo</th>
               <th style="width: 14%;" class="text-center">Thao tác</th>
             </tr>
           </thead>
           <tbody>
             @foreach ($questions as $question)
               <tr>
-                <th class="text-center">{{ $loop->iteration }}</th>
-                <th class="text-center fw-normal">{{ $question->code }}</th>
-                <th class="text-center fw-normal">{{ $question->fullname }}</th>
-                <th class="text-center fw-normal">{{ $question->email }}</th>
-                <th class="text-center fw-normal">{{ $question->date_of_birth }}</th>
-                <th class="text-center fw-normal">
+                <td class="text-center">{{ $loop->iteration }}</td>
+                <td class="text-truncate">{!! $question->content !!}</td>
+                <td class="text-center">{{ $question->subject->name }}</td>
+                <td class="text-center">{{ config('fixeddata.question_status')[$question->status] }}</td>
+                <td class="text-center">{{ $question->created_at }}</td>
+                <td class="text-center">
                   <div class="btn-group">
                     <a href="{{ route('admin.question.edit', ['question' => $question->id]) }}" class="btn btn-sm btn-alt-secondary" title="{{ __('Chỉnh sửa') }}">
                       <i class="fa fa-fw fa-pencil-alt"></i>
                     </a>
-                    <form method="POST" action="{{ route('admin.question.destroy', ['teacher' => $question->id]) }}" id="delete_form_{{ $question->id }}">
+                    <form method="POST" action="{{ route('admin.question.destroy', ['question' => $question->id]) }}" id="delete_form_{{ $question->id }}">
                       @csrf
                       @method('delete')
                       <button type="button" class="btn btn-sm btn-alt-secondary text-danger delete-btn" data-id="{{ $question->id }}"
-                        data-name="{{ $question->fullname }}" data-bs-toggle="tooltip" title="{{ __('Xóa') }}">
+                        data-name="{{ $loop->iteration }}" data-bs-toggle="tooltip" title="{{ __('Xóa') }}">
                         <i class="fa fa-fw fa-times"></i>
                       </button>
                     </form>
                   </div>
-                </th>
+                </td>
               </tr>
             @endforeach
           </tbody>
@@ -64,10 +64,10 @@
   $('.delete-btn').on('click', function(e) {
     e.preventDefault();
     id = $(this).data("id");
-    teacher = $(this).data("name");
+    number = $(this).data("name");
     toast.fire({
       title: '{{ __('Xác nhận') }}',
-      text: 'Bạn có chắc chắn muốn xóa câu hỏi "' + teacher + '"?',
+      text: 'Bạn có chắc chắn muốn xóa câu hỏi số ' + number + '?',
       icon: 'warning',
       showCancelButton: true,
       customClass: {
