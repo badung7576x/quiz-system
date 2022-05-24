@@ -39,12 +39,23 @@ Route::group([
     // Subject
     Route::resource('subjects', 'SubjectController')->names('subject');
 
-    // Question Set
-    Route::resource('question-sets', 'QuestionSetController')->names('question-set');
-
     // Teacher
     Route::resource('teachers', 'TeacherController')->names('teacher');
 
     // Question
+    Route::get('questions/banks', 'QuestionController@banks')->name('question.bank');
+    Route::get('questions/reviews', 'QuestionController@reviews')->name('review.question');
     Route::resource('questions', 'QuestionController')->names('question');
+    Route::get('questions/{question}/review', 'QuestionController@review')->name('question.review');
+    
+    // Comment
+    Route::resource('questions.comments', 'CommentController')->names('comment');
+    Route::post('questions/{question}/comments/{comment}/resolved', 'CommentController@resolved')->name('comment.resolved');
+
+    // Exam set
+    Route::resource('exam-sets', 'ExamSetController')->names('exam-set');
+
+    // Assignment
+    Route::get('assignments', 'AssignmentController@index')->name('assignment.index');
+    Route::post('assignments/assign', 'AssignmentController@assign')->name('assignment.assign');
 });

@@ -8,7 +8,12 @@ class TeacherService
 
   public function all()
   {
-    return Teacher::where('role', '!=', '0')->latest()->get();
+    return Teacher::where('role', '!=', ROLE_ADMIN)->latest()->get();
+  }
+
+  public function getSpecialTeachers()
+  {
+    return Teacher::whereIn('role', [ROLE_SPECIALIST_TEACHER, ROLE_PRO_CHIEF])->latest()->get();
   }
 
   public function create(array $data)

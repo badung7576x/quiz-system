@@ -16,4 +16,11 @@ return [
     'success' => 'Nhập dữ liệu thành công',
     'error' => 'Đã có lỗi xảy ra trong quá trình nhập dữ liệu',
   ],
+  'resolved' => [
+    'success' => 'Bình luận đã được giải quyết',
+  ],
+  'review' => [
+    'success' => 'Câu hỏi đã được xem xét',
+    'error' => 'Đã có lỗi xảy ra trong quá trình xử lý',
+  ],
 ];

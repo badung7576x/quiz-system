@@ -88,66 +88,107 @@
         <!-- Side Navigation -->
         <div class="content-side">
           <ul class="nav-main">
-            <li class="nav-main-item">
-              <a class="nav-main-link {{ request()->routeIs('admin.dashboard*') ? 'active' : '' }}" href="{{ route('admin.dashboard.index') }}">
-                <i class="nav-main-link-icon fa fa-chart-pie"></i>
-                <span class="nav-main-link-name">Thống kê</span>
-              </a>
-            </li>
-            <li class="nav-main-item">
-              <a class="nav-main-link {{ request()->routeIs('admin.teacher*') ? 'active' : '' }}" href="{{ route('admin.teacher.index') }}">
-                <i class="nav-main-link-icon fa fa-users"></i>
-                <span class="nav-main-link-name">Giáo viên</span>
-              </a>
-            </li>
-            <li class="nav-main-item">
-              <a class="nav-main-link {{ request()->routeIs('admin.subject*') ? 'active' : '' }}" href="{{ route('admin.subject.index') }}">
-                <i class="nav-main-link-icon fa fa-book-reader"></i>
-                <span class="nav-main-link-name">Môn học</span>
-              </a>
-            </li>
-            <li class="nav-main-item">
-              <a class="nav-main-link {{ request()->routeIs('admin.question*') ? 'active' : '' }}" href="{{ route('admin.question.index') }}">
-                <i class="nav-main-link-icon fa fa-question"></i>
-                <span class="nav-main-link-name">Soạn thảo câu hỏi</span>
-              </a>
-            </li>
-            <li class="nav-main-item">
-              <a class="nav-main-link {{ request()->routeIs('admin.class*') ? 'active' : '' }}" href="{{ route('admin.question-set.index') }}">
-                <i class="nav-main-link-icon fa fa-file-archive"></i>
-                <span class="nav-main-link-name">Ngân hàng câu hỏi</span>
-              </a>
-            </li>
-            <li class="nav-main-item">
-              <a class="nav-main-link {{ request()->routeIs('admin.class*') ? 'active' : '' }}" href="{{ route('admin.question-set.index') }}">
-                <i class="nav-main-link-icon fa fa-layer-group"></i>
-                <span class="nav-main-link-name">Bộ đề thi</span>
-              </a>
-            </li>
-            <li class="nav-main-item">
-              <a class="nav-main-link {{ request()->routeIs('admin.class*') ? 'active' : '' }}" href="{{ route('admin.question-set.index') }}">
-                <i class="nav-main-link-icon fa fa-cog"></i>
-                <span class="nav-main-link-name">Cài đặt hệ thống</span>
-              </a>
-            </li>
-            {{-- <li class="nav-main-item">
-              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
-                <i class="nav-main-link-icon fa fa-users"></i>
-                <span class="nav-main-link-name">Ngân hàng câu hỏi</span>
-              </a>
-              <ul class="nav-main-submenu">
-                <li class="nav-main-item">
-                  <a class="nav-main-link" href="{{ route('admin.question-set.index') }}">
-                    <span class="nav-main-link-name">Bộ câu hỏi</span>
-                  </a>
-                </li>
-                <li class="nav-main-item">
-                  <a class="nav-main-link" href="#">
-                    <span class="nav-main-link-name">Bộ đề thi</span>
-                  </a>
-                </li>
-              </ul>
-            </li> --}}
+            @can('is_admin')
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.dashboard*') ? 'active' : '' }}" href="{{ route('admin.dashboard.index') }}">
+                  <i class="nav-main-link-icon fa fa-chart-pie"></i>
+                  <span class="nav-main-link-name">Thống kê</span>
+                </a>
+              </li>
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.teacher*') ? 'active' : '' }}" href="{{ route('admin.teacher.index') }}">
+                  <i class="nav-main-link-icon fa fa-users"></i>
+                  <span class="nav-main-link-name">Giáo viên</span>
+                </a>
+              </li>
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.subject*') ? 'active' : '' }}" href="{{ route('admin.subject.index') }}">
+                  <i class="nav-main-link-icon fa fa-book-reader"></i>
+                  <span class="nav-main-link-name">Môn học</span>
+                </a>
+              </li>
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.question.bank') ? 'active' : '' }}" href="{{ route('admin.question.bank') }}">
+                  <i class="nav-main-link-icon fa fa-file-archive"></i>
+                  <span class="nav-main-link-name">Ngân hàng câu hỏi</span>
+                </a>
+              </li>
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.class*') ? 'active' : '' }}" href="{{ route('admin.question.index') }}">
+                  <i class="nav-main-link-icon fa fa-cog"></i>
+                  <span class="nav-main-link-name">Cài đặt hệ thống</span>
+                </a>
+              </li>
+            @endcan
+            @can('is_teacher')
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.exam-set*') ? 'active' : '' }}" href="{{ route('admin.exam-set.index') }}">
+                  <i class="nav-main-link-icon fa fa-layer-group"></i>
+                  <span class="nav-main-link-name">Danh sách đề thi</span>
+                </a>
+              </li>
+            @endcan
+            @can('is_subject_teacher')
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.question*') ? 'active' : '' }}" href="{{ route('admin.question.index') }}">
+                  <i class="nav-main-link-icon fa fa-question"></i>
+                  <span class="nav-main-link-name">Soạn thảo câu hỏi</span>
+                </a>
+              </li>
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.exam-set*') ? 'active' : '' }}" href="{{ route('admin.exam-set.index') }}">
+                  <i class="nav-main-link-icon fa fa-layer-group"></i>
+                  <span class="nav-main-link-name">Danh sách đề thi</span>
+                </a>
+              </li>
+            @endcan
+            @can('is_specialist_teacher')
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.question*') ? 'active' : '' }}" href="{{ route('admin.question.index') }}">
+                  <i class="nav-main-link-icon fa fa-question"></i>
+                  <span class="nav-main-link-name">Soạn thảo câu hỏi</span>
+                </a>
+              </li>
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.review.question') ? 'active' : '' }}" href="{{ route('admin.review.question') }}">
+                  <i class="nav-main-link-icon fa fa-list-ol"></i>
+                  <span class="nav-main-link-name">Danh sách câu hỏi (chờ review)</span>
+                </a>
+              </li>
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.exam-set*') ? 'active' : '' }}" href="{{ route('admin.exam-set.index') }}">
+                  <i class="nav-main-link-icon fa fa-layer-group"></i>
+                  <span class="nav-main-link-name">Danh sách đề thi</span>
+                </a>
+              </li>
+            @endcan
+            @can('is_pro_chief')
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.assignment.*') ? 'active' : '' }}" href="{{ route('admin.assignment.index') }}">
+                  <i class="nav-main-link-icon fa fa-list-ol"></i>
+                  <span class="nav-main-link-name">Phân công nhiệm vụ</span>
+                </a>
+              </li>
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.question*') ? 'active' : '' }}" href="{{ route('admin.question.index') }}">
+                  <i class="nav-main-link-icon fa fa-question"></i>
+                  <span class="nav-main-link-name">Soạn thảo câu hỏi</span>
+                </a>
+              </li>
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.review.question') ? 'active' : '' }}" href="{{ route('admin.review.question') }}">
+                  <i class="nav-main-link-icon fa fa-list-ol"></i>
+                  <span class="nav-main-link-name">Danh sách câu hỏi (chờ review)</span>
+                </a>
+              </li>
+
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.exam-set*') ? 'active' : '' }}" href="{{ route('admin.exam-set.index') }}">
+                  <i class="nav-main-link-icon fa fa-layer-group"></i>
+                  <span class="nav-main-link-name">Danh sách đề thi</span>
+                </a>
+              </li>
+            @endcan
           </ul>
         </div>
         <!-- END Side Navigation -->
@@ -185,16 +226,13 @@
           <div class="dropdown d-inline-block ms-2">
             <button type="button" class="btn btn-sm btn-alt-secondary d-flex align-items-center" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">
-              <img class="rounded-circle"
-                src="/images/default_avatar.png"
-                style="width: 21px;">
+              <img class="rounded-circle" src="/images/default_avatar.png" style="width: 21px;">
               <span class="d-none d-sm-inline-block ms-2">{{ auth()->user()->fullname }}</span>
               <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block ms-1 mt-1"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0 border-0" aria-labelledby="page-header-user-dropdown">
               <div class="p-3 text-center bg-body-light border-bottom rounded-top">
-                <img class="img-avatar img-avatar48 img-avatar-thumb"
-                  src="/images/default_avatar.png" alt="">
+                <img class="img-avatar img-avatar48 img-avatar-thumb" src="/images/default_avatar.png" alt="">
                 <p class="mt-2 mb-0 fw-medium">{{ auth()->user()->fullname }}</p>
                 <p class="mb-0 text-muted fs-sm fw-medium"> {{ auth()->user()->title }} </p>
               </div>
@@ -252,11 +290,12 @@
   <script src="{{ asset('js/plugins/datatables-bs5/dataTables.bootstrap5.min.js') }}"></script>
   <script src="{{ asset('js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
   <script src="{{ asset('js/custom/custom_datatables.js') }}"></script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <script>
     @if (session()->has('message'))
       let type = "{{ session()->get('type') }}";
       let message = "{{ session()->get('message') }}";
-      if (type == 'error') type= "danger";
+      if (type == 'error') type = "danger";
       showNotify(type, message);
     @endif
 

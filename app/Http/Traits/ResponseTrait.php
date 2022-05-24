@@ -31,4 +31,10 @@ trait ResponseTrait
   {
     return back()->withInput()->with($this->error(__('messages.' . $message . '.error')));
   }
+
+  public function redirectBackWithSuccess($message)
+  {
+    return redirect()->back()
+      ->with($this->success(__('messages.' . $message . '.success')));
+  }
 }

@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('question_sets', function (Blueprint $table) {
+        Schema::create('exam_sets', function (Blueprint $table) {
             $table->id();
-            $table->string('group_id');
-            $table->unsignedBigInteger('subject_id');
-            $table->string('set_name', 100);
-            $table->integer('created_by');
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('question_sets');
+        Schema::dropIfExists('exam_sets');
     }
 };

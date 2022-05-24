@@ -23,8 +23,15 @@ if (!defined('QUESTION_TRUE_FALSE')) define('QUESTION_TRUE_FALSE', 4); // Câu h
 
 // Question status
 if (!defined('QUESTION_STATUS_CREATED')) define('QUESTION_STATUS_CREATED', 1); // Câu hỏi vừa được tạo
-if (!defined('QUESTION_STATUS_REVIEWED')) define('QUESTION_STATUS_REVIEWED', 2); // Câu hỏi đã được duyệt
-if (!defined('QUESTION_STATUS_REJECTED')) define('QUESTION_STATUS_REJECTED', 3); // Câu hỏi đã được duyệt
-if (!defined('QUESTION_STATUS_APPROVED')) define('QUESTION_STATUS_APPROVED', 4); // Câu hỏi đã được duyệt
-if (!defined('QUESTION_STATUS_DELETED')) define('QUESTION_STATUS_DELETED', 5); // Câu hỏi đã được xóa
+if (!defined('QUESTION_STATUS_WAITING_REVIEW')) define('QUESTION_STATUS_WAITING_REVIEW', 2); // Câu hỏi vừa được tạo
+if (!defined('QUESTION_STATUS_REVIEWED')) define('QUESTION_STATUS_REVIEWED', 3); // Câu hỏi đã được duyệt
+if (!defined('QUESTION_STATUS_REJECTED')) define('QUESTION_STATUS_REJECTED', 4); // Câu hỏi đã được duyệt
+if (!defined('QUESTION_STATUS_APPROVED')) define('QUESTION_STATUS_APPROVED', 5); // Câu hỏi đã được duyệt
+if (!defined('QUESTION_STATUS_DELETED')) define('QUESTION_STATUS_DELETED', 6); // Câu hỏi đã được xóa
+
+if (!defined('ROLE_ADMIN')) define('ROLE_ADMIN', 0);
+if (!defined('ROLE_PRO_CHIEF')) define('ROLE_PRO_CHIEF', 1);  // Trưởng bộ môn
+if (!defined('ROLE_SPECIALIST_TEACHER')) define('ROLE_SPECIALIST_TEACHER', 2);  // Giáo viên chuyên môn
+if (!defined('ROLE_SUBJECT_TEACHER')) define('ROLE_SUBJECT_TEACHER', 3);  // Giáo viên bộ môn
+if (!defined('ROLE_TEACHER')) define('ROLE_TEACHER', 4);  // Giáo viên cơ bản 
 

@@ -31,8 +31,20 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = $this->questionService->all();
+        $questions = $this->questionService->allMyQuestions();
         return view('admin.question.index', compact('questions'));
+    }
+
+    public function banks()
+    {
+        $questions = $this->questionService->all();
+        return view('admin.question.banks', compact('questions'));
+    }
+
+    public function reviews()
+    {
+        $questions = $this->questionService->allReviewQuestions();
+        return view('admin.question.reviews', compact('questions'));
     }
 
     /**
@@ -86,11 +98,14 @@ class QuestionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Question $question
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Question $question)
     {
+        $question->load(['answers', 'subject', 'subject_content']);
+        $comments = $this->questionService->getAllCommentForQuestion($question);
+        return view('admin.question.show', compact('question', 'comments'));
     }
 
     /**
@@ -142,5 +157,17 @@ class QuestionController extends Controller
         }
 
         return $this->redirectSuccess('admin.question.index', 'delete');
+    }
+
+    public function review(Question $question, Request $request)
+    {
+        try {
+            $this->questionService->reviewQuestion($question, $request->status);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return $this->redirectError('review');
+        }
+
+        return $this->redirectBackWithSuccess('review');
     }
 }

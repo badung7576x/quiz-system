@@ -44,6 +44,16 @@ class Question extends BaseModel
         return $this->belongsTo(Subject::class, 'subject_id', 'id');
     }
 
+    public function subject_content()
+    {
+        return $this->belongsTo(SubjectContent::class, 'subject_content_id', 'id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'question_id', 'id');
+    }
+
     public function createdAt(): Attribute
     {
         return Attribute::make(

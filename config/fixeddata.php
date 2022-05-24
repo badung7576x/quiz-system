@@ -9,6 +9,7 @@ return [
   ],
   'question_status' => [
     QUESTION_STATUS_CREATED => 'Tạo mới',
+    QUESTION_STATUS_WAITING_REVIEW => 'Chờ duyệt',
     QUESTION_STATUS_REVIEWED => 'Đã được duyệt',
     QUESTION_STATUS_REJECTED => 'Bị từ chối',
     QUESTION_STATUS_APPROVED => 'Đã được duyệt',
@@ -21,5 +22,12 @@ return [
     LEVEL_4 => 'Câu hỏi phân tích',
     LEVEL_5 => 'Câu hỏi tổng hợp',
     LEVEL_6 => 'Câu hỏi đánh giá'
-  ]
+  ],
+  'role' => [
+    ROLE_ADMIN => 'Quản trị viên',
+    ROLE_PRO_CHIEF => 'Trưởng bộ môn',
+    ROLE_SPECIALIST_TEACHER => 'Giáo viên chuyên môn',
+    ROLE_SUBJECT_TEACHER => 'Giáo viên bộ môn',
+    ROLE_TEACHER => 'Giáo viên'
+  ],
 ];
