@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('title')->nullable()->comment('Chức danh');
             $table->string('address')->nullable()->comment('Địa chỉ');
             $table->string('identity_number')->unique()->comment('CMND/CCCD');
-            $table->tinyInteger('group')->nullable()->comment('Tổ bộ môn, chuyên môn');
+            $table->integer('subject_id')->nullable()->comment('Giảng dạy bộ môn');
             $table->tinyInteger('gender')->comment('0: Nữ, 1: Nam');
             $table->tinyInteger('role')->comment('Admin/Giáo viên');
             $table->string('password')->comment('Mật khẩu');

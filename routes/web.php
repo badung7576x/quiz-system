@@ -54,6 +54,7 @@ Route::group([
 
     // Exam set
     Route::resource('exam-sets', 'ExamSetController')->names('exam-set');
+    Route::get('exam-sets/{exam-set}/export', 'ExamSetController@export')->name('exam-set.export');
 
     // Assignment
     Route::get('assignments', 'AssignmentController@index')->name('assignment.index');

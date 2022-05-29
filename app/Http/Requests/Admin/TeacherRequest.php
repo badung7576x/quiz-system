@@ -37,6 +37,7 @@ class TeacherRequest extends FormRequest
             'identity_number' => 'required_without:id|unique:teachers,identity_number' . ($this->id ? ",$this->id" : ''),
             'gender' => 'required',
             'role' => 'required',
+            'subject_id' => 'required'
         ];
     }
 
@@ -56,6 +57,7 @@ class TeacherRequest extends FormRequest
             'identity_number' => 'số CMND/CCCD',
             'gender' => 'giới tính',
             'role' => 'vai trò',
+            'subject_id' => 'bộ môn giảng dạy'
         ];
     }
 }

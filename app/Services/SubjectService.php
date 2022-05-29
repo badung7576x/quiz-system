@@ -8,7 +8,12 @@ class SubjectService
 
   public function all()
   {
-    return Subject::latest()->get();
+    $user = auth()->user();
+    if($user->role == ROLE_ADMIN) {
+      return Subject::latest()->get();
+    } else {
+      return Subject::where('id', $user->subject_id)->latest()->get();
+    }
   }
 
   public function subjectWithContents()

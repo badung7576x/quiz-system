@@ -8,46 +8,44 @@
       <div class="block-header block-header-default">
         <h3 class="block-title">Danh sách đề thi</h3>
         <div class="block-options">
-          <a href="#" class="btn btn-outline-primary btn-sm">
+          <a href="{{ route('admin.exam-set.create') }}" class="btn btn-outline-primary btn-sm">
             <i class="fa fa-plus"></i> Thêm mới
           </a>
         </div>
       </div>
       <div class="block-content block-content-full">
         <div class="row">
-          @for($i = 0; $i < 10; $i++)
-            
-          
-          <div class="col-sm-6 col-md-3">
-            <div class="block block-rounded bg-info-light">
-              <div class="block-content block-content-full text-center bg-city">
-                <div class="item item-2x item-circle bg-white-10 py-3 my-3 mx-auto">
-                  <i class="fab fa-html5 fa-2x text-white-75"></i>
+          @foreach($examSets as $examSet)
+            <div class="col-sm-6 col-md-2">
+              <div class="block block-rounded bg-gray-light">
+                <div class="block-content block-content-full text-center bg-success">
+                  <div class="item item-2x item-circle py-3 my-3 mx-auto bg-white-10">
+                    <span style="font-size:30px;font-weight:800;color:white">{{ $examSet->subject->name[0] }}</span>
+                  </div>
+                  <div class="fs-sm text-white-75">
+                    {{ $examSet->total_question }} câu hỏi • {{ $examSet->execute_time }} phút
+                  </div>
                 </div>
-                <div class="fs-sm text-white-75">
-                  10 lessons • 3 hours
-                </div>
-              </div>
-              <div class="block-content block-content-full">
-                <h4 class="h5 mb-1">
-                  Learn HTML5 in 10 simple and easy to follow steps
-                </h4>
-                <div class="fs-sm text-muted">November 5, 2021</div>
-                <hr>
-                <div class="text-center mt-2">
-                  <div class="btn-group">
-                    <a href="#" class="btn btn-sm btn-alt-secondary" title="{{ __('Xem') }}">
-                      <i class="fa fa-fw fa-eye"></i>
-                    </a>
-                    <a href="#" class="btn btn-sm btn-alt-secondary" title="{{ __('Tải xuống') }}">
-                      <i class="fa fa-fw fa-download"></i>
-                    </a>
+                <div class="block-content block-content-full">
+                  <h4 class="h5 mb-1">
+                    {{ $examSet->name }}
+                  </h4>
+                  <div class="fs-sm text-muted">{{ $examSet->created_at }}</div>
+                  <hr>
+                  <div class="text-center mt-2">
+                    <div class="btn-group">
+                      <a href="{{ route('admin.exam-set.export') }}" class="btn btn-sm btn-alt-info" title="{{ __('Xem') }}">
+                        <i class="fa fa-fw fa-eye"></i>
+                      </a>
+                      <a href="#" class="btn btn-sm btn-alt-info" title="{{ __('Cài đặt') }}">
+                        <i class="fa fa-fw fa-cog"></i>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          @endfor
+          @endforeach
         </div>
       </div>
       <div class="block block-rounded">
@@ -70,4 +68,27 @@
       </div>
     </div>
   </div>
+@endsection
+
+@section('js_after')
+  <script>
+    function randomBgPanel() {
+      const color = [
+        'bg-city-10',
+        'bg-flat-10',
+        'bg-amethyst-10',
+        'bg-smooth-10',
+        'bg-default-10',
+        'bg-modern-10',
+        'bg-warning-10',
+        'bg-success-10',
+        'bg-info-10',
+        'bg-danger-10',
+        'bg-gray-dark-10',
+        'bg-primary-10'
+      ];
+
+      return color[2];
+    }
+  </script>
 @endsection

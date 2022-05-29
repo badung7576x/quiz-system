@@ -33,5 +33,14 @@ if (!defined('ROLE_ADMIN')) define('ROLE_ADMIN', 0);
 if (!defined('ROLE_PRO_CHIEF')) define('ROLE_PRO_CHIEF', 1);  // Trưởng bộ môn
 if (!defined('ROLE_SPECIALIST_TEACHER')) define('ROLE_SPECIALIST_TEACHER', 2);  // Giáo viên chuyên môn
 if (!defined('ROLE_SUBJECT_TEACHER')) define('ROLE_SUBJECT_TEACHER', 3);  // Giáo viên bộ môn
-if (!defined('ROLE_TEACHER')) define('ROLE_TEACHER', 4);  // Giáo viên cơ bản 
+if (!defined('ROLE_TEACHER')) define('ROLE_TEACHER', 4);  // Giáo viên cơ bản
+
+if (!defined('EXAM_SET_TYPE_15P')) define('EXAM_SET_TYPE_15P', 1);
+if (!defined('EXAM_SET_TYPE_1T')) define('EXAM_SET_TYPE_1T', 2);
+if (!defined('EXAM_SET_TYPE_GK')) define('EXAM_SET_TYPE_GK', 3);
+if (!defined('EXAM_SET_TYPE_CK')) define('EXAM_SET_TYPE_CK', 4);
+if (!defined('EXAM_SET_TYPE_TT')) define('EXAM_SET_TYPE_TT', 5);
+
+if (!defined('EXAM_SET_STATUS_CREATED')) define('EXAM_SET_STATUS_CREATED', 1);
+
 

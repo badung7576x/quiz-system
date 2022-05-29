@@ -3,10 +3,25 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ExamSetRequest;
+use App\Http\Traits\ResponseTrait;
+use App\Models\ExamSet;
+use App\Services\ExamSetService;
+use App\Services\SubjectService;
 use Illuminate\Http\Request;
 
 class ExamSetController extends Controller
 {
+    use ResponseTrait;
+
+    protected $examSetService;
+
+    public function __construct(ExamSetService $examSetService, SubjectService $subjectService)
+    {
+        $this->examSetService = $examSetService;
+        $this->subjectService = $subjectService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +29,8 @@ class ExamSetController extends Controller
      */
     public function index()
     {
-        return view('admin.exam-set.index');
+        $examSets = $this->examSetService->all();
+        return view('admin.exam-set.index', compact('examSets'));
     }
 
     /**
@@ -24,7 +40,8 @@ class ExamSetController extends Controller
      */
     public function create()
     {
-        //
+        $subjects = $this->subjectService->subjectWithContents();
+        return view('admin.exam-set.create', compact('subjects'));
     }
 
     /**
@@ -33,9 +50,12 @@ class ExamSetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ExamSetRequest $request)
     {
-        //
+        $data = $request->validated();
+        $this->examSetService->create($data);
+
+        return $this->redirectSuccess('admin.exam-set.index', 'create');
     }
 
     /**
@@ -81,5 +101,19 @@ class ExamSetController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function export(ExamSet $examSet)
+    {
+        $this->examSetService->exportExamSetFile($examSet);
+
+        return $this->redirectSuccess('admin.exam-set.index', 'export');
+    }
+
+    public function import(ExamSet $examSet)
+    {
+        $this->examSetService->importExamSetFile($examSet);
+
+        return $this->redirectSuccess('admin.exam-set.index', 'import');
     }
 }

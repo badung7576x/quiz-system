@@ -61,7 +61,7 @@
                 <th style="width: 4%;" class="text-center"></th>
                 <th style="width: 10%;" class="text-center">STT</th>
                 <th style="width: 50%" class="text-truncate">Câu hỏi</th>
-                <th style="width: 12%;" class="text-center">Giáo viên kiểm tra</th>
+                <th style="width: 12%;" class="text-center">Tạo bởi</th>
                 <th style="width: 12%;" class="text-center">Thời gian tạo</th>
                 <th style="width: 12%;" class="text-center">Thao tác</th>
               </tr>
@@ -74,7 +74,7 @@
                   </td>
                   <td class="text-center">{{ $loop->iteration }}</td>
                   <td style="max-width: 450px" class="text-truncate">{!! $question->content !!}</td>
-                  <td class="text-center">Nguyễn Văn An</td>
+                  <td class="text-center">{{ $question->teacher->fullname }}</td>
                   <td class="text-center">{{ $question->created_at }}</td>
                   <td class="text-center">
                     <div class="btn-group">

@@ -33,6 +33,6 @@ class AssignmentController extends Controller
         $questionIds = $request->get('questions');
         $reviewTeacher = $request->get('teacher_id');
         $this->questionService->assign($questionIds, $reviewTeacher);
-        return redirect()->back()->with('success', 'Câu hỏi đã được gán cho giáo viên');
+        return redirect()->back()->with($this->success('Câu hỏi đã được gán cho giáo viên'));
     }
 }

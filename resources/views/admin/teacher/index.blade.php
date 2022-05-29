@@ -15,13 +15,14 @@
         </div>
       </div>
       <div class="block-content block-content-full">
-        <table class="table table-striped table-vcenter" id="exam-table">
+        <table class="table table-striped table-vcenter js-dataTable-full" id="exam-table">
           <thead>
             <tr style="">
               <th style="width: 6%;" class="text-center">STT</th>
               <th style="width: 10%;" class="text-center">Mã GV</th>
               <th style="width: 25%;" class="text-center">Họ và tên</th>
-              <th style="width: 25%;" class="text-center">Email</th>
+              <th style="width: 15%;" class="text-center">Môn học</th>
+              <th style="width: 15%;" class="text-center">Email</th>
               <th style="width: 10%;" class="text-center">Giới tính</th>
               <th style="width: 10%;" class="text-center">Ngày sinh</th>
               <th style="width: 14%;" class="text-center">Thao tác</th>
@@ -33,6 +34,7 @@
                 <th class="text-center">{{ $loop->iteration }}</th>
                 <th class="text-center fw-normal">{{ $teacher->code }}</th>
                 <th class="text-center fw-normal">{{ $teacher->fullname }}</th>
+                <th class="text-center fw-normal">{{ $teacher->subject->name }}</th>
                 <th class="text-center fw-normal">{{ $teacher->email }}</th>
                 <th class="text-center fw-normal">{{ GENDER[$teacher->gender] }}</th>
                 <th class="text-center fw-normal">{{ $teacher->date_of_birth }}</th>

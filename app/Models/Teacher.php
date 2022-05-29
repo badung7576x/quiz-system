@@ -20,6 +20,7 @@ class Teacher extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'subject_id',
         'code',
         'avatar',
         'fullname',
@@ -30,7 +31,6 @@ class Teacher extends Authenticatable
         'title',
         'address',
         'identity_number',
-        'group',
         'gender',
         'role',
         'status',
@@ -67,5 +67,10 @@ class Teacher extends Authenticatable
         return Attribute::make(
             set: fn ($value) => Hash::make($value)
         );
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class, 'subject_id', 'id');
     }
 }

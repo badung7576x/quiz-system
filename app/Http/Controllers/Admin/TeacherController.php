@@ -5,19 +5,25 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\TeacherRequest;
 use App\Services\TeacherService;
-use Illuminate\Http\Request;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Teacher;
+use App\Services\CommonService;
+use App\Services\SubjectService;
+use Illuminate\Support\Facades\Log;
 
 class TeacherController extends Controller
 {
     use ResponseTrait;
 
     protected $teacherService;
+    protected $subjectService;
+    protected $commonService;
 
-    public function __construct(TeacherService $teacherService)
+    public function __construct(TeacherService $teacherService, SubjectService $subjectService, CommonService $commonService)
     {
         $this->teacherService = $teacherService;
+        $this->subjectService = $subjectService;
+        $this->commonService = $commonService;
     }
 
     /**
@@ -27,7 +33,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = $this->teacherService->all();
+        $teachers = $this->teacherService->allTeacherBySubject();
         return view('admin.teacher.index', compact('teachers'));
     }
 
@@ -38,7 +44,9 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        return view('admin.teacher.create');
+        $subjects = $this->subjectService->all();
+        $roles = $this->commonService->getRoles();
+        return view('admin.teacher.create', compact('subjects', 'roles'));
     }
 
     /**
@@ -54,7 +62,7 @@ class TeacherController extends Controller
         try {
             $this->teacherService->create($data);
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
             return $this->redirectError('create');
         }
 
@@ -80,7 +88,9 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
-        return view('admin.teacher.edit', compact('teacher'));
+        $subjects = $this->subjectService->all();
+        $roles = $this->commonService->getRoles();
+        return view('admin.teacher.edit', compact('teacher', 'subjects', 'roles'));
     }
 
     /**
@@ -96,7 +106,7 @@ class TeacherController extends Controller
         try {
             $this->teacherService->update($teacher, $data);
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
             return $this->redirectError('update');
         }
 
@@ -114,7 +124,7 @@ class TeacherController extends Controller
         try {
             $this->teacherService->delete($teacher);
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
             return $this->redirectError('delete');
         }
 

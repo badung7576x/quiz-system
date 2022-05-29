@@ -113,10 +113,23 @@
                     </div>
                   </div>
                   <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Môn học giảng dạy</label>
+                    <div class="col-sm-9">
+                      <select class="form-select @error('subject_id') is-invalid @enderror" name="subject_id">
+                        @foreach($subjects as $subject)
+                          <option value="{{ $subject->id }}" @selected(old('subject_id', $teacher->subject_id) == $subject->id)>{{ $subject->name }}</option>
+                        @endforeach
+                      </select>
+                      @error('subject_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">{{ __('Vai trò') }}</label>
                     <div class="col-sm-9">
                       <select class="form-select @error('role') is-invalid @enderror" name="role">
-                        @foreach(config('fixeddata.role') as $value => $role)
+                        @foreach($roles as $value => $role)
                           <option value="{{ $value }}" @selected(old('role', $teacher->role) == $value)>{{ $role }}</option>
                         @endforeach
                       </select>

@@ -5,10 +5,12 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Elasticquent\ElasticquentTrait;
 
 class Question extends BaseModel
 {
     use HasFactory;
+    use ElasticquentTrait;
 
     protected $table = 'questions';
 
@@ -34,9 +36,21 @@ class Question extends BaseModel
         });
     }
 
+    protected $mappingProperties = [
+        'content' => [
+            'type' => 'text',
+            "analyzer" => "standard",
+        ],
+    ];
+
     public function answers()
     {
         return $this->hasMany(Answer::class, 'question_id', 'id');
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class, 'created_by', 'id');
     }
 
     public function subject()

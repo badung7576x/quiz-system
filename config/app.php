@@ -167,7 +167,8 @@ return [
         /*
          * Package Service Providers...
          */
-        Maatwebsite\Excel\ExcelServiceProvider::class,
+        // Maatwebsite\Excel\ExcelServiceProvider::class,
+        Elasticquent\ElasticquentServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -193,7 +194,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // ...
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        // 'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Es' => Elasticquent\ElasticquentElasticsearchFacade::class,
     ])->toArray(),
 
 ];

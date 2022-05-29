@@ -8,12 +8,28 @@ class TeacherService
 
   public function all()
   {
-    return Teacher::where('role', '!=', ROLE_ADMIN)->latest()->get();
+    return Teacher::where('role', '!=', ROLE_ADMIN)->with('subject:id,name')->latest()->get();
+  }
+
+  public function allTeacherBySubject()
+  {
+    $user = auth()->user();
+
+    if ($user->role == ROLE_ADMIN) {
+      return $this->all();
+    }
+    
+    return Teacher::where('subject_id', $user->subject_id)
+      ->where('id', '!=', $user->id)
+      ->where('role', '!=', ROLE_ADMIN)
+      ->with('subject:id,name')->latest()->get();
   }
 
   public function getSpecialTeachers()
   {
-    return Teacher::whereIn('role', [ROLE_SPECIALIST_TEACHER, ROLE_PRO_CHIEF])->latest()->get();
+    $user = auth()->user();
+    return Teacher::where('subject_id', $user->subject_id)
+      ->whereIn('role', [ROLE_SPECIALIST_TEACHER, ROLE_PRO_CHIEF])->latest()->get();
   }
 
   public function create(array $data)

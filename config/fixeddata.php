@@ -30,4 +30,11 @@ return [
     ROLE_SUBJECT_TEACHER => 'Giáo viên bộ môn',
     ROLE_TEACHER => 'Giáo viên'
   ],
+  'exam_set_type' => [
+    EXAM_SET_TYPE_15P => 'Đề kiểm tra 15 phút',
+    EXAM_SET_TYPE_1T => 'Đề kiểm tra 1 tiết',
+    EXAM_SET_TYPE_GK => 'Đề kiểm tra giữa kì',
+    EXAM_SET_TYPE_CK => 'Đề kiểm cuối kì',
+    EXAM_SET_TYPE_TT => 'Đề thi thử',
+  ]
 ];
