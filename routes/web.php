@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function() {
+    return redirect()->route('admin.login');
+});
+
 Route::group([
     'prefix' => 'admin',
     'namespace' => 'App\Http\Controllers\Auth', 'as' => 'admin.'
@@ -43,18 +47,26 @@ Route::group([
     Route::resource('teachers', 'TeacherController')->names('teacher');
 
     // Question
-    Route::get('questions/banks', 'QuestionController@banks')->name('question.bank');
     Route::get('questions/reviews', 'QuestionController@reviews')->name('review.question');
+    Route::post('questions/import', 'QuestionController@import')->name('question.import');
     Route::resource('questions', 'QuestionController')->names('question');
     Route::get('questions/{question}/review', 'QuestionController@review')->name('question.review');
+
+    // Question Bank
+    Route::get('question-banks/waiting-accept', 'QuestionBankController@waitAccepts')->name('question-bank.wait-accept');
+    Route::get('question-banks/{question_bank}/template', 'QuestionBankController@contentTemplate')->name('question-bank.template');
+    Route::resource('question-banks', 'QuestionBankController')->names('question-bank');
     
     // Comment
     Route::resource('questions.comments', 'CommentController')->names('comment');
     Route::post('questions/{question}/comments/{comment}/resolved', 'CommentController@resolved')->name('comment.resolved');
 
     // Exam set
+    Route::get('exam-sets/{exam_set}/pdf', 'ExamSetController@pdf')->name('exam-set.pdf');
+    Route::get('exam-sets/{exam_set}/setting', 'ExamSetController@setting')->name('exam-set.setting');
+    Route::post('exam-sets/{exam_set}/setting', 'ExamSetController@saveSetting')->name('exam-set.setting.save');
+    Route::get('exam-sets/{exam_set}/download', 'ExamSetController@download')->name('exam-set.download');
     Route::resource('exam-sets', 'ExamSetController')->names('exam-set');
-    Route::get('exam-sets/{exam-set}/export', 'ExamSetController@export')->name('exam-set.export');
 
     // Assignment
     Route::get('assignments', 'AssignmentController@index')->name('assignment.index');

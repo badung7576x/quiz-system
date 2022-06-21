@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SubjectContent extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'subject_contents';
 
@@ -15,6 +16,5 @@ class SubjectContent extends Model
         'subject_id',
         'order',
         'name',
-        'description',
     ];
 }

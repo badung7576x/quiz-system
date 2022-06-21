@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ImportQuestionRequest;
 use App\Http\Requests\Admin\QuestionRequest;
 use App\Services\QuestionService;
 use App\Services\SubjectService;
 use Illuminate\Http\Request;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Question;
+use App\Services\FileService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class QuestionController extends Controller
@@ -17,11 +20,13 @@ class QuestionController extends Controller
 
     protected $questionService;
     protected $subjectService;
+    protected $fileService;
 
-    public function __construct(QuestionService $questionService, SubjectService $subjectService)
+    public function __construct(QuestionService $questionService, SubjectService $subjectService, FileService $fileService)
     {
         $this->questionService = $questionService;
         $this->subjectService = $subjectService;
+        $this->fileService = $fileService;
     }
 
     /**
@@ -33,12 +38,6 @@ class QuestionController extends Controller
     {
         $questions = $this->questionService->allMyQuestions();
         return view('admin.question.index', compact('questions'));
-    }
-
-    public function banks()
-    {
-        $questions = $this->questionService->all();
-        return view('admin.question.banks', compact('questions'));
     }
 
     public function reviews()
@@ -54,8 +53,8 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        $subjects = $this->subjectService->subjectWithContents();
-        return view('admin.question.create', compact('subjects'));
+        $subject = $this->subjectService->subjectWithContents();
+        return view('admin.question.create', compact('subject'));
     }
 
     public function renderForm(Request $request)
@@ -105,6 +104,7 @@ class QuestionController extends Controller
     {
         $question->load(['answers', 'subject', 'subject_content']);
         $comments = $this->questionService->getAllCommentForQuestion($question);
+
         return view('admin.question.show', compact('question', 'comments'));
     }
 
@@ -117,8 +117,8 @@ class QuestionController extends Controller
     public function edit(Question $question)
     {
         $question->load('answers');
-        $subjects = $this->subjectService->subjectWithContents();
-        return view('admin.question.edit', compact('subjects', 'question'));
+        $subject = $this->subjectService->subjectWithContents();
+        return view('admin.question.edit', compact('subject', 'question'));
     }
 
     /**
@@ -169,5 +169,24 @@ class QuestionController extends Controller
         }
 
         return $this->redirectBackWithSuccess('review');
+    }
+
+    public function import(ImportQuestionRequest $request)
+    {
+        $file = $request->file('question_file');
+        $request->offsetUnset('question_file');
+
+        DB::beginTransaction();
+        try {
+            $this->fileService->importQuestions($file);
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+            return $this->redirectError('import');
+        }
+        
+        
+        return $this->redirectSuccess('admin.question.index', 'import');
     }
 }

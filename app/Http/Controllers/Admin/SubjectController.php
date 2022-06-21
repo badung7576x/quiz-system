@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\SubjectRequest;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Subject;
 use App\Services\SubjectService;
+use Illuminate\Support\Facades\Gate;
 
 class SubjectController extends Controller
 {
@@ -37,7 +38,11 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        //
+        if (!Gate::allows('is_admin')) {
+            abort(404);
+        }
+
+        return view('admin.subject.create');
     }
 
     /**
@@ -48,12 +53,16 @@ class SubjectController extends Controller
      */
     public function store(SubjectRequest $request)
     {
-        $data = $request->validated();
+        if (!Gate::allows('is_admin')) {
+            abort(404);
+        }
 
+        $data = $request->validated();
         try {
             $this->subjectService->create($data);
         } catch (\Exception $e) {
-            return $this->redirectError('create');
+            $message = $e->getMessage();
+            return $this->redirectError('create', $message);
         }
 
         return $this->redirectSuccess('admin.subject.index', 'create');
@@ -76,9 +85,13 @@ class SubjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Subject $subject)
     {
-        //
+        if (!Gate::allows('can-access', $subject)) {
+            abort(404);
+        }
+
+        return view('admin.subject.edit', compact('subject'));
     }
 
     /**
@@ -108,6 +121,10 @@ class SubjectController extends Controller
      */
     public function destroy(Subject $subject)
     {
+        if (!Gate::allows('is_admin')) {
+            abort(403);
+        }
+
         try {
             $this->subjectService->delete($subject);
         } catch (\Exception $e) {

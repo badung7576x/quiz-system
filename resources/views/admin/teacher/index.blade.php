@@ -1,7 +1,7 @@
 
 @extends('layouts.admin')
 
-@section('title', 'Quản lý giáo viên')
+@section('title', 'Giáo viên')
 
 @section('content')
   <div class="content">

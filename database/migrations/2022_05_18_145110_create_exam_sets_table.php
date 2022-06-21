@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('exam_sets', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->nullable()->comment('Mã bộ đề');
+            $table->string('code')->nullable()->comment('Mã đề');
             $table->string('name')->comment('Tên bộ đề');
             $table->tinyInteger('type')->comment('Loại đề thi');
             $table->integer('subject_id')->comment('Môn học');
@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('answers')->nullable()->comment('Đáp án');
             $table->integer('status')->comment('Trạng thái');
             $table->integer('created_by')->comment('Người tạo');
+            $table->integer('parent_id')->comment('ID bộ đề cha');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -42,7 +42,7 @@
               <div class="col-12 my-2 mt-0">
                 <span class="h4">Môn học: </span>
                 <span class="h5 fw-normal">{{ $question->subject->name }}</span> -
-                <span class="h5 fw-normal">{{ $question->subject_content->name }}</span>
+                <span class="h5 fw-normal">{{ $question->subject_content?->name ?? '' }}</span>
               </div>
               <div class="col-12 my-2">
                 <span class="h4">Dạng câu hỏi: </span>
@@ -76,7 +76,7 @@
           @endforeach
           <!-- END Form Horizontal - Default Style -->
         </div>
-        <form method="POST" action="{{ route('admin.question.destroy', ['question' => $question->id]) }}" id="delete_form_{{ $question->id }}">
+        <form method="POST" action="{{ route('admin.question.destroy', ['question' => $question->id]) }}" id="delete_form">
           @csrf
           @method('delete')
         </form>
@@ -95,7 +95,8 @@
               @foreach ($comments as $comment)
                 <li class="timeline-event">
                   <div class="timeline-event-icon">
-                    <img class="img-avatar img-avatar32" style="margin-left: 3px" src="{{ asset('/images/default_avatar.png') }}" alt="">
+                    @php $avatar = $comment->commentor->avatar != '' ? $comment->commentor->avatar : asset('images/default_avatar.png') @endphp
+                    <img class="img-avatar img-avatar32" style="margin-left: 3px" src="{{ $avatar }}" alt="">
                   </div>
                   <div class="timeline-event-block block">
                     <div class="block-header">
@@ -108,7 +109,9 @@
                           @if ($comment->is_resolved)
                             <i class="fa fa-check-circle text-success me-2"></i>
                           @else
-                            <i class="far fa-check-circle me-2" style="cursor: pointer" onclick="resolvedComment({{ $comment->id }})"></i>
+                            @if (auth()->user()->id == $comment->created_by || auth()->user()->id == $question->created_by)
+                              <i class="far fa-check-circle me-2" style="cursor: pointer" onclick="resolvedComment({{ $comment->id }})"></i>
+                            @endif
                           @endif
                           {{-- <i class="far fa-comment-dots me-2" style="cursor: pointer" onclick="replyCpmment({{ $comment->id }})"></i> --}}
                           @if (auth()->user()->id == $comment->created_by)
@@ -189,7 +192,7 @@
 @endsection
 
 @section('js_after')
-  <script src="https://cdn.ckeditor.com/4.18.0/standard-all/ckeditor.js"></script>
+  <script src="{{ asset('js/plugins/ckeditor/ckeditor.js') }}"></script>
   <script>
     $(document).ready(function() {
       initCkeditor();
@@ -260,7 +263,7 @@
         }
       }).then((result) => {
         if (result.isConfirmed) {
-          $('form#delete-form').submit();
+          $('form#delete_form').submit();
         }
       })
     }

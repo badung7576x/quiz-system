@@ -3,7 +3,7 @@
 @section('title', 'Soạn thảo câu hỏi')
 
 @section('content')
-  <form class="space-y-4" action="{{ route('admin.question.update', ['question' => $question->id]) }}" method="POST" enctype="multipart/form-data">
+  <form class="space-y-4" action="{{ route('admin.question.update', ['question' => $question->id]) }}" method="POST">
     @csrf
     @method('PUT')
     <div class="content content-boxed">
@@ -26,9 +26,7 @@
                 <label class="col-sm-12 col-form-label">Môn học</label>
                 <div class="col-sm-12">
                   <select id="subject" class="form-select @error('subject_id') is-invalid @enderror" name="subject_id">
-                    @foreach ($subjects as $subject)
-                      <option value="{{ $subject->id }}" @selected(old('subject_id', $question->subject_id) == $subject->id)>{{ $subject->name }}</option>
-                    @endforeach
+                    <option value="{{ $subject->id }}" @selected(old('subject_id', $question->subject_id) == $subject->id)>{{ $subject->name }}</option>
                   </select>
                   @error('subject_id')
                     <span class="text-danger">{{ $message }}</span>
@@ -41,8 +39,9 @@
                 <label class="col-sm-12 col-form-label">Nội dung</label>
                 <div class="col-sm-12">
                   <select id="subject-content" class="form-select @error('subject_content_id') is-invalid @enderror" name="subject_content_id">
-                    @foreach ($subjects[0]->contents as $subjectContent)
-                      <option value="{{ $subjectContent->id }}">{{ $subjectContent->name }}</option>
+                    <option value="">--Lựa chọn nội dung--</option>
+                    @foreach ($subject->contents as $subjectContent)
+                      <option value="{{ $subjectContent->id }}" @selected(old('subject_content_id', $question->subject_content_id) == $subjectContent->id)>{{ $subjectContent->name }}</option>
                     @endforeach
                   </select>
                   @error('subject_content_id')
@@ -110,13 +109,9 @@
 @endsection
 
 @section('js_after')
-  <script src="https://cdn.ckeditor.com/4.18.0/standard-all/ckeditor.js"></script>
+  <script src="{{ asset('js/plugins/ckeditor/ckeditor.js') }}"></script>
   <script>
-    const subjects = {!! json_encode($subjects) !!};
     $(document).ready(function() {
-      showOldFormValue();
-      handleSelectSubject();
-      clearValidateError();
       initCkeditor();
     });
 
@@ -157,41 +152,6 @@
           removeButtons: 'PasteFromWord'
         })
       });
-    }
-
-    function handleSelectSubject() {
-      $('#subject').on('change', function() {
-        const subjectId = $(this).val();
-        const subject = subjectId ? subjects.find(item => item.id == subjectId) : null;
-        const subjectContents = subject?.contents || subjects[0].contents;
-        changeQuestionSetOptions(subjectContents);
-      })
-    }
-
-    function changeQuestionSetOptions(options, selected) {
-      $('#subject-content').empty();
-      if (options.length) {
-        options.forEach(option => {
-          $('#subject-content').append(`<option value="${option.id}" ${selected == option.id.toString() ? 'selected' : ''}>${option.name}</option>`);
-        })
-      } else {
-        $('#subject-content').append(`<option value="">Môn học chưa có nội dung</option>`);
-      }
-    }
-
-    function clearValidateError() {
-      $("input, select").click(function() {
-        $(this).removeClass('is-invalid')
-      });
-    }
-
-    function showOldFormValue() {
-      let oldSubjectId = {!! json_encode(old('subject_id')) !!};
-      if (!oldSubjectId) oldSubjectId = {!! json_encode($question->subject_id) !!};
-      let oldSubjectContentId = {!! json_encode(old('subject_content_id')) !!};
-      if (!oldSubjectContentId) oldSubjectContentId = {!! json_encode($question->subject_content_id) !!};
-      let subjectContents = oldSubjectId ? subjects.find(item => item.id == oldSubjectId).contents : subjects[0].contents;
-      changeQuestionSetOptions(subjectContents, oldSubjectContentId);
     }
   </script>
 @endsection

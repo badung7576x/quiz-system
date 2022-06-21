@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ExamSetRequest;
+use App\Http\Requests\Admin\ExamSetSettingRequest;
 use App\Http\Traits\ResponseTrait;
 use App\Models\ExamSet;
 use App\Services\ExamSetService;
 use App\Services\SubjectService;
 use Illuminate\Http\Request;
+use PDF;
 
 class ExamSetController extends Controller
 {
@@ -40,8 +42,8 @@ class ExamSetController extends Controller
      */
     public function create()
     {
-        $subjects = $this->subjectService->subjectWithContents();
-        return view('admin.exam-set.create', compact('subjects'));
+        $subjectContents = $this->subjectService->getSubjectContents();
+        return view('admin.exam-set.create', compact('subjectContents'));
     }
 
     /**
@@ -64,9 +66,10 @@ class ExamSetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ExamSet $examSet)
     {
-        //
+        $examSet->load('subject');
+        return view('admin.exam-set.show', compact('examSet'));
     }
 
     /**
@@ -103,17 +106,35 @@ class ExamSetController extends Controller
         //
     }
 
-    public function export(ExamSet $examSet)
+    public function pdf(ExamSet $examSet)
     {
-        $this->examSetService->exportExamSetFile($examSet);
+        $examSet = $this->examSetService->formatData($examSet);
+        // dd($examSet);
 
-        return $this->redirectSuccess('admin.exam-set.index', 'export');
+        return view('admin.exam-set.template', compact('examSet'));
     }
 
-    public function import(ExamSet $examSet)
+    public function setting(ExamSet $examSet)
     {
-        $this->examSetService->importExamSetFile($examSet);
+        $examSet->load('setting');
 
-        return $this->redirectSuccess('admin.exam-set.index', 'import');
+        return view('admin.exam-set.setting', compact('examSet'));
+    }
+
+    public function saveSetting(ExamSet $examSet, ExamSetSettingRequest $request)
+    {
+        $data = $request->validated();
+
+        $this->examSetService->saveSetting($examSet, $data);
+        
+        return $this->redirectSuccess('admin.exam-set.show', 'save', ['exam_set' => $examSet->id]);
+    }
+
+    public function download(ExamSet $examSet)
+    {
+        $data['examSet'] = $this->examSetService->formatData($examSet);
+        $pdf = PDF::loadView('admin.exam-set.template_for_download', $data);
+
+        return $pdf->stream();
     }
 }

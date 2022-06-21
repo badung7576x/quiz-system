@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('subject_id');
             $table->integer('order')->nullable();
             $table->string('name', 100);
-            $table->string('description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

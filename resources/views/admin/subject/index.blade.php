@@ -3,47 +3,23 @@
 @section('title', 'Môn học')
 
 @section('content')
-  {{-- Modal create subject --}}
-  <div class="modal" id="create-subject" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+  {{-- Modal show subject --}}
+  <div class="modal" id="show-subject" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="block block-rounded block-transparent mb-0">
           <div class="block-header block-header-default">
-            <h3 class="block-title">Thêm môn học</h3>
+            <h3 class="block-title">Thông tin môn học</h3>
             <div class="block-options">
               <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
                 <i class="fa fa-fw fa-times"></i>
               </button>
             </div>
           </div>
-          <form id="create-form" action="{{ route('admin.subject.store') }}" method="POST">
-            <div class="block-content fs-sm">
-              @csrf
-              <input type="hidden" name="type" value="create">
-              <div class="row mb-2">
-                <label class="col-12 col-form-label">Tên môn học <span style="color: red">*</span></label>
-                <div class="col-12">
-                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', '') }}">
-                  @error('name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label class="col-12 col-form-label">Mô tả</label>
-                <div class="col-12">
-                  <textarea class="form-control @error('description') is-invalid @enderror" rows="3" name="description">{{ old('description', '') }}</textarea>
-                  @error('description')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-              </div>
-            </div>
-            <div class="block-content block-content-full text-end bg-body">
-              <button type="button" class="btn btn-sm btn-alt-secondary me-1" data-bs-dismiss="modal">Hủy</button>
-              <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-save me-1"></i>Tạo</button>
-            </div>
-          </form>
+          <div class="block-content fs-sm">
+            <table class="table table-borderless table-striped table-vcenter fs-sm" id='subject-table'>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -104,9 +80,11 @@
       <div class="block-header block-header-default">
         <h3 class="block-title">Danh sách môn học</h3>
         <div class="block-options">
-          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#create-subject">
-            <i class="fa fa-plus"></i>Thêm mới
-          </button>
+          @can('is_admin')
+            <a class="btn btn-primary btn-sm" href="{{ route('admin.subject.create') }}" >
+              <i class="fa fa-plus"></i>Thêm mới
+            </a>
+          @endcan
         </div>
       </div>
       <div class="block-content block-content-full">
@@ -129,18 +107,22 @@
                 <th class="text-center fw-normal">{{ $subject->description }}</th>
                 <th class="text-center fw-normal">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-alt-secondary edit-btn" data-bs-toggle="tooltip" title="{{ __('Chỉnh sửa') }}" data-id="{{ $subject->id }}"
-                      data-name="{{ $subject->name }}" data-description="{{ $subject->description }}">
-                      <i class="fa fa-fw fa-pencil-alt"></i>
+                    <button type="button" class="btn btn-sm btn-alt-secondary show-btn" data-bs-toggle="tooltip" title="Xem thông tin" data-id="{{ $subject->id }}">
+                      <i class="fa fa-fw fa-eye"></i>
                     </button>
+                    <a type="button" class="btn btn-sm btn-alt-secondary" title="Chỉnh sửa" href="{{ route('admin.subject.edit', ['subject' => $subject->id]) }}">
+                      <i class="fa fa-fw fa-pencil-alt"></i>
+                    </a>
+                    @can('is_admin')
                     <form method="POST" action="{{ route('admin.subject.destroy', $subject->id) }}" id="delete_form_{{ $subject->id }}">
                       @csrf
                       @method('delete')
                       <button type="button" class="btn btn-sm btn-alt-secondary text-danger delete-btn" data-id="{{ $subject->id }}"
-                        data-name="{{ $subject->name }}" data-bs-toggle="tooltip" title="{{ __('Xóa') }}">
+                        data-name="{{ $subject->name }}" data-bs-toggle="tooltip" title="Xóa">
                         <i class="fa fa-fw fa-times"></i>
                       </button>
                     </form>
+                    @endcan
                   </div>
                 </th>
               </tr>
@@ -155,15 +137,7 @@
 
 @section('js_after')
   <script>
-    $(document).ready(function() {
-      @if ($errors->has('create_error'))
-        $('#create-subject').modal('show');
-      @endif
-      @if ($errors->has('edit_error'))
-        setEditFormAction({{ old('id') }});
-        $('#edit-subject').modal('show');
-      @endif
-    });
+    const subjects = @json($subjects);
 
     $('.delete-btn').on('click', function(e) {
       e.preventDefault();
@@ -195,33 +169,59 @@
       });
     });
 
-    $('.edit-btn').on('click', function(e) {
-        const btn = $(this);
-        $('#edit-form input:gt(1)').each(function(idx) {
-          $(this).removeClass('is-invalid');
-          attr = $(this).attr('name');
-          $(this).val(btn.data(attr));
-        });
-        $('#description').val(btn.data('description'));
+    // $('.edit-btn').on('click', function(e) {
+    //   const btn = $(this);
+    //   $('#edit-form input:gt(1)').each(function(idx) {
+    //     $(this).removeClass('is-invalid');
+    //     attr = $(this).attr('name');
+    //     $(this).val(btn.data(attr));
+    //   });
+    //   $('#description').val(btn.data('description'));
 
-        setEditFormAction();
-        $('#edit-subject').modal('show');
+    //   setEditFormAction();
+    //   $('#edit-subject').modal('show');
+    // });
+
+    $('.show-btn').on('click', function(e) {
+      const subjectId = $(this).data('id');
+      const subject = subjects.find(subject => subject.id == subjectId);
+      const html = `
+        <tbody>
+          <tr>
+            <td class="fw-semibold" style="width: 30%">Môn học</td>
+            <td>${subject.name}</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold" style="width: 30%">Mô tả</td>
+            <td>${subject.description ?? ''}</td>
+          </tr>
+          <tr>
+            <td class="fw-semibold align-top" style="width: 30%">Nội dung</td>
+            <td>
+              ${
+                subject.contents.map(content => `${content.order}. ${content.name}`).join('<br>')
+              }
+            </td>
+          </tr>
+        </tbody>`;
+      $('#subject-table').html(html);
+      $('#show-subject').modal('show');
+    });
+
+    $('#save_btn').on('click', function(e) {
+      e.preventDefault();
+      $('#edit-form input:gt(1)').each(function(idx) {
+        $(this).prop('disabled', false);
       });
+      $('#edit-form').submit();
+    })
 
-      $('#save_btn').on('click', function(e) {
-        e.preventDefault();
-        $('#edit-form input:gt(1)').each(function(idx) {
-          $(this).prop('disabled', false);
-        });
-        $('#edit-form').submit();
-      })
-
-      function setEditFormAction(classId=null) {
-        id = classId ? classId : $("#edit-form input[name='id']").val();
-        $('#subject-id').val(id);
-        url = "{{ route('admin.subject.update', ':id') }}";
-        url = url.replace(':id', id);
-        $('#edit-form').attr('action', url);
-      }
+    function setEditFormAction(classId=null) {
+      id = classId ? classId : $("#edit-form input[name='id']").val();
+      $('#subject-id').val(id);
+      url = "{{ route('admin.subject.update', ':id') }}";
+      url = url.replace(':id', id);
+      $('#edit-form').attr('action', url);
+    }
   </script>
 @endsection

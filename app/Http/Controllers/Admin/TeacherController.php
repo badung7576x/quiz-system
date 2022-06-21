@@ -9,6 +9,7 @@ use App\Http\Traits\ResponseTrait;
 use App\Models\Teacher;
 use App\Services\CommonService;
 use App\Services\SubjectService;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 
 class TeacherController extends Controller
@@ -34,6 +35,7 @@ class TeacherController extends Controller
     public function index()
     {
         $teachers = $this->teacherService->allTeacherBySubject();
+
         return view('admin.teacher.index', compact('teachers'));
     }
 
@@ -88,6 +90,10 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
+        if (!Gate::allows('can-access', $teacher)) {
+            abort(403);
+        }
+
         $subjects = $this->subjectService->all();
         $roles = $this->commonService->getRoles();
         return view('admin.teacher.edit', compact('teacher', 'subjects', 'roles'));

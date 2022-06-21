@@ -26,6 +26,8 @@ class SubjectRequest extends FormRequest
         return [
             'name' => 'required|string|max:100',
             'description' => 'nullable|string',
+            'subject_contents' => 'required|array',
+            'subject_contents.*' => 'required|string|max:150',
         ];
     }
 
@@ -39,26 +41,27 @@ class SubjectRequest extends FormRequest
         return [
             'name' => 'tên môn học',
             'description' => 'mô tả',
+            'subject_contents.*' => 'nội dung môn học',
         ];
     }
 
-    /**
-     * Configure the validator instance.
-     *
-     * @param  \Illuminate\Validation\Validator  $validator
-     * @return void
-     */
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            if ($validator->errors()->any()) {
-                if($this->type = 'create') {
-                    $validator->errors()->add('create_error', __('messages.create.error'));
-                } else {
-                    $validator->errors()->add('edit_error', __('messages.update.error'));
-                }
+    // /**
+    //  * Configure the validator instance.
+    //  *
+    //  * @param  \Illuminate\Validation\Validator  $validator
+    //  * @return void
+    //  */
+    // public function withValidator($validator)
+    // {
+    //     $validator->after(function ($validator) {
+    //         if ($validator->errors()->any()) {
+    //             if($this->type = 'create') {
+    //                 $validator->errors()->add('create_error', __('messages.create.error'));
+    //             } else {
+    //                 $validator->errors()->add('edit_error', __('messages.update.error'));
+    //             }
                 
-            }
-        });
-    }
+    //         }
+    //     });
+    // }
 }

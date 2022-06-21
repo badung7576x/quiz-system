@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Teacher extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     const STATUS_ACTIVE = 1;
 

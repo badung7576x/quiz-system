@@ -23,4 +23,8 @@ return [
     'success' => 'Câu hỏi đã được xem xét',
     'error' => 'Đã có lỗi xảy ra trong quá trình xử lý',
   ],
+  'save' => [
+    'success' => 'Lưu cài đặt thành công',
+    'error' => 'Đã có lỗi xảy ra trong quá trình lưu dữ liệu',
+  ],
 ];

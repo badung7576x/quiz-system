@@ -35,7 +35,7 @@
             </div>
             <div class="block-content block-content-full text-end bg-body">
               <button type="button" class="btn btn-sm btn-alt-secondary me-1" data-bs-dismiss="modal">Hủy</button>
-              <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-user-cog me-1"></i>Gán</button>
+              <button type="submit" class="btn btn-sm btn-outline-success"><i class="fa fa-user-cog me-1"></i>Gán giáo viên</button>
             </div>
           </form>
         </div>
@@ -48,14 +48,14 @@
       <div class="block-header block-header-default">
         <h3 class="block-title">Danh sách câu hỏi</h3>
         <div class="block-options">
-          <button class="btn btn-sm btn-success" onclick="showAssignModal()">
+          <button class="btn btn-sm btn-outline-success" onclick="showAssignModal()">
             <i class="fa fa-user-cog"></i> Phân công
           </button>
         </div>
       </div>
       <div class="block-content block-content-full">
         <div class="table-responsive">
-          <table class="table table-striped table-vcenter" id="exam-table">
+          <table class="table table-striped table-vcenter js-dataTable-full" id="exam-table">
             <thead>
               <tr style="">
                 <th style="width: 4%;" class="text-center"></th>

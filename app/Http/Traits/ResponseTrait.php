@@ -21,15 +21,16 @@ trait ResponseTrait
     ];
   }
 
-  public function redirectSuccess($route, $message)
+  public function redirectSuccess($route, $message, $params = null)
   {
-    return redirect()->route($route)
+    return redirect()->route($route, $params)
       ->with($this->success(__('messages.' . $message . '.success')));
   }
 
-  public function redirectError($message)
+  public function redirectError($type, $message = null)
   {
-    return back()->withInput()->with($this->error(__('messages.' . $message . '.error')));
+    $errorMsg = $message ? $message : __('messages.' . $type . '.error');
+    return back()->withInput()->with($this->error($errorMsg));
   }
 
   public function redirectBackWithSuccess($message)

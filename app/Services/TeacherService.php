@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\Teacher;
+use Illuminate\Support\Facades\Gate;
 
 class TeacherService
 {
@@ -43,6 +44,10 @@ class TeacherService
 
   public function update(Teacher $teacher, array $data)
   {
+    if (!Gate::allows('can-access', $teacher)) {
+      abort(403);
+    }
+
     if(isset($data['avatar'])){
       $uploadImageService = new UploadImageService();
       $data['avatar'] = $uploadImageService->upload($data['avatar']->get())['url'];
@@ -52,6 +57,10 @@ class TeacherService
 
   public function delete(Teacher $teacher)
   {
+    if (!Gate::allows('can-access', $teacher)) {
+      abort(403);
+    }
+    
     return $teacher->delete();
   }
 }

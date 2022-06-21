@@ -11,7 +11,7 @@
           <a href="{{ route('admin.exam-set.index') }}" class="btn btn-sm btn-secondary">
             <i class="fa fa-arrow-left"></i> Quay lại
           </a>
-          <button type="submit" class="btn btn-sm btn-success" onclick="createExamSet()">
+          <button type="submit" class="btn btn-sm btn-outline-success" onclick="createExamSet()">
             <i class="fa fa-random"></i> Tạo đề thi
           </button>
         </div>
@@ -23,6 +23,17 @@
             <form id="create_exam_set" class="" action="{{ route('admin.exam-set.store') }}" method="POST">
               @csrf
               <div class="row">
+                <div class="col-12">
+                  <div class="row mb-2">
+                    <label class="col-sm-12 col-form-label">Mã đề thi</label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control @error('code') is-invalid @enderror" name="code" value="{{ old('code') }}" placeholder="Nhập mã đề thi">
+                      @error('code')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+                  </div>
+                </div>
                 <div class="col-12">
                   <div class="row mb-2">
                     <label class="col-sm-12 col-form-label">Tên đề thi</label>
@@ -73,27 +84,13 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-3">
+                <div class="col-12">
                   <div class="row mb-3">
-                    <label class="col-sm-12 col-form-label">Môn học</label>
-                    <div class="col-sm-12">
-                      <select id="subject" class="form-select @error('subject_id') is-invalid @enderror" name="subject_id">
-                        @foreach ($subjects as $subject)
-                          <option value="{{ $subject->id }}" @selected(old('subject_id') == $subject->id)>{{ $subject->name }}</option>
-                        @endforeach
-                      </select>
-                      @error('subject_id')
-                        <span class="text-danger">{{ $message }}</span>
-                      @enderror
-                    </div>
-                  </div>
-                </div>
-                <div class="col-9">
-                  <div class="row mb-3">
+                    <input type="hidden" name="subject_id" value="{{ auth()->user()->subject->id }}">
                     <label class="col-sm-12 col-form-label">Các nội dung (chọn nhiều)</label>
                     <div class="col-sm-12">
                       <select id="subject-content" class="js-select2 form-select @error('subject_content_ids') is-invalid @enderror" name="subject_content_ids[]" multiple>
-                        @foreach ($subjects[0]->contents as $subjectContent)
+                        @foreach ($subjectContents as $subjectContent)
                           <option value="{{ $subjectContent->id }}">{{ $subjectContent->name }}</option>
                         @endforeach
                       </select>

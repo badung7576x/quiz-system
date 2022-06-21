@@ -5,7 +5,7 @@
         @error('correct_answer')
           <div class="text-danger text-center">{{ $message }}</div>
         @enderror
-        <label class="col-sm-12 col-form-label">Nội dung câu hỏi</label>
+        <label class="col-sm-12 col-form-label">Nội dung câu hỏi <span style="color: red">*</span></label>
         <div class="col-sm-12">
           <textarea class="ckeditor1 form-control @error('content') is-invalid @enderror" name="content">{!! old('content', $question->content) !!}</textarea>
           @error('content')
@@ -16,7 +16,7 @@
     </div>
     <div class="col-12">
       <div class="row mb-3">
-        <label class="col-sm-6 col-form-label">Đáp án 1</label>
+        <label class="col-sm-6 col-form-label">Đáp án 1 <span style="color: red">*</span></label>
         <div class="col-sm-12">
           <textarea class="ckeditor1 form-control @error('answers.0') is-invalid @enderror" name="answers[]">{!! old('answers.0', $question->answers[0]->content_1) !!}</textarea>
           @error('answers.0')
@@ -33,7 +33,7 @@
     </div>
     <div class="col-12">
       <div class="row mb-3">
-        <label class="col-sm-12 col-form-label">Đáp án 2</label>
+        <label class="col-sm-12 col-form-label">Đáp án 2 <span style="color: red">*</span></label>
         <div class="col-sm-12">
           <textarea class="ckeditor1 form-control @error('answers.1') is-invalid @enderror" name="answers[]">{!! old('answers.1', $question->answers[1]->content_1) !!}</textarea>
           @error('answers.1')
@@ -50,7 +50,7 @@
     </div>
     <div class="col-12">
       <div class="row mb-3">
-        <label class="col-sm-12 col-form-label">Đáp án 3</label>
+        <label class="col-sm-12 col-form-label">Đáp án 3 <span style="color: red">*</span></label>
         <div class="col-sm-12">
           <textarea class="ckeditor1 form-control @error('answers.2') is-invalid @enderror" name="answers[]">{!! old('answers.2', $question->answers[2]->content_1) !!}</textarea>
           @error('answers.2')
@@ -67,7 +67,7 @@
     </div>
     <div class="col-12">
       <div class="row mb-3">
-        <label class="col-sm-12 col-form-label">Đáp án 4</label>
+        <label class="col-sm-12 col-form-label">Đáp án 4 <span style="color: red">*</span></label>
         <div class="col-sm-12">
           <textarea class="ckeditor1 form-control @error('answers.3') is-invalid @enderror" name="answers[]">{!! old('answers.3', $question->answers[3]->content_1) !!}</textarea>
           @error('answers.3')

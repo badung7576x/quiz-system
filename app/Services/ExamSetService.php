@@ -43,75 +43,42 @@ class ExamSetService
     }
   }
 
-  public function exportExamSetFile($examSet)
+  public function formatData(ExamSet $examSet)
   {
-    $examSet->load('subject', 'questions', 'questions.answers');
-    dd($examSet);
+    $examSet->load('subject', 'questions', 'questions.answers', 'setting');
 
-    $ss = IOFactory::load(storage_path('app/templates/PHIEU_BAI_THI.xlsx'));
+    $questions = collect($examSet->questions)->map(function($question) {
+      $ques = [
+        'content' => $question->content,
+      ];
 
-    $sheet = $ss->getSheetByName('TEMPLATE_01');
-    $leftTopText = "SỞ GIÁO DỤC VÀ ĐÀO TẠO HÀ NỘI";
-    $sheet->getCell('B2')->setValue($leftTopText);
-    $sheet->getStyle('B2')->getFont()->setSize(22);
-    $sheet->getStyle('U2')->getFont()->setSize(22);
-    $sheet->getStyle('A8')->getFont()->setSize(24);
-    $sheet->getCell('A10')->setValue('MÔN THI: ' . $examSet->subject->name);
-    $sheet->getCell('A11')->setValue('NGÀY THI: ' . Carbon::now()->format('d/m/Y'));
-    $sheet->getStyle('A10')->getFont()->setSize(23);
-    $sheet->getStyle('A11')->getFont()->setSize(23);
-
-    $sheet->getCell('L14')->setValue("");
-    $sheet->getStyle('A14:AM14')->getFont()->setSize(22);
-
-    $sheet->getCell('J15')->setValue("");
-    $sheet->getStyle('A15:AM15')->getFont()->setSize(22);
-
-    $sheet->getCell('K17')->setValue("");
-    $sheet->getCell('T17')->setValue("");
-    $sheet->getCell('AD17')->setValue("");
-    $sheet->getStyle('A17:AM17')->getFont()->setSize(22);
-    $sheet->getStyle('A19:AM19')->getFont()->setSize(22);
-
-    $questions = $examSet->questions;
-    $startRow = 21;
-
-    foreach ($questions as $qIdx => $question) {
-      $questionIdx = strval($startRow + $qIdx * 7);
-
-      $sheet->mergeCells('D' . $questionIdx . ':F' . $questionIdx);
-      $sheet->getCell('D' . $questionIdx)->setValue('Câu ' . strval($qIdx + 1) . ':');
-      $sheet->mergeCells('G' . $questionIdx . ':AJ' . $questionIdx);
-      $sheet->getCell('G' . $questionIdx)->setValue($question->content);
-      $sheet->getStyle('A' . $questionIdx . ':AM' . $questionIdx)->getFont()->setSize(22)->setBold(true)->setItalic(false);
-      $sheet->getStyle('A' . $questionIdx . ':AM' . $questionIdx)->getAlignment()->setVertical('top');
-
-      for ($idx = 1; $idx < 5; $idx++) {
-        $answerIdx = $questionIdx + $idx + 1;
-        $answerField = 'answer_' . $idx;
-        $sheet->mergeCells('D' . $answerIdx . ':F' . $answerIdx);
-
-        $sheet->getStyle('D' . $answerIdx . ':F' . $answerIdx)->getFont()->setSize(22)->setBold(true);
-
-        $sheet->mergeCells('G' . $answerIdx . ':AJ' . $answerIdx);
-        $answerString = config('mapping.answer')[$idx] . ". " . $question->$answerField . ($question->correct_answer == $idx ? ' (*)' : '');
-        $sheet->getCell('G' . $answerIdx)->setValue($answerString);
-        $sheet->getStyle('G' . $answerIdx . ':AM' . $answerIdx)->getFont()->setSize(22)->setBold(false)->setItalic(true);
-        $sheet->getStyle('A' . $answerIdx . ':AM' . $answerIdx)->getAlignment()->setVertical('middle');
+      $maxLength = 0;
+      foreach ($question->answers as $answer) {
+        $maxLength = max($maxLength, strlen($answer->content_1));
+        $ques['answers'][] = [
+          'content' => $answer->content_1,
+        ];
       }
-      $sheet->getRowDimension($questionIdx + 6)->setRowHeight('15px');
-    }
+      $ques['length_answer'] = $maxLength;
 
-    $fileName = 'PHIEU_DE_THI';
-    $ss->getProperties()->setTitle($fileName);
-    $pdfFilePath = storage_path('app/downloads/' . $fileName  . '.pdf');
-    $writer = IOFactory::createWriter($ss, 'Mpdf');
-    $writer->save($pdfFilePath);
+      if ($maxLength < 50) {
+        $ques['format'] = 'col-3';
+      } else if ($maxLength < 100) {
+        $ques['format'] = 'col-6';
+      } else {
+        $ques['format'] = 'col-12';
+      }
 
-    if (File::exists($pdfFilePath)) {
-      return $pdfFilePath;
-    } else {
-      throw new \RuntimeException('Không thể lưu file ' . $pdfFilePath);
-    }
+      return (object) $ques;
+    });
+
+    $examSet->questions = $questions;
+
+    return $examSet;
+  }
+
+  public function saveSetting(ExamSet $examSet, array $data)
+  {
+    $examSet->setting()->updateOrCreate(['exam_set_id' => $examSet->id], $data);
   }
 }

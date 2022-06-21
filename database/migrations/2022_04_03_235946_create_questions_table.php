@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('subject_id');
-            $table->unsignedBigInteger('subject_content_id');
+            $table->unsignedBigInteger('subject_content_id')->nullable();
             $table->tinyInteger('level')->default(LEVEL_1)->comment('Mức độ câu hỏi');
             $table->tinyInteger('type')->nullable()->comment('Loại câu hỏi');
             $table->text('content')->comnent('Nội dung câu hỏi');
@@ -25,6 +25,7 @@ return new class extends Migration
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('review_by')->nullable();
             $table->tinyInteger('status')->default(QUESTION_STATUS_CREATED)->comment('Trạng thái câu hỏi');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

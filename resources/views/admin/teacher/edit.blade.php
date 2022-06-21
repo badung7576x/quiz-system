@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Giáo viên')
+@section('title', 'Giáo viên - Cập nhật thông tin')
 
 @section('content')
   <div class="content content-boxed">
@@ -8,7 +8,7 @@
       <div class="block-header block-header-default">
         <h3 class="block-title">Thông tin giáo viên</h3>
         <div class="block-options">
-          <a href="javascript:history.back()" class="btn btn-sm btn-secondary">
+          <a href="{{ route('admin.teacher.index') }}" class="btn btn-sm btn-secondary">
             <i class="fa fa-arrow-left"></i> Quay lại
           </a>
           <button type="submit" class="btn btn-sm btn-success" id="save_btn">
@@ -32,7 +32,7 @@
               <div class="row">
                 <div class="col-9">
                   <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">{{ __('Mã giáo viên') }}</label>
+                    <label class="col-sm-3 col-form-label">Mã giáo viên <span class="text-danger">*</span></label>
                     <div class="col-sm-9">
                       <input type="text" class="form-control @error('code') is-invalid @enderror" value="{{ old('code', $teacher->code) }}" disabled
                         placeholder="{{ __('Nhập mã giáo viên') }}">
@@ -42,7 +42,7 @@
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">{{ __('Email') }}</label>
+                    <label class="col-sm-3 col-form-label">Email <span class="text-danger">*</span></label>
                     <div class="col-sm-9">
                       <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email', $teacher->email) }}"
                         placeholder="{{ __('Nhập địa chỉ email') }}" disabled>
@@ -52,7 +52,7 @@
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">{{ __('Họ và tên') }}</label>
+                    <label class="col-sm-3 col-form-label">Họ và tên <span class="text-danger">*</span></label>
                     <div class="col-sm-9">
                       <input type="text" class="form-control @error('fullname') is-invalid @enderror" name="fullname" value="{{ old('fullname', $teacher->fullname) }}"
                         placeholder="{{ __('Nhập họ và tên') }}">
@@ -62,7 +62,7 @@
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">{{ __('Số điện thoại') }}</label>
+                    <label class="col-sm-3 col-form-label">Số điện thoại <span class="text-danger">*</span></label>
                     <div class="col-sm-9">
                       <input type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number', $teacher->phone_number) }}"
                         placeholder="{{ __('Nhập số điện thoại') }}">
@@ -72,7 +72,7 @@
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">{{ __('CMND/CCCD') }}</label>
+                    <label class="col-sm-3 col-form-label">CMND/CCCD <span class="text-danger">*</span></label>
                     <div class="col-sm-9">
                       <input type="text" class="form-control @error('identity_number') is-invalid @enderror" name="identity_number" value="{{ old('identity_number', $teacher->identity_number) }}"
                         placeholder="{{ __('Nhập CMND/CCCD') }}">
@@ -82,7 +82,7 @@
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label" for="gender">{{ __('Giới tính') }}</label>
+                    <label class="col-sm-3 col-form-label" for="gender">Giới tính <span class="text-danger">*</span></label>
                     <div class="col-sm-3">
                       <select class="form-select @error('gender') is-invalid @enderror" name="gender">
                         <option value="1" @selected(old('gender', $teacher->gender) == 1)>Nam</option>
@@ -103,7 +103,7 @@
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">{{ __('Địa chỉ') }}</label>
+                    <label class="col-sm-3 col-form-label">Địa chỉ <span class="text-danger">*</span></label>
                     <div class="col-sm-9">
                       <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address', $teacher->address) }}"
                         placeholder="{{ __('Nhập địa chỉ') }}">
@@ -113,7 +113,7 @@
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">Môn học giảng dạy</label>
+                    <label class="col-sm-3 col-form-label">Môn học giảng dạy <span class="text-danger">*</span></label>
                     <div class="col-sm-9">
                       <select class="form-select @error('subject_id') is-invalid @enderror" name="subject_id">
                         @foreach($subjects as $subject)
@@ -126,7 +126,7 @@
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">{{ __('Vai trò') }}</label>
+                    <label class="col-sm-3 col-form-label">Vai trò <span class="text-danger">*</span></label>
                     <div class="col-sm-9">
                       <select class="form-select @error('role') is-invalid @enderror" name="role">
                         @foreach($roles as $value => $role)
@@ -139,7 +139,7 @@
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">{{ __('Mật khẩu') }}</label>
+                    <label class="col-sm-3 col-form-label">Mật khẩu</label>
                     <div class="col-sm-9">
                       <input type="password" class="form-control @error('password') is-invalid @enderror" name="password"
                         placeholder="{{ __('Nhập mật khẩu') }}">
@@ -149,7 +149,7 @@
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">{{ __('Mật khẩu (xác nhận)') }}</label>
+                    <label class="col-sm-3 col-form-label">Mật khẩu (xác nhận)</label>
                     <div class="col-sm-9">
                       <input type="password" class="form-control @error('password_confirm') is-invalid @enderror" name="password_confirm"
                         placeholder="{{ __('Nhập mật khẩu') }}">

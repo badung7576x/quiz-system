@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('password')->comment('Mật khẩu');
             $table->string('token')->nullable()->comment('Sử dụng cho việc đăng nhập');
             $table->tinyInteger('status')->default(0)->comment('Trạng thái');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

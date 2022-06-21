@@ -24,6 +24,7 @@ class ExamSetRequest extends FormRequest
     public function rules()
     {
         return [
+            'code' => 'required|string|max:10',
             'name' => 'required|string|max:255',
             'type' => 'required|numeric',
             'subject_id' => 'required|integer',
@@ -36,6 +37,7 @@ class ExamSetRequest extends FormRequest
     public function attributes()
     {
         return [
+            'code' => 'mã đề thi',
             'name' => 'tên đề thi',
             'type' => 'loại đề thi',
             'subject_id' => 'môn học',

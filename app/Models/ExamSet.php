@@ -24,6 +24,7 @@ class ExamSet extends Model
         'answers',
         'status',
         'created_by',
+        'parent_id',
     ];
 
     public static function boot()
@@ -46,6 +47,11 @@ class ExamSet extends Model
         return $this->belongsTo(Subject::class, 'subject_id', 'id');
     }
 
+    public function setting()
+    {
+        return $this->hasOne(ExamSetSetting::class, 'exam_set_id', 'id');
+    }
+
     public function subjectContentIds(): Attribute
     {
         return Attribute::make(
@@ -53,10 +59,20 @@ class ExamSet extends Model
         );
     }
 
+    public function subjectContents(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value, $attributes) {
+                $subjectContentIds = explode(',', $attributes['subject_content_ids']);
+                return SubjectContent::whereIn('id', $subjectContentIds)->pluck('name');
+            },
+        );
+    }
+
     public function createdAt(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => Carbon::parse($value)->format('d/m/Y'),
+            get: fn ($value) => Carbon::parse($value)->format('H:i d/m/Y'),
         );
     }
 }

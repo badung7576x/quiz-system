@@ -179,6 +179,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Barryvdh\DomPDF\ServiceProvider::class,
+
     ],
 
     /*
@@ -196,6 +198,7 @@ return [
         // ...
         // 'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Es' => Elasticquent\ElasticquentElasticsearchFacade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ])->toArray(),
 
 ];

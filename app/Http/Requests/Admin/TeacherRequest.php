@@ -60,4 +60,11 @@ class TeacherRequest extends FormRequest
             'subject_id' => 'bộ môn giảng dạy'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'date_of_birth.before' => 'Ngày sinh phải nhỏ hơn ngày hiện tại',
+        ];
+    }
 }

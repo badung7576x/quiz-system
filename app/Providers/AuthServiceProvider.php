@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Subject;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -47,6 +48,18 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('is_pro_chief', function ($user) {
             return $user->role === ROLE_PRO_CHIEF;
+        });
+
+        Gate::define('can-access', function ($user, $model) {
+            if ($model instanceof Subject) {
+                return $user->role === ROLE_ADMIN || $model->id === $user->subject_id;
+            } else {
+                return $user->role === ROLE_ADMIN || $model->subject_id === $user->subject_id;
+            }
+        });
+
+        Gate::define('can-update-question', function ($user, $question) {
+            return $question->created_by === $user->id;
         });
     }
 }

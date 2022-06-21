@@ -5,12 +5,11 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Elasticquent\ElasticquentTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Question extends BaseModel
 {
-    use HasFactory;
-    use ElasticquentTrait;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'questions';
 
@@ -35,13 +34,6 @@ class Question extends BaseModel
             $model->status = QUESTION_STATUS_CREATED;
         });
     }
-
-    protected $mappingProperties = [
-        'content' => [
-            'type' => 'text',
-            "analyzer" => "standard",
-        ],
-    ];
 
     public function answers()
     {
