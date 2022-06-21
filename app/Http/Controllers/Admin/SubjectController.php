@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SubjectRequest;
+use App\Http\Requests\Admin\UpdateSubjectRequest;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Subject;
 use App\Services\SubjectService;
@@ -97,11 +98,11 @@ class SubjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  SubjectRequest  $request
+     * @param  UpdateSubjectRequest  $request
      * @param  Subject $subject
      * @return \Illuminate\Http\Response
      */
-    public function update(SubjectRequest $request, Subject $subject)
+    public function update(UpdateSubjectRequest $request, Subject $subject)
     {
         $data = $request->validated();
         try {

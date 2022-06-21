@@ -47,7 +47,8 @@ class TeacherService
     if (!Gate::allows('can-access', $teacher)) {
       abort(403);
     }
-
+    if (!$data['password']) unset($data['password']);
+    
     if(isset($data['avatar'])){
       $uploadImageService = new UploadImageService();
       $data['avatar'] = $uploadImageService->upload($data['avatar']->get())['url'];

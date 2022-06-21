@@ -75,7 +75,7 @@
                 <tr>
                   <td class="text-center">{{ $loop->iteration }}</td>
                   <td style="max-width: 450px" class="text-truncate">{!! $question->content !!}</td>
-                  <td class="text-center">{{ config('fixeddata.question_status')[$question->status] }}</td>
+                  <td class="text-center">{!! render_status($question->status) !!}</td>
                   <td class="text-center">{{ $question->created_at }}</td>
                   <td class="text-center">
                     <div class="btn-group">

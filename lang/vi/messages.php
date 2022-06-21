@@ -20,7 +20,7 @@ return [
     'success' => 'Bình luận đã được giải quyết',
   ],
   'review' => [
-    'success' => 'Câu hỏi đã được xem xét',
+    'success' => 'Câu hỏi đã được đánh giá',
     'error' => 'Đã có lỗi xảy ra trong quá trình xử lý',
   ],
   'save' => [

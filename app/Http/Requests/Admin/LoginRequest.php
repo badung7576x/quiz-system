@@ -64,6 +64,8 @@ class LoginRequest extends FormRequest
         $this->ensureIsNotRateLimited();
         $credentials = $this->only('email', 'password');
         $credentials['status'] = Teacher::STATUS_ACTIVE;
+        $credentials['deleted_at'] = null;
+        
         if (!auth()->attempt($credentials)) {
             RateLimiter::hit($this->throttleKey());
             throw ValidationException::withMessages([

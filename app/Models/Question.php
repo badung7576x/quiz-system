@@ -29,10 +29,10 @@ class Question extends BaseModel
     public static function boot()
     {
         parent::boot();
-        static::creating(function ($model) {
-            $model->created_by = auth()->user()->id;
-            $model->status = QUESTION_STATUS_CREATED;
-        });
+        // static::creating(function ($model) {
+        //     $model->created_by = auth()->user()->id;
+        //     $model->status = QUESTION_STATUS_CREATED;
+        // });
     }
 
     public function answers()
@@ -43,6 +43,11 @@ class Question extends BaseModel
     public function teacher()
     {
         return $this->belongsTo(Teacher::class, 'created_by', 'id');
+    }
+
+    public function reviewer()
+    {
+        return $this->belongsTo(Teacher::class, 'review_by', 'id');
     }
 
     public function subject()

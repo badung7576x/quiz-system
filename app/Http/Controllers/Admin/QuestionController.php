@@ -43,6 +43,7 @@ class QuestionController extends Controller
     public function reviews()
     {
         $questions = $this->questionService->allReviewQuestions();
+        
         return view('admin.question.reviews', compact('questions'));
     }
 

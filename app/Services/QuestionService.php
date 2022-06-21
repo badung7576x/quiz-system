@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Answer;
 use App\Models\Comment;
 use App\Models\Question;
 use App\Models\QuestionBank;
@@ -39,6 +40,7 @@ class QuestionService
   {
     return Question::with('subject:name,id')
       ->where('review_by', auth()->user()->id)
+      ->orderBy('status', 'asc')
       ->latest()->get();
   }
 
@@ -63,14 +65,13 @@ class QuestionService
 
     $question->update($data);
     
-    $question->answers()->delete();
-    foreach ($data['answers'] as $key => $answer) {
-      $answer = [
-        'order' => $key + 1,
+    foreach ($data['answers'] as $id => $answer) {
+      $oldAnswer = Answer::find($id);
+      $order = $oldAnswer->order;
+      $oldAnswer->update([
         'content_1' => $answer,
-        'is_correct' => $data['correct_answer'] == $key + 1,
-      ];
-      $question->answers()->create($answer);
+        'is_correct' => $data['correct_answer'] == $order,
+      ]);
     }
   }
 

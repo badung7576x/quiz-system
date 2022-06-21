@@ -11,7 +11,7 @@ return [
     QUESTION_STATUS_CREATED => 'Tạo mới',
     QUESTION_STATUS_WAITING_REVIEW => 'Chờ đánh giá',
     QUESTION_STATUS_REVIEWED => 'Chờ phê duyệt',
-    QUESTION_STATUS_REJECTED => 'Bị từ chối',
+    QUESTION_STATUS_REJECTED => 'Từ chối phê duyệt',
     QUESTION_STATUS_APPROVED => 'Đã được duyệt',
     QUESTION_STATUS_DELETED => 'Xóa'
   ],

@@ -11,12 +11,12 @@
   </div>
   @foreach ($question->answers as $idx => $answer)
     <div class="col-12 ps-5">
-      <span class="font-weight-bold">{{ config('fixeddata.answer_index')[$idx + 1] }}.</span>
+      <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{{ config('fixeddata.answer_index')[$idx + 1] }}.</span>
       @php
         $ans = preg_replace('<p>', 'span', $answer->content_1, 1);
         $ans = preg_replace('</p>', '/span', $ans, 1);
       @endphp
-      <span>{!! $ans !!}</span>
+      <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{!! $ans !!}</span>
     </div>
   @endforeach
 </div>

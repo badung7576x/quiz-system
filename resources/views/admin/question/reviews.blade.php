@@ -28,7 +28,7 @@
                 <tr>
                   <td class="text-center">{{ $loop->iteration }}</td>
                   <td class="text-truncate">{!! $question->content !!}</td>
-                  <td class="text-center">{{ config('fixeddata.question_status')[$question->status] }}</td>
+                  <td class="text-center">{!! render_status($question->status) !!}</td>
                   <td class="text-center">{{ $question->created_at }}</td>
                   <td class="text-center">
                     <div class="btn-group">
@@ -50,35 +50,7 @@
 
 @section('js_after')
   <script>
-    $('.delete-btn').on('click', function(e) {
-      e.preventDefault();
-      id = $(this).data("id");
-      number = $(this).data("name");
-      toast.fire({
-        title: '{{ __('Xác nhận') }}',
-        text: 'Bạn có chắc chắn muốn xóa câu hỏi số ' + number + '?',
-        icon: 'warning',
-        showCancelButton: true,
-        customClass: {
-          confirmButton: 'btn btn-danger m-1',
-          cancelButton: 'btn btn-secondary m-1'
-        },
-        confirmButtonText: '{{ __('Xác nhận') }}',
-        cancelButtonText: '{{ __('Hủy') }}',
-        html: false,
-        preConfirm: e => {
-          return new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-            }, 50);
-          });
-        }
-      }).then(result => {
-        if (result.value) {
-          $('#delete_form_' + id).submit();
-        }
-      });
-    });
+    
   </script>
 
 @endsection

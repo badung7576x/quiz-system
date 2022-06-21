@@ -234,15 +234,16 @@
         <div class="d-flex align-items-center">
           <!-- User Dropdown -->
           <div class="dropdown d-inline-block ms-2">
+            @php $avatar = auth()->user()->avatar != '' ? auth()->user()->avatar : asset('images/default_avatar.png') @endphp
             <button type="button" class="btn btn-sm btn-alt-secondary d-flex align-items-center" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">
-              <img class="rounded-circle" src="{{ auth()->user()->avatar ?? '/images/default_avatar.png' }}" style="width: 21px;">
+              <img class="rounded-circle" src="{{ $avatar }}" style="width: 21px;">
               <span class="d-none d-sm-inline-block ms-2">{{ auth()->user()->fullname }}</span>
               <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block ms-1 mt-1"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0 border-0" aria-labelledby="page-header-user-dropdown">
               <div class="p-3 text-center bg-body-light border-bottom rounded-top">
-                <img class="img-avatar img-avatar48 img-avatar-thumb" src="{{ auth()->user()->avatar ?? '/images/default_avatar.png' }}" alt="">
+                <img class="img-avatar img-avatar48 img-avatar-thumb" src="{{ $avatar }}" alt="">
                 <p class="mt-2 mb-0 fw-medium">{{ auth()->user()->fullname }}</p>
                 <p class="mb-0 text-muted fs-sm fw-medium"> {{ auth()->user()->title }} </p>
               </div>

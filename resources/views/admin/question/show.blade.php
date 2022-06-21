@@ -35,46 +35,47 @@
         </div>
       </div>
       <div class="block-content block-content-full">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center p-4">
           <!-- Form Horizontal - Default Style -->
-          <div class="col-12">
-            <div class="row">
-              <div class="col-12 my-2 mt-0">
-                <span class="h4">Môn học: </span>
-                <span class="h5 fw-normal">{{ $question->subject->name }}</span> -
-                <span class="h5 fw-normal">{{ $question->subject_content?->name ?? '' }}</span>
-              </div>
-              <div class="col-12 my-2">
-                <span class="h4">Dạng câu hỏi: </span>
-                <span class="h5 fw-normal">{{ config('fixeddata.question_type')[$question->type] }}</span>
-              </div>
-              <div class="col-12 my-2">
-                <span class="h4">Loại câu hỏi: </span>
-                <span class="h5 fw-normal">{{ config('fixeddata.question_level')[$question->level] }}</span>
-              </div>
-              <div class="col-12 my-2 mb-3">
-                <span class="h4">Trạng thái: </span>
-                <span class="h5 badge bg-black-50">Tạo mới</span>
-              </div>
+          <div class="col-12 mb-2">
+            <div>
+              <span class="fw-bold">Câu hỏi: </span>
+              @php
+                  $cont = preg_replace('<p>', 'span', $question->content, 1);
+                  $cont = preg_replace('</p>', '/span', $cont, 1);
+              @endphp
+              <span>{!! $cont !!}</span> (<span>{{ $question->score }} điểm</span>)
             </div>
           </div>
-          <hr>
-          <div class="col-12 pb-1">
-            <span class="h4">Câu hỏi:</span>
-            <span class="h4 fw-normal">{{ ' (' . $question->score . __(' điểm)') }}</span>
-            <div class="h4 fw-normal bg-gray-light p-3">{!! $question->content !!}</div>
-            <hr>
-          </div>
-          @foreach ($question->answers as $answer)
-            @php $no = $loop->iteration @endphp
-            <div class="col-12">
-              <span class="h4 fw-semibold">{{ __('Đáp án') }} {{ $no }} {{ $answer->is_correct ? '(đáp án đúng)' : '' }}</span>
-              <div class="h4 fw-normal {{ $answer->is_correct ? 'bg-success-light' : 'bg-gray-light' }} p-3 mt-2">
-                {!! $answer->content_1 !!}
-              </div>
+          @foreach ($question->answers as $idx => $answer)
+            <div class="col-12 ps-5 mb-1">
+              <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{{ config('fixeddata.answer_index')[$idx + 1] }}.</span>
+              @php
+                $ans = preg_replace('<p>', 'span', $answer->content_1, 1);
+                $ans = preg_replace('</p>', '/span', $ans, 1);
+              @endphp
+              <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{!! $ans !!}</span>
             </div>
           @endforeach
           <!-- END Form Horizontal - Default Style -->
+          <div class="col-12 mt-4">
+            <table class="table-borderless table-striped table-vcenter fs-sm table">
+              <tbody>
+                <tr>
+                  <td class="fw-semibold" style="width: 30%">Phạm vi câu hỏi</td>
+                  <td>{{ $question->subject_content?->name ?? '' }}</td>
+                </tr>
+                <tr>
+                  <td class="fw-semibold" style="width: 30%">Độ khó</td>
+                  <td>{{ $question->level }}</td>
+                </tr>
+                <tr>
+                  <td class="fw-semibold" style="width: 30%">Ngày tạo</td>
+                  <td>{{ $question->created_at }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <form method="POST" action="{{ route('admin.question.destroy', ['question' => $question->id]) }}" id="delete_form">
           @csrf

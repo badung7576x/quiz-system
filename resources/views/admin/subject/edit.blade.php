@@ -50,28 +50,21 @@
                   <div class="row mb-3">
                     <label class="col-12 col-form-label">Các nội dung môn học</label>
                     <div class="col-12" id="content-area">
-                      @foreach ($subject->contents as $idx => $content)
-                        <div class="row mb-2">
-                          <label class="col-2 col-form-label">Nội dung {{ $idx + 1 }} <span style="color: red">*</span></label>
-                          <div class="col-9">
-                            <input type="text" class="form-control @error('subject_contents.' . $idx) is-invalid @enderror" name="subject_contents[]" value="{{ old('subject_contents.' . $idx, $content->name) }}">
-                            @error('subject_contents.*')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                          </div>
-                          <div class="col-1 d-flex justify-content-end mt-2">
-                            @if ($idx == 0)
-                              <a href="#" onclick="addContent()">
-                                <i class="fa fa-plus-circle text-success"></i>
-                              </a>
-                            @else
-                              <a href="#" onclick="removeContent(this)">
-                                <i class="fa fa-minus-circle text-danger"></i>
-                              </a>
-                            @endif
-                          </div>
+                      <div class="row mb-2">
+                        <label class="col-2 col-form-label">Nội dung 1 <span style="color: red">*</span></label>
+                        <div class="col-9">
+                          @php $content = $subject->contents->first(); @endphp
+                          <input type="text" class="form-control @error('subject_contents.' . $content->id) is-invalid @enderror" name="subject_contents[{{ $content->id }}]" value="{{ old('subject_contents.' . $content->id, $content->name) }}">
+                          @error('subject_contents.' . $content->id)
+                              <div class="invalid-feedback">{{ $message }}</div>
+                          @enderror
                         </div>
-                      @endforeach
+                        <div class="col-1 d-flex justify-content-end mt-2">
+                            <a href="#" onclick="addNewContent()">
+                              <i class="fa fa-plus-circle text-success"></i>
+                            </a>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -89,15 +82,37 @@
 
 @section('js_after')
 <script>
-  function addContent(content, error = null) {
+  function addContent(data) {
     const contentArea = document.getElementById('content-area');
-    const index = contentArea.childElementCount ;
+    const index = contentArea.childElementCount;
     var newDiv = `
       <div class="row mb-2">
         <label class="col-2 col-form-label">Nội dung ${index + 1} <span style="color: red">*</span></label>
         <div class="col-9">
-          <input type="text" class="form-control ${error ? 'is-invalid': ''}" name="subject_contents[]" value="${content || ''}">
-          ${error ? `<div class="invalid-feedback">${error}</div>` : ''}
+          <input type="text" class="form-control ${data.error ? 'is-invalid': ''}" name="subject_contents[${data.id}]" value="${data.name || ''}">
+          ${data.error ? `<div class="invalid-feedback">${data.error}</div>` : ''}
+        </div>
+        <div class="col-1 d-flex justify-content-end mt-2">
+          <a href="#" onclick="removeContent(this)">
+            <i class="fa fa-minus-circle text-danger"></i>
+          </a>
+        </div>
+      </div>
+    `;
+    $(contentArea).append(newDiv);
+  }
+
+  function addNewContent(data) {
+    const contentArea = document.getElementById('content-area');
+    const index = contentArea.childElementCount;
+
+    console.log(data)
+    var newDiv = `
+      <div class="row mb-2">
+        <label class="col-2 col-form-label">Nội dung ${index + 1} <span style="color: red">*</span></label>
+        <div class="col-9">
+          <input type="text" class="form-control ${data && data.error ? 'is-invalid': ''}" name="new_subject_contents[]" value="${data?.name || ''}">
+          ${ data && data.error ? `<div class="invalid-feedback">${data.error}</div>` : ''}
         </div>
         <div class="col-1 d-flex justify-content-end mt-2">
           <a href="#" onclick="removeContent(this)">
@@ -119,17 +134,41 @@
 
   function showOldContent() {
     const contentArea = document.getElementById('content-area');
-    const oldContent = @json(old('subject_contents'));
-    const oldErrorContent = @json($errors->get('subject_contents.*'));
+    let oldContent = @json(old('subject_contents', $subject->contents));
+    let newContent = @json(old('new_subject_contents', []));
+    const newErrorContent = @json($errors->get('new_subject_contents.*'));
+
+    console.log(newContent, newErrorContent);
+
+    if (!Array.isArray(oldContent)) {
+      const oldErrorContent = @json($errors->get('subject_contents.*'));
+
+      oldContent = Object.keys(oldContent).map(function(key) {
+        return {
+          id: key,
+          name: oldContent[key],
+          error: oldErrorContent['subject_contents.' + key]
+        };
+      });
+
+      newContent = newContent.map(function(key, index) {
+        return {
+          id: index,
+          name: key,
+          error: newErrorContent['new_subject_contents.' + index] ? newErrorContent['new_subject_contents.' + index][0] : ''
+        };
+      });
+    } 
     oldContent && oldContent.forEach(function(content, index) {
-      if (index != 0) {
-        if (oldErrorContent['subject_contents.' + index]) {
-          addContent(content, oldErrorContent['subject_contents.' + index][0]);
-        } else {
-          addContent(content);
-        }
-      }
+      if (index != 0) addContent(content);
     });
+
+    console.log(newContent)
+
+    newContent && newContent.forEach(function(content, index) {
+      addNewContent(content);
+    });
+
   }
 
   $(document).ready(function() {
