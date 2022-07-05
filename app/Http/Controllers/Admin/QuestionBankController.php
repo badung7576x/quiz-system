@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Traits\ResponseTrait;
+use App\Models\Question;
 use App\Models\QuestionBank;
 use App\Services\QuestionBankService;
 use App\Services\SubjectService;
@@ -26,8 +27,10 @@ class QuestionBankController extends Controller
     public function index()
     {
         $questions = $this->questionBankService->getQuestionBank();
-        
-        return view('admin.banks.index', compact('questions'));
+        $waitingList = $this->questionBankService->allWaitingAcceptQuestions();
+        $numOfWaiting = count($waitingList);
+
+        return view('admin.banks.index', compact('questions', 'numOfWaiting'));
     }
 
     public function waitAccepts(Request $request)
@@ -70,5 +73,16 @@ class QuestionBankController extends Controller
 
         return $this->redirectSuccess('admin.question-bank.index', 'delete');
     }
-    
+
+    public function approved(Question $question, Request $request)
+    {
+        try {
+            $data = $this->questionBankService->approvedQuestion($question, $request->status, $request->ignore);
+            
+            return response()->json($data);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return $this->redirectError('approved');
+        }
+    }
 }

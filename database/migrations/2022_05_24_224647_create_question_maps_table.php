@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('question_maps', function (Blueprint $table) {
             $table->bigInteger('exam_set_id')->unsigned();
             $table->bigInteger('question_id')->unsigned();
-            $table->integer('order')->nullable();
 
             $table->index(['exam_set_id', 'question_id'], 'question_map_exam_set_id_question_id_idx');
             $table->index('exam_set_id', 'question_map_exam_set_id_idx');

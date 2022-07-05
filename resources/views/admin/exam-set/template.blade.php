@@ -50,7 +50,9 @@
 						width: fit-content;
 						height: fit-content;
 						border: 2px solid #000;
-						padding: 10px;
+						padding: 5px 25px;
+						font-size: 16px;
+						margin-top: 10px !important;
 				}
 
 				.box-center {
@@ -68,6 +70,14 @@
 				.text-center {
 						text-align: center;
 				}
+
+				.f-right {
+						float: right;
+				}
+
+				.f-left {
+						float: left;
+				}
 		</style>
 
 </head>
@@ -76,10 +86,13 @@
 		@php $setting = $examSet->setting; @endphp
 		@if ($setting && $setting->is_display_top)
 				<div class="row" style="font-size:20px">
-						<div class="col-6 text-center">
-								{!! $setting->top_left !!}
+						<div class="col-6 f-left text-center">
+								@php
+										$top_left = preg_replace('{code}', '<div class="box-center box"> Mã đề thi <br>' . $examSetDetail->code . '</div>', $setting->top_left, 1);
+								@endphp
+								{!! $top_left !!}
 						</div>
-						<div class="col-6 text-center">
+						<div class="col-6 f-right text-center">
 								@php
 										$top_right = preg_replace('{subject}', $examSet->subject->name, $setting->top_right, 1);
 								@endphp

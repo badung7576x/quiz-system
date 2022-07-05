@@ -16,8 +16,9 @@
 						font-size: 14px;
 						color: #000;
 						font-family: lora, "Times New Roman", Times, serif;
-						margin: 20px 70px;
+						margin: 10px 50px;
 						margin-top: 50px;
+						height: 50px;
 				}
 
 				div {
@@ -47,10 +48,9 @@
 				}
 
 				.box {
-						width: fit-content;
+						width: 100px;
 						height: fit-content;
-						border: 2px solid #000;
-						padding: 10px;
+						border: 1px solid #000;
 				}
 
 				.box-center {
@@ -78,8 +78,8 @@
 				}
 
 				p {
-						margin: 0;
-						padding: 0;
+						margin: 0 !important;
+						padding: 0 !important;
 				}
 		</style>
 
@@ -88,9 +88,30 @@
 <body>
 		@php $setting = $examSet->setting; @endphp
 		@if ($setting && $setting->is_display_top)
-				<div class="row" style="font-size:16px">
+				<table class="table-bordered table">
+						<thead>
+								<tr>
+										<td class="f-left text-center	" style="width:350px">
+												@php
+														$top_left = preg_replace('{code}', '<div class="box-center box"> Mã đề thi <br>' . '001' . '</div>', $setting->top_left, 1);
+												@endphp
+												{!! $top_left !!}
+										</td>
+										<td class="f-right text-center" style="width:350px">
+												@php
+														$top_right = preg_replace('{subject}', $examSet->subject->name, $setting->top_right, 1);
+												@endphp
+												{!! $top_right !!}
+										</td>
+								</tr>
+						</thead>
+				</table>
+				{{-- <div class="row" style="font-size:16px">
 						<div class="col-6 f-left text-center">
-								{!! $setting->top_left !!}
+								@php
+										$top_left = preg_replace('{code}', '<div class="box-center box"> Mã đề thi <br>' . '001' . '</div>', $setting->top_left, 1);
+								@endphp
+								{!! $top_left !!}
 						</div>
 						<div class="col-6 f-right text-center">
 								@php
@@ -98,7 +119,7 @@
 								@endphp
 								{!! $top_right !!}
 						</div>
-				</div>
+				</div> --}}
 		@endif
 
 		@if ($setting && $setting->is_display_center)

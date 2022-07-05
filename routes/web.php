@@ -48,21 +48,24 @@ Route::group([
 
     // Question
     Route::get('questions/reviews', 'QuestionController@reviews')->name('review.question');
+    Route::get('questions/reviews/{question}', 'QuestionController@reviewShow')->name('review.show');
     Route::post('questions/import', 'QuestionController@import')->name('question.import');
     Route::resource('questions', 'QuestionController')->names('question');
     Route::get('questions/{question}/review', 'QuestionController@review')->name('question.review');
+    Route::get('questions/{question}/template', 'QuestionController@contentTemplate')->name('question.template');
 
     // Question Bank
     Route::get('question-banks/waiting-accept', 'QuestionBankController@waitAccepts')->name('question-bank.wait-accept');
     Route::get('question-banks/{question_bank}/template', 'QuestionBankController@contentTemplate')->name('question-bank.template');
     Route::resource('question-banks', 'QuestionBankController')->names('question-bank');
+    Route::get('question-banks/{question}/approved', 'QuestionBankController@approved')->name('question-bank.approved');
     
     // Comment
     Route::resource('questions.comments', 'CommentController')->names('comment');
     Route::post('questions/{question}/comments/{comment}/resolved', 'CommentController@resolved')->name('comment.resolved');
 
     // Exam set
-    Route::get('exam-sets/{exam_set}/pdf', 'ExamSetController@pdf')->name('exam-set.pdf');
+    Route::get('exam-sets/{exam_set}/pdf/{exam_set_detail}', 'ExamSetController@pdf')->name('exam-set.pdf');
     Route::get('exam-sets/{exam_set}/setting', 'ExamSetController@setting')->name('exam-set.setting');
     Route::post('exam-sets/{exam_set}/setting', 'ExamSetController@saveSetting')->name('exam-set.setting.save');
     Route::get('exam-sets/{exam_set}/download', 'ExamSetController@download')->name('exam-set.download');

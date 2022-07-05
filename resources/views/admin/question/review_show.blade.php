@@ -11,23 +11,15 @@
       <div class="block-header block-header-default">
         <h3 class="block-title">Thông tin câu hỏi</h3>
         <div class="block-options">
-          <a href="{{ route('admin.question.index') }}" class="btn btn-sm btn-dark">
+          <a href="{{ route('admin.review.question') }}" class="btn btn-sm btn-dark">
             <i class="fa fa-arrow-left"></i> {{ __('Quay lại') }}
           </a>
-          @if (auth()->user()->id == $question->created_by)
-            <a class="btn btn-sm btn-info" href="{{ route('admin.question.edit', ['question' => $question->id]) }}">
-              <i class="fa fa-pencil-alt"></i> {{ __('Chỉnh sửa') }}
-            </a>
-            <a class="btn btn-sm btn-danger" href="#" onclick="deleteQuestion()">
-              <i class="fa fa-trash"></i> {{ __('Xóa') }}
-            </a>
-          @endif
-          @if (auth()->user()->id == $question->review_by && $question->status == QUESTION_STATUS_WAITING_REVIEW)
-            <a class="btn btn-sm btn-success" 
+          @if (auth()->user()->id == $question->review_by)
+            <a class="btn btn-sm btn-outline-success" 
               href="{{ route('admin.question.review', ['question' => $question->id]) . "?status=" . QUESTION_STATUS_REVIEWED }}">
               <i class="fa fa-check-circle"></i> {{ __('Xác nhận') }}
             </a>
-            <a class="btn btn-sm btn-danger" 
+            <a class="btn btn-sm btn-outline-danger" 
               href="{{ route('admin.question.review', ['question' => $question->id]) . "?status=" . QUESTION_STATUS_REJECTED }}">
               <i class="fa fa-ban"></i> {{ __('Từ chối') }}
             </a>
@@ -77,10 +69,6 @@
             </table>
           </div>
         </div>
-        <form method="POST" action="{{ route('admin.question.destroy', ['question' => $question->id]) }}" id="delete_form">
-          @csrf
-          @method('delete')
-        </form>
       </div>
     </div>
     <div class="block block-rounded">
@@ -236,37 +224,6 @@
           removeButtons: 'PasteFromWord'
         })
       });
-    }
-
-    function deleteQuestion() {
-      showConfirmModal()
-    }
-
-    function showConfirmModal() {
-      toast.fire({
-        title: '{{ __('Xác nhận') }}',
-        text: '{{ __('Bạn chắc chắn muốn xóa câu hỏi này?') }}',
-        icon: 'warning',
-        showCancelButton: true,
-        customClass: {
-          confirmButton: 'btn btn-danger m-1',
-          cancelButton: 'btn btn-secondary m-1'
-        },
-        confirmButtonText: '{{ __('Xác nhận') }}',
-        cancelButtonText: '{{ __('Hủy') }}',
-        html: false,
-        preConfirm: e => {
-          return new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-            }, 50);
-          });
-        }
-      }).then((result) => {
-        if (result.isConfirmed) {
-          $('form#delete_form').submit();
-        }
-      })
     }
 
     function resolvedComment(id) {

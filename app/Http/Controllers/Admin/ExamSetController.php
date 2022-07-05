@@ -7,9 +7,11 @@ use App\Http\Requests\Admin\ExamSetRequest;
 use App\Http\Requests\Admin\ExamSetSettingRequest;
 use App\Http\Traits\ResponseTrait;
 use App\Models\ExamSet;
+use App\Models\ExamSetDetail;
 use App\Services\ExamSetService;
 use App\Services\SubjectService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use PDF;
 
 class ExamSetController extends Controller
@@ -55,7 +57,13 @@ class ExamSetController extends Controller
     public function store(ExamSetRequest $request)
     {
         $data = $request->validated();
-        $this->examSetService->create($data);
+
+        try {
+            $this->examSetService->create($data);
+        }  catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return $this->redirectError('create', $e->getMessage());
+        }
 
         return $this->redirectSuccess('admin.exam-set.index', 'create');
     }
@@ -68,7 +76,7 @@ class ExamSetController extends Controller
      */
     public function show(ExamSet $examSet)
     {
-        $examSet->load('subject');
+        $examSet->load(['subject', 'examSetDetails']);
         return view('admin.exam-set.show', compact('examSet'));
     }
 
@@ -98,20 +106,26 @@ class ExamSetController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  ExamSet $examSet
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ExamSet $examSet)
     {
-        //
+        try {
+            $this->examSetService->delete($examSet);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return $this->redirectError('delete');
+        }
+
+        return $this->redirectSuccess('admin.exam-set.index', 'delete');
     }
 
-    public function pdf(ExamSet $examSet)
+    public function pdf(ExamSet $examSet, ExamSetDetail $examSetDetail)
     {
         $examSet = $this->examSetService->formatData($examSet);
-        // dd($examSet);
 
-        return view('admin.exam-set.template', compact('examSet'));
+        return view('admin.exam-set.template', compact('examSet', 'examSetDetail'));
     }
 
     public function setting(ExamSet $examSet)

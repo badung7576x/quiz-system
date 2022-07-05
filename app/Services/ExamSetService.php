@@ -4,10 +4,9 @@ namespace App\Services;
 
 use App\Models\ExamSet;
 use App\Models\Question;
-use Carbon\Carbon;
+use App\Models\QuestionBank;
+use Exception;
 use Illuminate\Support\Facades\DB;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use Illuminate\Support\Facades\File;
 
 class ExamSetService
 {
@@ -20,22 +19,45 @@ class ExamSetService
 
   public function create($data)
   {
+    $user = auth()->user();
     DB::beginTransaction();
     try {
+      $numOfSet = $data['num_of_set'];
       $examSet = ExamSet::create($data);
+
       $numOfQuestions = $data['total_question'];
+      $totalQuestionCount = QuestionBank::where('subject_id', $user->subject_id)->count();
 
-      $questionIds = Question::inRandomOrder()
-        ->whereIn('subject_content_id', $data['subject_content_ids'])
-        ->limit($numOfQuestions)->pluck('id')->toArray();
-
-      $questionIdsWithOrder = [];
-      foreach ($questionIds as $key => $questionId) {
-        $questionIdsWithOrder[$questionId] = ['order' => $key + 1];
+      if ($totalQuestionCount < $numOfQuestions * GENERATE_RATIO) {
+        throw new Exception('Số lượng câu hỏi trong ngân hàng đề không đủ');
       }
 
-      $examSet->questions()->attach($questionIdsWithOrder);
+      $questionIds = QuestionBank::inRandomOrder()
+        ->whereIn('subject_content_id', $data['subject_content_ids'])
+        ->orderBy('level', 'desc')
+        ->limit($numOfQuestions)->pluck('id')->toArray();
 
+      if (count($questionIds) < $numOfQuestions) {
+        throw new Exception('Số lượng câu hỏi trong ngân hàng đề không đủ');
+      }
+
+      $questionMap = [];
+      foreach ($questionIds as $level => $questionId) {
+        $questionMap[] = [
+          'question_id' => $questionId
+        ];
+      }
+
+      $examSet->questions()->attach($questionMap);
+
+      for($i = 1; $i <= $numOfSet; $i++) {
+        $examSet->examSetDetails()->create([
+          'code' => $data['code'] . str_pad($i, 3, "0", STR_PAD_LEFT),
+          'question_order' => '',
+          'answers' => ''
+        ]);
+      }
+      
       DB::commit();
     } catch (\Exception $e) {
       DB::rollback();
@@ -80,5 +102,10 @@ class ExamSetService
   public function saveSetting(ExamSet $examSet, array $data)
   {
     $examSet->setting()->updateOrCreate(['exam_set_id' => $examSet->id], $data);
+  }
+
+  public function delete(ExamSet $examSet)
+  {
+    return $examSet->delete();
   }
 }

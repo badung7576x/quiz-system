@@ -32,7 +32,7 @@
                   <td class="text-center">{{ $question->created_at }}</td>
                   <td class="text-center">
                     <div class="btn-group">
-                      <a href="{{ route('admin.question.show', ['question' => $question->id]) }}" class="btn btn-sm btn-alt-secondary" title="{{ __('Xem') }}">
+                      <a href="{{ route('admin.review.show', ['question' => $question->id]) }}" class="btn btn-sm btn-alt-secondary" title="{{ __('Xem') }}">
                         <i class="fa fa-fw fa-eye"></i>
                       </a>
                     </div>

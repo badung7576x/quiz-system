@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Giáo viên')
+@section('title', 'Tạo đề thi')
 
 @section('content')
   <div class="content content-boxed">
@@ -23,9 +23,9 @@
             <form id="create_exam_set" class="" action="{{ route('admin.exam-set.store') }}" method="POST">
               @csrf
               <div class="row">
-                <div class="col-12">
+                <div class="col-8">
                   <div class="row mb-2">
-                    <label class="col-sm-12 col-form-label">Mã đề thi</label>
+                    <label class="col-sm-12 col-form-label">Mã đề thi <span style="color: red">*</span> </label>
                     <div class="col-sm-12">
                       <input type="text" class="form-control @error('code') is-invalid @enderror" name="code" value="{{ old('code') }}" placeholder="Nhập mã đề thi">
                       @error('code')
@@ -34,9 +34,20 @@
                     </div>
                   </div>
                 </div>
+                <div class="col-4">
+                  <div class="row mb-2">
+                    <label class="col-sm-12 col-form-label">Số lượng đề thi <span style="color: red">*</span></label>
+                    <div class="col-sm-12">
+                      <input type="number" class="form-control @error('num_of_set') is-invalid @enderror" name="num_of_set" value="{{ old('num_of_set', 1) }}">
+                      @error('num_of_set')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+                  </div>
+                </div>
                 <div class="col-12">
                   <div class="row mb-2">
-                    <label class="col-sm-12 col-form-label">Tên đề thi</label>
+                    <label class="col-sm-12 col-form-label">Tên đề thi <span style="color: red">*</span></label>
                     <div class="col-sm-12">
                       <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Nhập tên đề thi">
                       @error('name')
@@ -47,7 +58,7 @@
                 </div>
                 <div class="col-4">
                   <div class="row mb-3">
-                    <label class="col-sm-12 col-form-label">Loại đề thi</label>
+                    <label class="col-sm-12 col-form-label">Loại đề thi <span style="color: red">*</span></label>
                     <div class="col-sm-12">
                       <select id="subject" class="form-select @error('type') is-invalid @enderror" name="type">
                         @foreach (config('fixeddata.exam_set_type') as $type => $label)
@@ -62,9 +73,9 @@
                 </div>
                 <div class="col-4">
                   <div class="row mb-3">
-                    <label class="col-sm-12 col-form-label">Số lượng câu hỏi</label>
+                    <label class="col-sm-12 col-form-label">Số lượng câu hỏi <span style="color: red">*</span></label>
                     <div class="col-sm-12">
-                      <input type="text" class="form-control @error('total_question') is-invalid @enderror" name="total_question" value="{{ old('total_question') }}"
+                      <input type="text" class="form-control @error('total_question') is-invalid @enderror" name="total_question" value="{{ old('total_question', 1) }}"
                         placeholder="Nhập số lượng câu hỏi">
                       @error('total_question')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -74,9 +85,9 @@
                 </div>
                 <div class="col-4">
                   <div class="row mb-3">
-                    <label class="col-sm-12 col-form-label">Thời gian làm bài</label>
+                    <label class="col-sm-12 col-form-label">Thời gian làm bài <span style="color: red">*</span></label>
                     <div class="col-sm-12">
-                      <input type="text" class="form-control @error('execute_time') is-invalid @enderror" name="execute_time" value="{{ old('execute_time') }}"
+                      <input type="text" class="form-control @error('execute_time') is-invalid @enderror" name="execute_time" value="{{ old('execute_time', 1) }}"
                         placeholder="Nhập thời gian làm bài">
                       @error('execute_time')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -87,11 +98,11 @@
                 <div class="col-12">
                   <div class="row mb-3">
                     <input type="hidden" name="subject_id" value="{{ auth()->user()->subject->id }}">
-                    <label class="col-sm-12 col-form-label">Các nội dung (chọn nhiều)</label>
+                    <label class="col-sm-12 col-form-label">Các nội dung (chọn nhiều) <span style="color: red">*</span></label>
                     <div class="col-sm-12">
-                      <select id="subject-content" class="js-select2 form-select @error('subject_content_ids') is-invalid @enderror" name="subject_content_ids[]" multiple>
+                      <select id="subject-content" class="js-select2 form-select @error('subject_content_ids') is-invalid @enderror" name="subject_content_ids[]" multiple value="">
                         @foreach ($subjectContents as $subjectContent)
-                          <option value="{{ $subjectContent->id }}">{{ $subjectContent->name }}</option>
+                          <option value="{{ $subjectContent->id }}" @selected(in_array($subjectContent->id, old('subject_content_ids', [])))>{{ $subjectContent->name }}</option>
                         @endforeach
                       </select>
                       @error('subject_content_ids')

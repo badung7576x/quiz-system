@@ -110,6 +110,20 @@ class QuestionController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param Question $question
+     * @return \Illuminate\Http\Response
+     */
+    public function reviewShow(Question $question)
+    {
+        $question->load(['answers', 'subject', 'subject_content']);
+        $comments = $this->questionService->getAllCommentForQuestion($question);
+
+        return view('admin.question.review_show', compact('question', 'comments'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  Question $question
@@ -189,5 +203,20 @@ class QuestionController extends Controller
         
         
         return $this->redirectSuccess('admin.question.index', 'import');
+    }
+
+    /**
+     * Get template content of question bank
+     *
+     * @param QuestionBank $question
+     * @return \Illuminate\Http\Response
+     */
+    public function contentTemplate($id)
+    {
+        $question = $this->questionService->findQuestion($id);
+
+        $html = view('admin.question._question-template', compact('question'))->render();
+        
+        return response()->json(['html' => $html]);
     }
 }

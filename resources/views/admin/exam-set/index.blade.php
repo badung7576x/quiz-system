@@ -34,41 +34,12 @@
                   <div class="mt-2">
                     <span class="badge bg-success">{{ config('fixeddata.exam_set_type')[$examSet->type] }}</span>
                   </div>
-                  {{-- <hr>
-                  <div class="text-center mt-2">
-                    <div class="btn-group">
-                      <a href="{{ route('admin.exam-set.export', ['exam_set' => $examSet->id]) }}" target="_blank" class="btn btn-sm btn-alt-info" title="{{ __('Xem') }}">
-                        <i class="fa fa-fw fa-eye"></i>
-                      </a>
-                      <a href="#" class="btn btn-sm btn-alt-info" title="{{ __('Cài đặt') }}">
-                        <i class="fa fa-fw fa-cog"></i>
-                      </a>
-                    </div>
-                  </div> --}}
                 </div>
               </div>
             </div>
           @endforeach
         </div>
       </div>
-      {{-- <div class="block block-rounded">
-        <div class="row">
-          <div class="col-12">
-            <div class="dataTables_paginate">
-              <ul class="pagination">
-                <li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0"
-                    class="page-link"><i class="fa fa-angle-left"></i></a></li>
-                <li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                <li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-                <li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
-                <li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
-                <li class="paginate_button page-item next" id="DataTables_Table_0_next"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="5" tabindex="0"
-                    class="page-link"><i class="fa fa-angle-right"></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div> --}}
     </div>
   </div>
 @endsection

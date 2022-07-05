@@ -25,14 +25,13 @@
     </div>
   </div>
 
-
   <div class="content">
     <div class="block block-rounded">
       <div class="block-header block-header-default">
         <h3 class="block-title">Danh sách câu hỏi</h3>
         <div class="block-options">
           <a href="{{ route('admin.question-bank.wait-accept') }}" class="btn btn-outline-success btn-sm">
-            <i class="fa fa-check-square"></i> Câu hỏi chờ duyệt (10)
+            <i class="fa fa-check-square"></i> Câu hỏi chờ duyệt ({{ $numOfWaiting }})
           </a>
         </div>
       </div>
@@ -42,8 +41,8 @@
             <thead>
               <tr style="">
                 <th style="width: 6%;" class="text-center">STT</th>
-                <th style="width: 35%;" class="text-center">Câu hỏi</th>
-                <th style="width: 10%;" class="text-center">Trạng thái</th>
+                <th style="width: 50%;" class="text-center">Câu hỏi</th>
+                <th style="width: 20%;" class="text-center">Nội dung</th>
                 <th style="width: 10%;" class="text-center">Thời gian tạo</th>
                 <th style="width: 14%;" class="text-center">Thao tác</th>
               </tr>
@@ -53,7 +52,7 @@
                 <tr>
                   <td class="text-center">{{ $loop->iteration }}</td>
                   <td style="max-width: 450px" class="text-truncate">{!! $question->content !!}</td>
-                  <td class="text-center">{!! render_status($question->status) !!}</td>
+                  <td style="max-width: 250px" class="text-truncate">{{ $question->subject_content->name }}</td>
                   <td class="text-center">{{ $question->created_at }}</td>
                   <td class="text-center">
                     <div class="btn-group">

@@ -113,18 +113,8 @@ class QuestionService
     ]);
   }
 
-  public function acceptQuestionToBank(Question $question)
+  public function findQuestion($id)
   {
-    // Check question is not already in bank
-    // $alreadyQuestions = QuestionBank::searchByQuery(['match' => ['content' => $question->content]]);
-    $alreadyQuestions = QuestionBank::whereIn('id', [1, 2, 3])->get();
-    
-    if (count($alreadyQuestions) > 0) {
-      throw new Exception('Question is already in bank');
-    }
-    
-    $question->load('answers');
-    $questionBank = QuestionBank::create($question->toArray());
-    $questionBank->answers()->create($question->answers->toArray());
+    return Question::with(['teacher:id,fullname', 'reviewer:id,fullname', 'subject_content', 'answers'])->find($id);
   }
 }

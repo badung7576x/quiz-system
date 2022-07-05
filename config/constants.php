@@ -43,4 +43,7 @@ if (!defined('EXAM_SET_TYPE_TT')) define('EXAM_SET_TYPE_TT', 5);
 
 if (!defined('EXAM_SET_STATUS_CREATED')) define('EXAM_SET_STATUS_CREATED', 1);
 
+// num of questions need to create exam set
+if (!defined('GENERATE_RATIO')) define('GENERATE_RATIO', 6); 
+
 

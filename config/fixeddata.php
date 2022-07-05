@@ -16,12 +16,9 @@ return [
     QUESTION_STATUS_DELETED => 'Xóa'
   ],
   'question_level' => [
-    LEVEL_1 => 'Câu hỏi biết',
-    LEVEL_2 => 'Câu hỏi hiểu',
-    LEVEL_3 => 'Câu hỏi vận dụng',
-    LEVEL_4 => 'Câu hỏi phân tích',
-    LEVEL_5 => 'Câu hỏi tổng hợp',
-    LEVEL_6 => 'Câu hỏi đánh giá'
+    LEVEL_1 => 'Dễ',
+    LEVEL_2 => 'Trung bình',
+    LEVEL_3 => 'Khó',
   ],
   'role' => [
     ROLE_ADMIN => 'Quản trị viên',

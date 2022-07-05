@@ -8,7 +8,7 @@
       <div class="col-3 end-0">
         <div class="block block-rounded pb-2">
           <div class="block-header block-header-default">
-            <h3 class="block-title">Thông tin đề thi</h3>
+            <h3 class="block-title">Thông tin bộ đề thi</h3>
           </div>
           <div class="block-content">
             <table class="table table-borderless table-striped table-vcenter fs-sm">
@@ -26,17 +26,34 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="fw-semibold" style="width: 30%">Mã đề thi</td>
-                  <td>{{ $examSet->code }}</td>
-                </tr>
-                <tr>
-                  <td class="fw-semibold" style="width: 30%"> Số lượng câu hỏi </td>
+                  <td class="fw-semibold" style="width: 30%"> Số lượng <br>câu hỏi </td>
                   <td>{{ $examSet->total_question }} câu hỏi</td>
                 </tr>
                 <tr>
-                  <td class="fw-semibold" style="width: 30%"> Thời gian làm bài </td>
-                  <td>{{ $examSet->total_question }} phút</td>
+                  <td class="fw-semibold" style="width: 30%"> Thời gian <br>làm bài </td>
+                  <td>{{ $examSet->execute_time }} phút</td>
                 </tr>
+                <tr>
+                  <td class="fw-semibold" style="width: 30%"> Loại đề thi</td>
+                  <td><span class="badge bg-success">{{ config('fixeddata.exam_set_type')[$examSet->type] }}</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="block block-rounded pb-2">
+          <div class="block-header block-header-default">
+            <h3 class="block-title">Danh sách đề thi</h3>
+          </div>
+          <div class="block-content">
+            <table class="table table-borderless table-striped table-vcenter fs-sm">
+              <tbody>
+                @foreach ($examSet->examSetDetails as $index => $detail)
+                <tr>
+                  <td class="fw-semibold" style="width: 30%">Đề thi {{ $index + 1 }}</td>
+                  <td><a href="{{ route('admin.exam-set.pdf', ['exam_set' => $examSet->id, 'exam_set_detail' => $detail->id]) }}" target="exam-iframe" onclick="renderExamDetail({{ $detail->id }})">{{ $detail->code }}  </a></td>
+                </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
@@ -56,10 +73,17 @@
               <a href="{{ route('admin.exam-set.download', ['exam_set' => $examSet->id]) }}" target="_blank" class="btn btn-sm btn-outline-success">
                 <i class="fa fa-file-download"></i> Tải xuống
               </a>
+              <a href="javascript:void(0)" class="btn btn-sm btn-outline-danger delete-btn">
+                <i class="fa fa-trash"></i> Xóa bộ đề
+              </a>
+              <form method="POST" action="{{ route('admin.exam-set.destroy', ['exam_set' => $examSet->id]) }}" id="delete_form">
+                @csrf
+                @method('delete')
+              </form>
             </div>
           </div>
           <div class="block-content">
-            <iframe src="{{ route('admin.exam-set.pdf', ['exam_set' => $examSet->id]) }}" frameborder="0" style="width: 100%; height: 80vh;"></iframe>
+            <iframe name="exam-iframe" src="{{ route('admin.exam-set.pdf', ['exam_set' => $examSet->id, 'exam_set_detail' => $examSet->examSetDetails[0]->id]) }}" frameborder="0" style="width: 100%; height: 80vh;"></iframe>
           </div>
         </div>
       </div>
@@ -112,5 +136,33 @@
         })
       });
     }
+
+    $('.delete-btn').on('click', function(e) {
+      e.preventDefault();
+      toast.fire({
+        title: '{{ __('Xác nhận') }}',
+        text: 'Bạn có chắc chắn muốn xóa bộ đề thi này không ?',
+        icon: 'warning',
+        showCancelButton: true,
+        customClass: {
+          confirmButton: 'btn btn-danger m-1',
+          cancelButton: 'btn btn-secondary m-1'
+        },
+        confirmButtonText: '{{ __('Xác nhận') }}',
+        cancelButtonText: '{{ __('Hủy') }}',
+        html: false,
+        preConfirm: e => {
+          return new Promise(resolve => {
+            setTimeout(() => {
+              resolve();
+            }, 50);
+          });
+        }
+      }).then(result => {
+        if (result.value) {
+          $('#delete_form').submit();
+        }
+      });
+    });
   </script>
 @endsection

@@ -6,31 +6,30 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ExamSet extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'exam_sets';
 
     protected $fillable = [
-        'code',
         'name',
         'type',
         'subject_id',
         'subject_content_ids',
         'execute_time',
         'total_question',
-        'answers',
         'status',
         'created_by',
-        'parent_id',
     ];
 
     public static function boot()
     {
         parent::boot();
         static::creating(function ($model) {
+            $model->subject_id = auth()->user()->subject_id;
             $model->created_by = auth()->user()->id;
             $model->status = EXAM_SET_STATUS_CREATED;
         });
@@ -38,8 +37,7 @@ class ExamSet extends Model
 
     public function questions()
     {
-        return $this->belongsToMany(Question::class, 'question_maps', 'exam_set_id', 'question_id')
-            ->withPivot('order')->orderBy('order', 'asc');
+        return $this->belongsToMany(QuestionBank::class, 'question_maps', 'exam_set_id', 'question_id');
     }
 
     public function subject()
@@ -50,6 +48,11 @@ class ExamSet extends Model
     public function setting()
     {
         return $this->hasOne(ExamSetSetting::class, 'exam_set_id', 'id');
+    }
+
+    public function examSetDetails()
+    {
+        return $this->hasMany(ExamSetDetail::class, 'exam_set_id', 'id');
     }
 
     public function subjectContentIds(): Attribute
