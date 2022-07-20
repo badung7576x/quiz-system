@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  nginx:
+    build:
+      context: .docker/nginx
+      args:
+        uid: ${UID}
+        gid: ${GID}
+        env: dev
+    depends_on:
+      - php
+    volumes:
+      - ".:/app:delegated"
+    env_file:
+      - .env
+    networks:
+      - quiz-system
+
+  php:
+    build:
+      context: .docker/php
+      args:
+        uid: ${UID}
+        gid: ${GID}
+    user: ${UID}
+    volumes:
+      - ".:/app:delegated"
+    env_file:
+      - .env
+    networks:
+      - quiz-system
+
+networks:
+    quiz-system:

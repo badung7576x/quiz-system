@@ -29,10 +29,10 @@ class Question extends BaseModel
     public static function boot()
     {
         parent::boot();
-        // static::creating(function ($model) {
-        //     $model->created_by = auth()->user()->id;
-        //     $model->status = QUESTION_STATUS_CREATED;
-        // });
+        static::creating(function ($model) {
+            $model->created_by = auth()->user()->id;
+            $model->status = QUESTION_STATUS_CREATED;
+        });
     }
 
     public function answers()

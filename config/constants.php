@@ -11,9 +11,6 @@ if (!defined('GENDER')) define('GENDER', $gender);
 if (!defined('LEVEL_1')) define('LEVEL_1', 1); // Câu hỏi biết
 if (!defined('LEVEL_2')) define('LEVEL_2', 2); // Câu hỏi hiểu
 if (!defined('LEVEL_3')) define('LEVEL_3', 3); // Câu hỏi vận dụng
-if (!defined('LEVEL_4')) define('LEVEL_4', 4); // Câu hỏi phân tích
-if (!defined('LEVEL_5')) define('LEVEL_5', 5); // Câu hỏi tổng hợp
-if (!defined('LEVEL_6')) define('LEVEL_6', 6); // Câu hỏi đánh giá
 
 // Question type
 if (!defined('QUESTION_MULTI_CHOICE')) define('QUESTION_MULTI_CHOICE', 1); // Câu hỏi trắc nghiệm
@@ -44,6 +41,6 @@ if (!defined('EXAM_SET_TYPE_TT')) define('EXAM_SET_TYPE_TT', 5);
 if (!defined('EXAM_SET_STATUS_CREATED')) define('EXAM_SET_STATUS_CREATED', 1);
 
 // num of questions need to create exam set
-if (!defined('GENERATE_RATIO')) define('GENERATE_RATIO', 6); 
+if (!defined('GENERATE_RATIO')) define('GENERATE_RATIO', 1); 
 
 

@@ -88,12 +88,12 @@
         <div class="content-side">
           <ul class="nav-main">
             @can('is_admin')
-              <li class="nav-main-item">
+              {{-- <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->routeIs('admin.dashboard*') ? 'active' : '' }}" href="{{ route('admin.dashboard.index') }}">
                   <i class="nav-main-link-icon fa fa-chart-pie"></i>
                   <span class="nav-main-link-name">Thống kê</span>
                 </a>
-              </li>
+              </li> --}}
               <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->routeIs('admin.teacher*') ? 'active' : '' }}" href="{{ route('admin.teacher.index') }}">
                   <i class="nav-main-link-icon fa fa-users"></i>
@@ -106,12 +106,12 @@
                   <span class="nav-main-link-name">Môn học</span>
                 </a>
               </li>
-              <li class="nav-main-item">
+              {{-- <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->routeIs('admin.class*') ? 'active' : '' }}" href="{{ route('admin.question.index') }}">
                   <i class="nav-main-link-icon fa fa-cog"></i>
                   <span class="nav-main-link-name">Cài đặt hệ thống</span>
                 </a>
-              </li>
+              </li> --}}
             @endcan
             @can('is_teacher')
               <li class="nav-main-item">
@@ -157,6 +157,12 @@
             @endcan
             @can('is_pro_chief')
               <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.question-bank.*') ? 'active' : '' }}" href="{{ route('admin.question-bank.index') }}">
+                  <i class="nav-main-link-icon fa fa-list-ol"></i>
+                  <span class="nav-main-link-name">Thống kê</span>
+                </a>
+              </li>
+              <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->routeIs('admin.teacher*') ? 'active' : '' }}" href="{{ route('admin.teacher.index') }}">
                   <i class="nav-main-link-icon fa fa-users"></i>
                   <span class="nav-main-link-name">Giáo viên</span>
@@ -166,12 +172,6 @@
                 <a class="nav-main-link {{ request()->routeIs('admin.subject*') ? 'active' : '' }}" href="{{ route('admin.subject.index') }}">
                   <i class="nav-main-link-icon fa fa-book-reader"></i>
                   <span class="nav-main-link-name">Môn học</span>
-                </a>
-              </li>
-              <li class="nav-main-item">
-                <a class="nav-main-link {{ request()->routeIs('admin.question-bank.*') ? 'active' : '' }}" href="{{ route('admin.question-bank.index') }}">
-                  <i class="nav-main-link-icon fa fa-list-ol"></i>
-                  <span class="nav-main-link-name">Ngân hàng câu hỏi</span>
                 </a>
               </li>
               <li class="nav-main-item">

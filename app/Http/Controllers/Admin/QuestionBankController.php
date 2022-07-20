@@ -24,13 +24,15 @@ class QuestionBankController extends Controller
         $this->subjectService = $subjectService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $questions = $this->questionBankService->getQuestionBank();
+        $filters = $request->only(['subject_content_ids', 'from', 'to']);
+        $questions = $this->questionBankService->getQuestionBank($filters);
         $waitingList = $this->questionBankService->allWaitingAcceptQuestions();
+        $subjectContents = $this->subjectService->getSubjectContents();
         $numOfWaiting = count($waitingList);
 
-        return view('admin.banks.index', compact('questions', 'numOfWaiting'));
+        return view('admin.banks.index', compact('questions', 'numOfWaiting', 'subjectContents', 'filters'));
     }
 
     public function waitAccepts(Request $request)
@@ -84,5 +86,12 @@ class QuestionBankController extends Controller
             Log::error($e->getMessage());
             return $this->redirectError('approved');
         }
+    }
+
+    public function export(Request $request)
+    {
+        $filters = $request->only(['subject_content_ids', 'from', 'to', 'type']);
+
+        return $this->questionBankService->export($filters);
     }
 }

@@ -11,8 +11,10 @@ use App\Models\ExamSetDetail;
 use App\Services\ExamSetService;
 use App\Services\SubjectService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use PDF;
+use Throwable;
 
 class ExamSetController extends Controller
 {
@@ -123,7 +125,7 @@ class ExamSetController extends Controller
 
     public function pdf(ExamSet $examSet, ExamSetDetail $examSetDetail)
     {
-        $examSet = $this->examSetService->formatData($examSet);
+        $examSet = $this->examSetService->formatData($examSet, $examSetDetail);
 
         return view('admin.exam-set.template', compact('examSet', 'examSetDetail'));
     }
@@ -144,11 +146,26 @@ class ExamSetController extends Controller
         return $this->redirectSuccess('admin.exam-set.show', 'save', ['exam_set' => $examSet->id]);
     }
 
-    public function download(ExamSet $examSet)
+    public function downloadPdf(ExamSet $examSet, ExamSetDetail $examSetDetail)
     {
-        $data['examSet'] = $this->examSetService->formatData($examSet);
+        $data['examSet'] = $this->examSetService->formatData($examSet, $examSetDetail);
         $pdf = PDF::loadView('admin.exam-set.template_for_download', $data);
 
         return $pdf->stream();
+    }
+
+    public function downloadWord(ExamSet $examSet, ExamSetDetail $examSetDetail)
+    {
+        try {
+            $wordFile = $this->examSetService->downloadWord($examSet, $examSetDetail);
+            ob_end_clean();
+            $headers = [
+                'Content-Type' => 'application/octet-stream',
+                'Content-Disposition' => 'attachment;filename="test.docx"'
+            ];
+            return response()->file($wordFile, $headers)->deleteFileAfterSend(true);
+        } catch (Throwable $e) {
+            report($e);
+        }
     }
 }

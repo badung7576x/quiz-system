@@ -33,7 +33,44 @@
           <a href="{{ route('admin.question-bank.wait-accept') }}" class="btn btn-outline-success btn-sm">
             <i class="fa fa-check-square"></i> Câu hỏi chờ duyệt ({{ $numOfWaiting }})
           </a>
+          <a href="#" class="btn btn-outline-primary btn-sm" onClick="exportListQuestion()">
+            <i class="fa fa-download"></i> Tải xuống bộ câu hỏi
+          </a>
         </div>
+      </div>
+      <div class="block-content border-bottom">
+        <form id="filter-form" action="{{ route('admin.question-bank.index') }}" method="GET">
+          <div class="push">
+            <div class="row">
+              <div class="col-6">
+                <label class="form-label">Nội dung môn học</label>
+                <select class="js-select2 form-select" name="subject_content_ids[]" id="sc" multiple data-placeholder="Lựa chọn nội dung" style="width: 100%">
+                  @foreach($subjectContents as $content)
+                    <option value="{{ $content->id }}" @selected(in_array($content->id, request()->subject_content_ids ?? []))>{{ $content->name }}</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="col-3">
+                <label class="form-label">Thời gian tạo</label>
+                <input type="text" class="js-flatpickr form-control col-6" name="from" data-date-format="d-m-Y" placeholder="Từ ngày" value="{{ request()->from ?? '' }}">
+              </div>
+              <div class="col-3">
+                <label class="form-label">　　　　</label>
+                <input type="text" class="js-flatpickr form-control col-6" name="to" data-date-format="d-m-Y" placeholder="Đến ngày" value="{{ request()->to ?? '' }}">
+              </div>
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="d-flex justify-content-center">
+              <button type="button" class="btn btn-sm btn-alt-success me-2" onclick="filterData()">
+                <i class="fa fa-filter"></i> Lọc dữ liệu
+              </button>
+              <button type="reset" class="btn btn-sm btn-alt-secondary" onclick="clearSearch()">
+                <i class="fa fa-trash"></i> Xóa bộ lọc
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
       <div class="block-content block-content-full">
         <div class="table-responsive">
@@ -79,9 +116,40 @@
   </div>
 @endsection
 
+@section('css_before')
+  <link rel="stylesheet" href="{{ asset('/js/plugins/select2/css/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('/js/plugins/flatpickr/flatpickr.min.css') }}">
+@endsection
 
 @section('js_after')
+  <script src="{{ asset('/js/plugins/select2/js/select2.full.min.js') }}"></script>
+  <script src="{{ asset('/js/plugins/flatpickr/flatpickr.min.js') }}"></script>
   <script>
+    One.helpersOnLoad(['jq-select2', 'js-flatpickr']);
+    
+    $(".js-select2").select2({
+      language: {
+        noResults: function() {
+          return "Không có dữ liệu";
+        }
+      }
+    });
+
+    const clearSearch = () => {
+      // $(".js-select2").val('').trigger('change');
+      window.location.href = "{{ route('admin.question-bank.index') }}"
+    }
+
+    const filterData = () => {
+      $('#filter-form').attr('action', '{{ route('admin.question-bank.index') }}');
+      $('#filter-form').submit();
+    }
+
+    function exportListQuestion() {
+      $('#filter-form').attr('action', '{{ route('admin.question-bank.export') }}');
+      $('#filter-form').submit();
+    }
+
     const questions = @json($questions);
 
     $('.show-btn').on('click', function(e) {

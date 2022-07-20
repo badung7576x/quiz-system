@@ -56,6 +56,7 @@ Route::group([
 
     // Question Bank
     Route::get('question-banks/waiting-accept', 'QuestionBankController@waitAccepts')->name('question-bank.wait-accept');
+    Route::get('question-banks/export', 'QuestionBankController@export')->name('question-bank.export');
     Route::get('question-banks/{question_bank}/template', 'QuestionBankController@contentTemplate')->name('question-bank.template');
     Route::resource('question-banks', 'QuestionBankController')->names('question-bank');
     Route::get('question-banks/{question}/approved', 'QuestionBankController@approved')->name('question-bank.approved');
@@ -68,7 +69,7 @@ Route::group([
     Route::get('exam-sets/{exam_set}/pdf/{exam_set_detail}', 'ExamSetController@pdf')->name('exam-set.pdf');
     Route::get('exam-sets/{exam_set}/setting', 'ExamSetController@setting')->name('exam-set.setting');
     Route::post('exam-sets/{exam_set}/setting', 'ExamSetController@saveSetting')->name('exam-set.setting.save');
-    Route::get('exam-sets/{exam_set}/download', 'ExamSetController@download')->name('exam-set.download');
+    Route::get('exam-sets/{exam_set}/download/{exam_set_detail}', 'ExamSetController@downloadPdf')->name('exam-set.download');
     Route::resource('exam-sets', 'ExamSetController')->names('exam-set');
 
     // Assignment

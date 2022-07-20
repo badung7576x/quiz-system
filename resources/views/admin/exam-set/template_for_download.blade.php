@@ -139,10 +139,10 @@
 		</div>
 		@php $questions = $examSet->questions @endphp
 		@foreach ($questions as $idx => $question)
-				<div class="row" style="padding-bottom: 0">
+				<div class="row" style="padding-bottom: 0; margin-left: 30px">
 						<div class="col-12">
 								<div>
-										<span class="text-bold">Câu {{ $idx + 1 }}:</span>
+										<span class="text-bold">Câu {{ $loop->iteration }}:</span>
 										@php
 												$cont = preg_replace('<p>', 'span', $question->content, 1);
 												$cont = preg_replace('</p>', '/span', $cont, 1);
@@ -151,8 +151,8 @@
 								</div>
 						</div>
 				</div>
-				<div class="row" style="padding: 0 15px; margin-bottom: 10px">
-						<table class="table-bordered table">
+				<div class="row" style="padding: 0 45px; margin-bottom: 10px">
+						<table>
 								<thead>
 										@if ($question->length_answer < 50)
 												<tr>

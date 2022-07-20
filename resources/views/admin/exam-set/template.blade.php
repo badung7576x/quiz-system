@@ -71,6 +71,10 @@
 						text-align: center;
 				}
 
+				.text-left {
+						text-align: left;
+				}
+
 				.f-right {
 						float: right;
 				}
@@ -121,7 +125,7 @@
 				<div class="row">
 						<div class="col-12">
 								<div>
-										<span class="text-bold">Câu {{ $idx + 1 }}:</span>
+										<span class="text-bold">Câu {{ $loop->iteration }}:</span>
 										@php
 												$cont = preg_replace('<p>', 'span', $question->content, 1);
 												$cont = preg_replace('</p>', '/span', $cont, 1);
@@ -150,6 +154,26 @@
 						</div>
 				</div>
 		@endif
+		
+
+		<br>
+		<br>
+		<br>
+		<hr>
+		<br>
+		<br>
+		<div class="row text-center" style="margin: 5px 0">
+			<div class="col-12" style="margin-bottom: 15px">
+				<span class="text-bold text-underline">ĐÁP ÁN</span>
+			</div>
+			<br>
+			@foreach ($questions as $idx => $question)
+				<div class="col-3 text-left">
+						<span class="text-bold">Câu {{ $loop->iteration }}: </span>
+						<span>{{ config('fixeddata.answer_index')[$question->correct_answer] }}</span>
+				</div>
+			@endforeach
+	</div>
 		<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 

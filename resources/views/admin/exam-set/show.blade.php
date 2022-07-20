@@ -51,7 +51,7 @@
                 @foreach ($examSet->examSetDetails as $index => $detail)
                 <tr>
                   <td class="fw-semibold" style="width: 30%">Đề thi {{ $index + 1 }}</td>
-                  <td><a href="{{ route('admin.exam-set.pdf', ['exam_set' => $examSet->id, 'exam_set_detail' => $detail->id]) }}" target="exam-iframe" onclick="renderExamDetail({{ $detail->id }})">{{ $detail->code }}  </a></td>
+                  <td><a href="{{ route('admin.exam-set.pdf', ['exam_set' => $examSet->id, 'exam_set_detail' => $detail->id]) }}" target="exam-iframe" onclick="changeDownloadHref({{ $examSet->id }}, {{ $detail->id }})">{{ $detail->code }}  </a></td>
                 </tr>
                 @endforeach
               </tbody>
@@ -70,7 +70,7 @@
               <a href="{{ route('admin.exam-set.setting', ['exam_set' => $examSet->id]) }}" class="btn btn-sm btn-outline-primary">
                 <i class="fa fa-cogs"></i> Cài đặt
               </a>
-              <a href="{{ route('admin.exam-set.download', ['exam_set' => $examSet->id]) }}" target="_blank" class="btn btn-sm btn-outline-success">
+              <a id="download_link" href="{{ route('admin.exam-set.download', ['exam_set' => $examSet->id, 'exam_set_detail' => $examSet->examSetDetails[0]->id]) }}" target="_blank" class="btn btn-sm btn-outline-success">
                 <i class="fa fa-file-download"></i> Tải xuống
               </a>
               <a href="javascript:void(0)" class="btn btn-sm btn-outline-danger delete-btn">
@@ -164,5 +164,12 @@
         }
       });
     });
+
+    function changeDownloadHref(id, detailId) {
+      let href = "{{ route('admin.exam-set.pdf', ['exam_set' => ':exId', 'exam_set_detail' => ':detailId']) }}"
+      href = href.replace(':exId', id)
+      href = href.replace(':detailId', detailId)
+      $('#download_link').attr("href", href)
+    } 
   </script>
 @endsection

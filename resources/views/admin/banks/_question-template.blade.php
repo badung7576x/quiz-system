@@ -26,7 +26,7 @@
     <table class="table-borderless table-striped table-vcenter fs-sm table">
       <tbody>
         <tr>
-          <td class="fw-semibold" style="width: 30%">Phạm vi câu hỏi</td>
+          <td class="fw-semibold" style="width: 30%">Nội dung môn học</td>
           <td>{{ $question->subject_content->name }}</td>
         </tr>
         <tr>
