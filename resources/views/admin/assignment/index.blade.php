@@ -58,7 +58,9 @@
           <table class="table table-striped table-vcenter js-dataTable-full" id="exam-table">
             <thead>
               <tr style="">
-                <th style="width: 4%;" class="text-center"></th>
+                <th style="width: 4%;" class="text-center">
+                  <input type="checkbox" class="form-check-input" name="all_question" value="1">
+                </th>
                 <th style="width: 10%;" class="text-center">STT</th>
                 <th style="width: 50%" class="text-truncate">Câu hỏi</th>
                 <th style="width: 12%;" class="text-center">Tạo bởi</th>

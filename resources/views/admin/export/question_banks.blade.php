@@ -19,7 +19,6 @@
       <th align="center" ><b>Đáp án 3</b></th>
       <th align="center" ><b>Đáp án 4</b></th>
       <th align="center" ><b>Đáp án đúng</b></th>
-      <th align="center" ><b>Thời gian tạo</b></th>
     </tr>
   </thead>
   <tbody>
@@ -33,7 +32,6 @@
           <td align="left">{{ $answer->content_1 }}</td>
         @endforeach
         <td align="left">{{ $correctAns }}</td>
-        <td align="left">{{ $question->created_at }}</td>
       </tr>
     @endforeach
   </tbody>

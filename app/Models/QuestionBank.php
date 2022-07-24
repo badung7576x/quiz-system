@@ -33,6 +33,11 @@ class QuestionBank extends Model
         parent::boot();
     }
 
+    function getIndexName()
+   {
+      return "question_banks";
+   }
+
     protected $mappingProperties = [
         'content' => [
             'type' => 'text',

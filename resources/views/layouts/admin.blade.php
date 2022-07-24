@@ -159,7 +159,7 @@
               <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->routeIs('admin.question-bank.*') ? 'active' : '' }}" href="{{ route('admin.question-bank.index') }}">
                   <i class="nav-main-link-icon fa fa-list-ol"></i>
-                  <span class="nav-main-link-name">Thống kê</span>
+                  <span class="nav-main-link-name">Trang thống kê</span>
                 </a>
               </li>
               <li class="nav-main-item">

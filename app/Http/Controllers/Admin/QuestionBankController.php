@@ -26,7 +26,7 @@ class QuestionBankController extends Controller
 
     public function index(Request $request)
     {
-        $filters = $request->only(['subject_content_ids', 'from', 'to']);
+        $filters = $request->only(['content', 'subject_content_ids', 'from', 'to']);
         $questions = $this->questionBankService->getQuestionBank($filters);
         $waitingList = $this->questionBankService->allWaitingAcceptQuestions();
         $subjectContents = $this->subjectService->getSubjectContents();
@@ -90,7 +90,7 @@ class QuestionBankController extends Controller
 
     public function export(Request $request)
     {
-        $filters = $request->only(['subject_content_ids', 'from', 'to', 'type']);
+        $filters = $request->only(['subject_content_ids', 'from', 'to', 'type', 'ids', 'export_type']);
 
         return $this->questionBankService->export($filters);
     }

@@ -1,12 +1,8 @@
 build:
 	docker-compose build
 
-build-mix:
-	docker-compose -f build-mix.yml build
-
 run:
 	make build
-	make build-mix
 	docker-compose up -d --force-recreate
 
 reload:
@@ -17,6 +13,7 @@ init:
 	docker-compose exec -T php sh -c "php artisan key:generate"
 	docker-compose exec -T php sh -c "php artisan migrate"
 	docker-compose exec -T php sh -c "php artisan db:seed"
+	docker-compose exec -T php sh -c "php artisan question:index"
 
 install:
 	docker-compose exec -T php sh -c "php composer.phar install"

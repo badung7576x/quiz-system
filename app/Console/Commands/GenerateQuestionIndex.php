@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Question;
+use App\Models\QuestionBank;
 use Illuminate\Console\Command;
 
 class GenerateQuestionIndex extends Command
@@ -12,7 +12,7 @@ class GenerateQuestionIndex extends Command
      *
      * @var string
      */
-    protected $signature = 'question:generate-index';
+    protected $signature = 'question:index';
 
     /**
      * The console command description.
@@ -29,9 +29,9 @@ class GenerateQuestionIndex extends Command
     public function handle()
     {
         $this->info('Generating question index...');
-        Question::createIndex($shards = null, $replicas = null);
-        Question::putMapping($ignoreConflicts = true);
-        Question::addAllToIndex();
+        // QuestionBank::createIndex($shards = null, $replicas = null);
+        // QuestionBank::putMapping($ignoreConflicts = true);
+        QuestionBank::addAllToIndex();
         $this->info('Question index generated successfully!');
     }
 }

@@ -30,8 +30,8 @@ class ExamSetRequest extends FormRequest
             'type' => 'required|numeric',
             'subject_id' => 'required|integer',
             'subject_content_ids' => 'required|array',
-            'execute_time' => 'required|numeric',
-            'total_question' => 'required|integer',
+            'execute_time' => 'required|numeric|min:1',
+            'total_question' => 'required|integer|min:1',
         ];
     }
 

@@ -14,7 +14,7 @@ return array(
     */
 
     'config' => [
-        'hosts'     => ['localhost:9200'],
+        'hosts'     => ['elasticsearch:9200'],
         'retries'   => 1,
     ],
 
@@ -27,6 +27,6 @@ return array(
     | Elasticquent models.
     */
 
-    'default_index' => 'questions',
+    'default_index' => 'question_banks',
 
 );

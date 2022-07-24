@@ -1,19 +1,19 @@
 no,subject_id,subject_content_id,level,type,content,image,answer1,answer2,answer3,answer4,correct_answer,score,created_by
-1,1,1,1,1,"Choose the words that are not stressed in the following sentences. <br>This tour takes you to the outskirts of Hue.",,"tour","takes","outskirts","of",4,1,4
-2,1,1,1,1,"Choose the words that are not stressed in the following sentences. <br>During their stay in Hanoi, most tourists insist on a trip to Van Phuc Silk Village.",,"stay","in","tourists","Van Phuc",2,1,4
-3,1,1,1,1,"Choose the words that are not stressed in the following sentences. <br>Banh chung of Tranh Khuc village is famous for its distinctive flavour.",,"Banh chung","Tranh Khuc","famous","its",4,1,4
-4,1,1,1,1,"Choose the words that are not stressed in the following sentences. <br>Nhat Tan peach flowers have become a brand of Hanoi.",,"peach","brand","a","Ha Noi",3,1,4
-5,1,1,1,1,"Choose the words that are not stressed in the following sentences. <br>Pomelos from Phu Dien Village in Ha Noi is the most famous for its special taste.",,"pomelos","Phu Dien","famous","its",4,1,4
-6,1,1,1,1,"Choose the words that are not stressed in the following sentences. <br>For Hmong women, traditional clothing consists of an outer garment with a colorful and decorative collar.",,"for","Hmong","traditional","garment",1,1,4
-7,1,1,1,1,"Choose the words that are not stressed in the following sentences. <br>Not only domestically famous, products of the village have been in many countries around the world.",,"famous","products","village","the",4,1,4
-8,1,1,1,1,"Choose the words that are not stressed in the following sentences. <br>Last year I visited the Somerset Levels.",,"last","I","the","Somerset Levels",3,1,4
-9,1,1,1,1,"Choose the words that are not stressed in the following sentences. <br>I should practice more for the competition.",,"I","practice","for","competition",3,1,4
-9,1,1,1,1,"Choose the words that are not stressed in the following sentences. <br>He lost the key, so he couldn’t get into the house.",,"lost","key","get","the",3,1,4
-10,1,1,1,1,"Choose the best answer. <br>He works as a/ an ...... in his uncle’s workshop.",,"attraction","artisan","embroider","purchase",2,1,4
-11,1,1,1,1,"Choose the best answer. <br>Vietnamese ...... is now available to purchase online.",,"lacquer","lacquers","lacquerware","lacqueres",3,1,4
-12,1,1,1,1,"Choose the best answer. <br>Those handicrafts may face the challenges of losing their ......",,"authenticity","sculpture","surface","craft",4,1,4
-13,1,1,1,1,"Choose the best answer. <br>I know some interesting tourist ...... in the city that you would love to visit.",,"sculptures","attractions","handicrafts","embroidered",2,1,4
-14,1,1,1,1,"Choose the best answer. <br>The scarf embroidered with gold ...... is the most expensive one in our shop.",,"frame","layer","thread","games",3,1,4
+1,1,1,1,1,"Choose the words that are not stressed in the following sentences: This tour takes you to the outskirts of Hue.",,"tour","takes","outskirts","of",4,1,4
+2,1,1,1,1,"Choose the words that are not stressed in the following sentences: During their stay in Hanoi, most tourists insist on a trip to Van Phuc Silk Village.",,"stay","in","tourists","Van Phuc",2,1,4
+3,1,1,1,1,"Choose the words that are not stressed in the following sentences: Banh chung of Tranh Khuc village is famous for its distinctive flavour.",,"Banh chung","Tranh Khuc","famous","its",4,1,4
+4,1,1,1,1,"Choose the words that are not stressed in the following sentences: Nhat Tan peach flowers have become a brand of Hanoi.",,"peach","brand","a","Ha Noi",3,1,4
+5,1,1,1,1,"Choose the words that are not stressed in the following sentences: Pomelos from Phu Dien Village in Ha Noi is the most famous for its special taste.",,"pomelos","Phu Dien","famous","its",4,1,4
+6,1,1,1,1,"Choose the words that are not stressed in the following sentences: For Hmong women, traditional clothing consists of an outer garment with a colorful and decorative collar.",,"for","Hmong","traditional","garment",1,1,4
+7,1,1,1,1,"Choose the words that are not stressed in the following sentences: Not only domestically famous, products of the village have been in many countries around the world.",,"famous","products","village","the",4,1,4
+8,1,1,1,1,"Choose the words that are not stressed in the following sentences: Last year I visited the Somerset Levels.",,"last","I","the","Somerset Levels",3,1,4
+9,1,1,1,1,"Choose the words that are not stressed in the following sentences: I should practice more for the competition.",,"I","practice","for","competition",3,1,4
+9,1,1,1,1,"Choose the words that are not stressed in the following sentences: He lost the key, so he couldn’t get into the house.",,"lost","key","get","the",3,1,4
+10,1,1,1,1,"Choose the best answer: He works as a/ an ...... in his uncle’s workshop.",,"attraction","artisan","embroider","purchase",2,1,4
+11,1,1,1,1,"Choose the best answer: Vietnamese ...... is now available to purchase online.",,"lacquer","lacquers","lacquerware","lacqueres",3,1,4
+12,1,1,1,1,"Choose the best answer: Those handicrafts may face the challenges of losing their ......",,"authenticity","sculpture","surface","craft",4,1,4
+13,1,1,1,1,"Choose the best answer: I know some interesting tourist ...... in the city that you would love to visit.",,"sculptures","attractions","handicrafts","embroidered",2,1,4
+14,1,1,1,1,"Choose the best answer: The scarf embroidered with gold ...... is the most expensive one in our shop.",,"frame","layer","thread","games",3,1,4
 15,1,1,1,1,"Choose the options that best fit the blanks. <br>The boys are playing games, ...... the girls are watching TV.",,"so","nor","and","then",3,1,4
 16,1,1,1,1,"Choose the options that best fit the blanks. <br>I tried my best in the final test, ...... the result was not as good as I expected.",,"but","so","for","then",1,1,4
 17,1,1,1,1,"Choose the best option to complete the sentences. <br>He was thinking of passing ...... the workshop to his eldest son.",,"with","to","down","and",3,1,4
@@ -23,10 +23,10 @@ no,subject_id,subject_content_id,level,type,content,image,answer1,answer2,answer
 21,1,2,1,1,"Choose the word which has a different stress pattern from the others.",,"affordable","environment","variety","indicator",4,1,4
 22,1,2,1,1,"Choose the word which has a different stress pattern from the others.",,"handicraft","lacquerware","artisan","pottery",4,1,4
 23,1,2,1,1,"Choose the word which has a different stress pattern from the others.",,"historical","embroidery","authority","architecture",4,1,4
-24,1,2,1,1,"Complete the sentences using the given words.<br>Tourists can see a wide ...... of hand-made things at the event.",,"lot","variety","authority","many",2,1,4
-25,1,2,1,1,"Complete the sentences using the given words.<br>He was hired for the position because he is .......",,"reliability","reliably","reliable","reliaty",3,1,4
-26,1,2,1,1,"Complete the sentences using the given words.<br>There are many stores in the ...... area of the city.",,"downtown","suburb","sea","mountain",1,1,4
-27,1,2,1,1,"Complete the sentences using the given words.<br>The bronze casting craft in Viet Nam dated back from the age of King An Duong Vuong ....... ancient bronze arrowheads were made.",,"because","although","so","when",4,1,4
+24,1,2,1,1,"Complete the sentences using the given words: Tourists can see a wide ...... of hand-made things at the event.",,"lot","variety","authority","many",2,1,4
+25,1,2,1,1,"Complete the sentences using the given words: He was hired for the position because he is .......",,"reliability","reliably","reliable","reliaty",3,1,4
+26,1,2,1,1,"Complete the sentences using the given words: There are many stores in the ...... area of the city.",,"downtown","suburb","sea","mountain",1,1,4
+27,1,2,1,1,"Complete the sentences using the given words: The bronze casting craft in Viet Nam dated back from the age of King An Duong Vuong ....... ancient bronze arrowheads were made.",,"because","although","so","when",4,1,4
 28,1,3,1,1,"Choose the word which has a different stress pattern from the others.",,"empathise","embarrassed","cognitive","adulthood",2,1,4
 29,1,3,1,1,"Choose the word which has a different stress pattern from the others.",,"neighbourhood","assignment","emotion","supportive",1,1,4
 30,1,3,1,1,"Choose the word which has a different stress pattern from the others.",,"experience","emotional","emergency","favourable",1,1,4
@@ -54,6 +54,6 @@ no,subject_id,subject_content_id,level,type,content,image,answer1,answer2,answer
 52,1,8,1,1,"Choose the word which has a different stress pattern from the others.",,"describe","enter","agree","replace",2,1,4
 53,1,8,1,1,"Choose the word which has a different stress pattern from the others.",,"station","student","disease","disease",3,1,4
 54,1,8,1,1,"Choose the word which has a different stress pattern from the others.",,"solution","physician","confusion","poverty",4,1,4
-55,1,8,1,1,"Choose the best answer for each of the following sentences.<br> ...... have enough apples, she’ll make an apple pie this afternoon.",,"Should she","If she","Will she","Unless she",1,1,4
-56,1,8,1,1,"Choose the best answer for each of the following sentences.<br> If you ...... to me, you wouldn’t have got so much trouble.",,"listened","would listen","had listened","would have listened",3,1,4
-57,1,8,1,1,"Choose the best answer for each of the following sentences.<br> If you don’t know how to spell a word, you ...... look it up in the dictionary.",,"must","will","should","ought",3,1,4
+55,1,8,1,1,"Choose the best answer for each of the following sentences:  ...... have enough apples, she’ll make an apple pie this afternoon.",,"Should she","If she","Will she","Unless she",1,1,4
+56,1,8,1,1,"Choose the best answer for each of the following sentences:  If you ...... to me, you wouldn’t have got so much trouble.",,"listened","would listen","had listened","would have listened",3,1,4
+57,1,8,1,1,"Choose the best answer for each of the following sentences:  If you don’t know how to spell a word, you ...... look it up in the dictionary.",,"must","will","should","ought",3,1,4
