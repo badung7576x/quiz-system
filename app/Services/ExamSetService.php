@@ -25,14 +25,13 @@ class ExamSetService
 
   public function create($data)
   {
-    $user = auth()->user();
     DB::beginTransaction();
     try {
       $numOfSet = $data['num_of_set'];
       $examSet = ExamSet::create($data);
 
       $numOfQuestions = $data['total_question'];
-      $totalQuestionCount = QuestionBank::where('subject_id', $user->subject_id)->count();
+      $totalQuestionCount = QuestionBank::active()->count();
 
       if ($totalQuestionCount < $numOfQuestions * GENERATE_RATIO) {
         throw new Exception('Số lượng câu hỏi trong ngân hàng đề không đủ');

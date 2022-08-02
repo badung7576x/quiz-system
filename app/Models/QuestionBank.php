@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Elasticquent\ElasticquentTrait;
+// use Elasticquent\ElasticquentTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class QuestionBank extends Model
 {
-    use HasFactory, ElasticquentTrait, SoftDeletes;
+    use HasFactory, Searchable, SoftDeletes;
 
     protected $table = 'question_banks';
 
@@ -32,18 +33,35 @@ class QuestionBank extends Model
     {
         parent::boot();
     }
+    
+    /**
+     * Get the name of the index associated with the model.
+     *
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return 'question_banks';
+    }
 
-    function getIndexName()
-   {
-      return "question_banks";
-   }
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return [
+            'content' => $this->content,
+        ];
+    }
 
-    protected $mappingProperties = [
-        'content' => [
-            'type' => 'text',
-            "analyzer" => "standard",
-        ],
-    ];
+    public function scopeActive($query)
+    {
+        $user = auth()->user();
+        
+        return $query->where('subject_id', $user->subject_id);
+    }
 
     public function answers()
     {

@@ -168,7 +168,7 @@ return [
          * Package Service Providers...
          */
         // Maatwebsite\Excel\ExcelServiceProvider::class,
-        Elasticquent\ElasticquentServiceProvider::class,
+        // Elasticquent\ElasticquentServiceProvider::class,
 
         /*
          * Application Service Providers...

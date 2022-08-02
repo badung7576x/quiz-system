@@ -3,8 +3,8 @@
     <div>
       <span style="font-weight: 600">Câu hỏi: </span>
       @php
-          $cont = preg_replace('<p>', 'span', $question->content, 1);
-          $cont = preg_replace('</p>', '/span', $cont, 1);
+          $cont = preg_replace('<p>', '', $question->content, 1);
+          $cont = preg_replace('</p>', '', $cont, 1);
       @endphp
       <span>{!! $cont !!}</span> (<span>{{ $question->score }} điểm</span>)
     </div>
@@ -13,8 +13,8 @@
     <div class="col-12 ps-5">
       <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{{ config('fixeddata.answer_index')[$idx + 1] }}.</span>
       @php
-        $ans = preg_replace('<p>', 'span', $answer->content_1, 1);
-        $ans = preg_replace('</p>', '/span', $ans, 1);
+        $ans = preg_replace('<p>', '', $answer->content_1, 1);
+        $ans = preg_replace('</p>', '', $ans, 1);
       @endphp
       <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{!! $ans !!}</span>
     </div>

@@ -31,5 +31,3 @@ RUN apk add --no-cache shadow \
  && usermod -u $uid nginx
 
 WORKDIR /app
-# COPY --chown=$uid:$gid --from=su-php:8.0 /app ./
-# COPY --chown=$uid:$gid --from=build-mix /app/public ./public

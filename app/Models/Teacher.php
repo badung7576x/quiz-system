@@ -56,6 +56,13 @@ class Teacher extends Authenticatable
     protected $attributes = [
     ];
 
+    public function scopeActive($query)
+    {
+        $user = auth()->user();
+        
+        return $query->where('subject_id', $user->subject_id);
+    }
+
     public function dateOfBirth(): Attribute
     {
         return Attribute::make(

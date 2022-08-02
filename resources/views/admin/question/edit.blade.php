@@ -66,7 +66,7 @@
               <div class="row mb-3">
                 <label class="col-sm-12 col-form-label">Loại câu hỏi</label>
                 <div class="col-sm-12">
-                  <select id="question-type" class="form-select" name="type">
+                  <select id="question-type" class="form-select" name="type" disabled>
                     @foreach (config('fixeddata.question_type') as $type => $label)
                       <option value="{{ $type }}" @selected(old('level', $question->type) == $type)>{{ $label }}</option>
                     @endforeach
@@ -96,7 +96,7 @@
         </div>
         <div class="block-content block-content-full">
           <div class="row" id="question-form">
-            @include('admin.question._multichoice-edit')
+            @include('admin.question._multichoice.edit')
           </div>
         </div>
       </div>
@@ -112,7 +112,7 @@
   <script src="{{ asset('js/plugins/ckeditor/ckeditor.js') }}"></script>
   <script>
     $(document).ready(function() {
-      initCkeditor();
+      // initCkeditor();
     });
 
     function initCkeditor() {

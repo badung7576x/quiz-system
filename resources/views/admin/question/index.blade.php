@@ -64,9 +64,9 @@
             <thead>
               <tr style="">
                 <th style="width: 6%;" class="text-center">STT</th>
-                <th style="width: 25%" class="text-truncate">Câu hỏi</th>
-                <th style="width: 10%;" class="text-center">Trạng thái</th>
-                <th style="width: 10%;" class="text-center">Thời gian tạo</th>
+                <th style="width: 40%" class="text-truncate">Câu hỏi</th>
+                <th style="width: 15%;" class="text-center">Trạng thái</th>
+                <th style="width: 15%;" class="text-center">Thời gian tạo</th>
                 <th style="width: 14%;" class="text-center">Thao tác</th>
               </tr>
             </thead>
@@ -83,9 +83,11 @@
                         <i class="fa fa-fw fa-eye"></i>
                       </a>
                       @if ($question->created_by == auth()->user()->id)
-                        <a href="{{ route('admin.question.edit', ['question' => $question->id]) }}" class="btn btn-sm btn-alt-secondary" title="{{ __('Chỉnh sửa') }}">
-                          <i class="fa fa-fw fa-pencil-alt"></i>
-                        </a>
+                        @if($question->status < QUESTION_STATUS_REVIEWED)
+                          <a href="{{ route('admin.question.edit', ['question' => $question->id]) }}" class="btn btn-sm btn-alt-secondary" title="{{ __('Chỉnh sửa') }}">
+                            <i class="fa fa-fw fa-pencil-alt"></i>
+                          </a>
+                        @endif
                         <form method="POST" action="{{ route('admin.question.destroy', ['question' => $question->id]) }}" id="delete_form_{{ $question->id }}">
                           @csrf
                           @method('delete')

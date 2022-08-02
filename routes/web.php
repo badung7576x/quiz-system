@@ -66,7 +66,7 @@ Route::group([
     Route::post('questions/{question}/comments/{comment}/resolved', 'CommentController@resolved')->name('comment.resolved');
 
     // Exam set
-    Route::get('exam-sets/{exam_set}/pdf/{exam_set_detail}', 'ExamSetController@pdf')->name('exam-set.pdf');
+    Route::get('exam-sets/{exam_set}/pdf/{exam_set_detail}', 'ExamSetController@viewPdf')->name('exam-set.pdf');
     Route::get('exam-sets/{exam_set}/setting', 'ExamSetController@setting')->name('exam-set.setting');
     Route::post('exam-sets/{exam_set}/setting', 'ExamSetController@saveSetting')->name('exam-set.setting.save');
     Route::get('exam-sets/{exam_set}/download/{exam_set_detail}', 'ExamSetController@downloadPdf')->name('exam-set.download');

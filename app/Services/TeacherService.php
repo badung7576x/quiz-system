@@ -9,7 +9,7 @@ class TeacherService
 
   public function all()
   {
-    return Teacher::where('role', '!=', ROLE_ADMIN)->with('subject:id,name')->latest()->get();
+    return Teacher::where('role', '!=', ROLE_ADMIN)->with('subject:id,name')->orderBy('role', 'asc')->get();
   }
 
   public function allTeacherBySubject()
@@ -20,17 +20,15 @@ class TeacherService
       return $this->all();
     }
     
-    return Teacher::where('subject_id', $user->subject_id)
-      ->where('id', '!=', $user->id)
+    return Teacher::active()
+      // ->where('id', '!=', $user->id)
       ->where('role', '!=', ROLE_ADMIN)
-      ->with('subject:id,name')->latest()->get();
+      ->with('subject:id,name')->orderBy('role', 'asc')->get();
   }
 
   public function getSpecialTeachers()
   {
-    $user = auth()->user();
-    return Teacher::where('subject_id', $user->subject_id)
-      ->whereIn('role', [ROLE_SPECIALIST_TEACHER, ROLE_PRO_CHIEF])->latest()->get();
+    return Teacher::active()->whereIn('role', [ROLE_SPECIALIST_TEACHER, ROLE_PRO_CHIEF])->latest()->get();
   }
 
   public function create(array $data)

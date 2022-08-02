@@ -8,7 +8,19 @@
       <div class="block-header block-header-default">
         <h3 class="block-title">Cập nhật nội dung</h3>
         <div class="block-options">
-          <a href="{{ route('admin.subject.index') }}" class="btn btn-sm btn-secondary">
+          @php
+            $previousUrl = explode('?', url()->previous())[0];
+            if ($previousUrl == route('admin.dashboard.index')) {
+                session()->put('backUrl', url()->previous());
+                $backUrl = url()->previous();
+            } if ($previousUrl == route('admin.subject.index')) {
+                session()->put('backUrl', url()->previous());
+                $backUrl = url()->previous();
+            } else {
+                $backUrl = session()->get('backUrl');
+            }
+          @endphp
+          <a href="{{ $backUrl }}" class="btn btn-sm btn-secondary">
               <i class="fa fa-arrow-left"></i> Quay lại
           </a>
           <button type="submit" class="btn btn-sm btn-outline-success" onclick="createSubject()">

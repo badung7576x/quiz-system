@@ -104,6 +104,57 @@ class TeacherSeeder extends Seeder
             'status' => 1
         ]);
 
+        Teacher::create([
+            'code' => 'TA004',
+            'avatar' => '',
+            'fullname' => 'Nguyễn Hoàng Bách',
+            'email' => 'english.teacher04@gmail.com',
+            'password' => '123123',
+            'phone_number' => '0981125719',
+            'date_of_birth' => '1985-01-21',
+            'title' => 'Giáo viên',
+            'address' => 'Thanh Xuân, Hà Nội',
+            'identity_number' => '079215566001',
+            'subject_id' => 1,
+            'gender' => 1,
+            'role' => 2,
+            'status' => 1
+        ]);
+
+        Teacher::create([
+            'code' => 'TA005',
+            'avatar' => '',
+            'fullname' => 'Lê Viết Mạnh',
+            'email' => 'english.teacher05@gmail.com',
+            'password' => '123123',
+            'phone_number' => '0981125719',
+            'date_of_birth' => '1985-01-21',
+            'title' => 'Giáo viên',
+            'address' => 'Thanh Xuân, Hà Nội',
+            'identity_number' => '079215888801',
+            'subject_id' => 1,
+            'gender' => 1,
+            'role' => 2,
+            'status' => 1
+        ]);
+
+        Teacher::create([
+            'code' => 'TA006',
+            'avatar' => '',
+            'fullname' => 'Nguyễn Linh Đan',
+            'email' => 'english.teacher06@gmail.com',
+            'password' => '123123',
+            'phone_number' => '0981125719',
+            'date_of_birth' => '1985-01-21',
+            'title' => 'Giáo viên',
+            'address' => 'Thanh Xuân, Hà Nội',
+            'identity_number' => '079555888801',
+            'subject_id' => 1,
+            'gender' => 0,
+            'role' => 4,
+            'status' => 1
+        ]);
+
 
         Teacher::create([
             'code' => 'TH099',

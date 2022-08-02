@@ -15,48 +15,51 @@
         </div>
       </div>
       <div class="block-content block-content-full">
-        <table class="table table-striped table-vcenter js-dataTable-full" id="exam-table">
-          <thead>
-            <tr style="">
-              <th style="width: 6%;" class="text-center">STT</th>
-              <th style="width: 10%;" class="text-center">Mã GV</th>
-              <th style="width: 25%;" class="text-center">Họ và tên</th>
-              <th style="width: 15%;" class="text-center">Môn học</th>
-              <th style="width: 15%;" class="text-center">Email</th>
-              <th style="width: 10%;" class="text-center">Giới tính</th>
-              <th style="width: 10%;" class="text-center">Ngày sinh</th>
-              <th style="width: 14%;" class="text-center">Thao tác</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($teachers as $teacher)
-              <tr>
-                <th class="text-center">{{ $loop->iteration }}</th>
-                <th class="text-center fw-normal">{{ $teacher->code }}</th>
-                <th class="text-center fw-normal">{{ $teacher->fullname }}</th>
-                <th class="text-center fw-normal">{{ $teacher->subject->name }}</th>
-                <th class="text-center fw-normal">{{ $teacher->email }}</th>
-                <th class="text-center fw-normal">{{ GENDER[$teacher->gender] }}</th>
-                <th class="text-center fw-normal">{{ $teacher->date_of_birth }}</th>
-                <th class="text-center fw-normal">
-                  <div class="btn-group">
-                    <a href="{{ route('admin.teacher.edit', ['teacher' => $teacher->id]) }}" class="btn btn-sm btn-alt-secondary" title="{{ __('Chỉnh sửa') }}">
-                      <i class="fa fa-fw fa-pencil-alt"></i>
-                    </a>
-                    <form method="POST" action="{{ route('admin.teacher.destroy', ['teacher' => $teacher->id]) }}" id="delete_form_{{ $teacher->id }}">
-                      @csrf
-                      @method('delete')
-                      <button type="button" class="btn btn-sm btn-alt-secondary text-danger delete-btn" data-id="{{ $teacher->id }}"
-                        data-name="{{ $teacher->fullname }}" data-bs-toggle="tooltip" title="{{ __('Xóa') }}">
-                        <i class="fa fa-fw fa-times"></i>
-                      </button>
-                    </form>
-                  </div>
-                </th>
+        <div class="table-responsive">
+
+          <table class="table table-striped table-vcenter js-dataTable-full" id="exam-table">
+            <thead>
+              <tr style="">
+                <th style="width: 6%;" class="text-center">STT</th>
+                <th style="width: 10%;" class="text-center">Mã GV</th>
+                <th style="width: 25%;" class="text-center">Họ và tên</th>
+                @can('is_admin')<th style="width: 15%;" class="text-center">Môn học</th> @endcan
+                <th style="width: 15%;" class="text-center">Email</th>
+                <th style="width: 10%;" class="text-center">Giới tính</th>
+                <th style="width: 10%;" class="text-center">Vai trò</th>
+                <th style="width: 14%;" class="text-center">Thao tác</th>
               </tr>
-            @endforeach
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              @foreach ($teachers as $teacher)
+                <tr>
+                  <th class="text-center">{{ $loop->iteration }}</th>
+                  <th class="text-center fw-normal">{{ $teacher->code }}</th>
+                  <th class="text-center fw-normal">{{ $teacher->fullname }}</th>
+                  @can('is_admin') <th class="text-center fw-normal">{{ $teacher->subject->name }}</th> @endcan
+                  <th class="text-center fw-normal">{{ $teacher->email }}</th>
+                  <th class="text-center fw-normal">{{ GENDER[$teacher->gender] }}</th>
+                  <th class="text-center fw-normal">{{ config('fixeddata.role')[$teacher->role] }}</th>
+                  <th class="text-center fw-normal">
+                    <div class="btn-group">
+                      <a href="{{ route('admin.teacher.edit', ['teacher' => $teacher->id]) }}" class="btn btn-sm btn-alt-secondary" title="{{ __('Chỉnh sửa') }}">
+                        <i class="fa fa-fw fa-pencil-alt"></i>
+                      </a>
+                      <form method="POST" action="{{ route('admin.teacher.destroy', ['teacher' => $teacher->id]) }}" id="delete_form_{{ $teacher->id }}">
+                        @csrf
+                        @method('delete')
+                        <button type="button" class="btn btn-sm btn-alt-secondary text-danger delete-btn" data-id="{{ $teacher->id }}"
+                          data-name="{{ $teacher->fullname }}" data-bs-toggle="tooltip" title="{{ __('Xóa') }}">
+                          <i class="fa fa-fw fa-times"></i>
+                        </button>
+                      </form>
+                    </div>
+                  </th>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

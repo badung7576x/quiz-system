@@ -123,7 +123,7 @@ class ExamSetController extends Controller
         return $this->redirectSuccess('admin.exam-set.index', 'delete');
     }
 
-    public function pdf(ExamSet $examSet, ExamSetDetail $examSetDetail)
+    public function viewPdf(ExamSet $examSet, ExamSetDetail $examSetDetail)
     {
         $examSet = $this->examSetService->formatData($examSet, $examSetDetail);
 
@@ -154,18 +154,18 @@ class ExamSetController extends Controller
         return $pdf->stream();
     }
 
-    public function downloadWord(ExamSet $examSet, ExamSetDetail $examSetDetail)
-    {
-        try {
-            $wordFile = $this->examSetService->downloadWord($examSet, $examSetDetail);
-            ob_end_clean();
-            $headers = [
-                'Content-Type' => 'application/octet-stream',
-                'Content-Disposition' => 'attachment;filename="test.docx"'
-            ];
-            return response()->file($wordFile, $headers)->deleteFileAfterSend(true);
-        } catch (Throwable $e) {
-            report($e);
-        }
-    }
+    // public function downloadWord(ExamSet $examSet, ExamSetDetail $examSetDetail)
+    // {
+    //     try {
+    //         $wordFile = $this->examSetService->downloadWord($examSet, $examSetDetail);
+    //         ob_end_clean();
+    //         $headers = [
+    //             'Content-Type' => 'application/octet-stream',
+    //             'Content-Disposition' => 'attachment;filename="test.docx"'
+    //         ];
+    //         return response()->file($wordFile, $headers)->deleteFileAfterSend(true);
+    //     } catch (Throwable $e) {
+    //         report($e);
+    //     }
+    // }
 }

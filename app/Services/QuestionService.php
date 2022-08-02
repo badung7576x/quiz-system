@@ -27,11 +27,8 @@ class QuestionService
 
   public function getNonAssignQuestions()
   {
-    $user = auth()->user();
-
     return Question::with(['subject:name,id', 'teacher:id,fullname'])
-      ->where('subject_id', $user->subject_id)
-      ->whereNull('review_by')
+      ->active()// ->whereNull('review_by')
       ->whereStatus(QUESTION_STATUS_CREATED)
       ->latest()->get();
   }

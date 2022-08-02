@@ -2,7 +2,7 @@
 
 return [
   'question_type' => [
-    QUESTION_MULTI_CHOICE => 'Trắc nghiệm chọn một đáp án',
+    QUESTION_MULTI_CHOICE => 'Trắc nghiệm nhiều đáp án',
     // QUESTION_SHORT_ANSWER => 'Trả lời ngắn',
     // QUESTION_MATCHING => 'Nối đáp án',
     // QUESTION_TRUE_FALSE => 'Đúng sai'

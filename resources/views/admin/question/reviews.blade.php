@@ -17,9 +17,9 @@
             <thead>
               <tr style="">
                 <th style="width: 6%;" class="text-center">STT</th>
-                <th style="width: 45%;" class="text-center">Câu hỏi</th>
+                <th style="width: 40%;" class="text-center">Câu hỏi</th>
                 <th style="width: 15%;" class="text-center">Trạng thái</th>
-                <th style="width: 10%;" class="text-center">Thời gian tạo</th>
+                <th style="width: 15%;" class="text-center">Thời gian tạo</th>
                 <th style="width: 14%;" class="text-center">Thao tác</th>
               </tr>
             </thead>

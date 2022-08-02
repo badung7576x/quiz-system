@@ -17,4 +17,11 @@ class SubjectContent extends Model
         'order',
         'name',
     ];
+    
+    public function scopeActive($query)
+    {
+        $user = auth()->user();
+        
+        return $query->where('subject_id', $user->subject_id);
+    }
 }

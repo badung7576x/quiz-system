@@ -8,7 +8,7 @@
 						<div class="modal-content">
 								<div class="block-rounded block-transparent mb-0 block">
 										<div class="block-header block-header-default">
-												<h3 class="block-title">Thông tin câu hỏi</h3>
+												<h3 class="block-title">Duyệt câu hỏi vào ngân hàng đề</h3>
 												<div class="block-options">
 														<button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
 																<i class="fa fa-fw fa-times"></i>

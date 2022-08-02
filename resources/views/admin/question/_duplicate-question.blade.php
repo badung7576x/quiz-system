@@ -5,8 +5,9 @@
       <div>
         <span style="font-weight: 600">Câu hỏi {{ $num + 1}}: </span>
         @php
-            $cont = preg_replace('<p>', 'span', $q->content, 1);
-            $cont = preg_replace('</p>', '/span', $cont, 1);
+            $cont = preg_replace('<p>', '', $q->content, 1);
+            $cont = preg_replace('</p>', '', $cont, 1);
+            $cont = $q->content;
         @endphp
         <span>{!! $cont !!}</span>
       </div>
@@ -15,8 +16,8 @@
       <div class="col-12 ps-5">
         <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{{ config('fixeddata.answer_index')[$idx + 1] }}.</span>
         @php
-          $ans = preg_replace('<p>', 'span', $answer->content_1, 1);
-          $ans = preg_replace('</p>', '/span', $ans, 1);
+          $ans = preg_replace('<p>', '', $answer->content_1, 1);
+          $ans = preg_replace('</p>', '', $ans, 1);
         @endphp
         <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{!! $ans !!}</span>
       </div>

@@ -15,9 +15,11 @@
             <i class="fa fa-arrow-left"></i> {{ __('Quay lại') }}
           </a>
           @if (auth()->user()->id == $question->created_by)
-            <a class="btn btn-sm btn-info" href="{{ route('admin.question.edit', ['question' => $question->id]) }}">
-              <i class="fa fa-pencil-alt"></i> {{ __('Chỉnh sửa') }}
-            </a>
+            @if($question->status < QUESTION_STATUS_REVIEWED)
+              <a class="btn btn-sm btn-info" href="{{ route('admin.question.edit', ['question' => $question->id]) }}">
+                <i class="fa fa-pencil-alt"></i> {{ __('Chỉnh sửa') }}
+              </a>
+            @endif
             <a class="btn btn-sm btn-danger" href="#" onclick="deleteQuestion()">
               <i class="fa fa-trash"></i> {{ __('Xóa') }}
             </a>

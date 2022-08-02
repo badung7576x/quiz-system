@@ -13,8 +13,8 @@ init:
 	docker-compose exec -T php sh -c "php artisan key:generate"
 	docker-compose exec -T php sh -c "php artisan migrate"
 	docker-compose exec -T php sh -c "php artisan db:seed"
-	docker-compose exec -T php sh -c "php artisan question:index"
-
+	docker-compose exec -T php sh -c "php artisan scout:import 'App\Models\QuestionBank'"
+	
 install:
 	docker-compose exec -T php sh -c "php composer.phar install"
 
@@ -26,3 +26,6 @@ clean:
 
 destroy:
 	docker-compose down
+
+index:
+	docker-compose exec -T php sh -c "php artisan scout:import 'App\Models\QuestionBank'"

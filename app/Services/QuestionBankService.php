@@ -25,8 +25,7 @@ class QuestionBankService
 
   public function getQuestionBank(array $filters)
   {
-    $user = auth()->user();
-    $query = QuestionBank::with(['teacher:id,fullname'])->where('subject_id', $user->subject_id);
+    $query = QuestionBank::with(['teacher:id,fullname'])->active();
 
     // if (array_key_exists('content', $filters) && $filters['content']) {
     //   $query->search($filters['content']);
@@ -49,10 +48,8 @@ class QuestionBankService
 
   public function allWaitingAcceptQuestions()
   {
-    $user = auth()->user();
     return Question::with(['subject:name,id', 'teacher:id,fullname'])
-      ->where('subject_id', $user->subject_id)
-      ->whereStatus(QUESTION_STATUS_REVIEWED)
+      ->active()->whereStatus(QUESTION_STATUS_REVIEWED)
       ->latest()->get();
   }
 
@@ -72,7 +69,10 @@ class QuestionBankService
         'message' => "Đã từ chối thêm câu hỏi vào ngân hàng đề thi."
       ];
     } else {
-      $duplicateQuestions = QuestionBank::searchByQuery(['match' => ['content' => 'Choose the words that are not stressed in the following sentences.']]);
+      $searchKey = preg_replace('<p>', '', $question->content);
+      $searchKey = preg_replace('/[^A-Za-z0-9 .]/', ' ', $searchKey);
+
+      $duplicateQuestions = QuestionBank::search($searchKey)->active()->take(3)->get();
 
       if (count($duplicateQuestions) > 0 && !$ignore) {
         return [
@@ -119,8 +119,7 @@ class QuestionBankService
 
   public function export(array $filters)
   {
-    $user = auth()->user();
-    $query = QuestionBank::with(['teacher:id,fullname'])->where('subject_id', $user->subject_id);
+    $query = QuestionBank::with(['teacher:id,fullname'])->active();
 
     if (array_key_exists('ids', $filters) && $filters['ids']) {
       $query->whereIn('id', explode(",", $filters['ids']));

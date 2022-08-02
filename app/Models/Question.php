@@ -30,9 +30,16 @@ class Question extends BaseModel
     {
         parent::boot();
         static::creating(function ($model) {
-            // $model->created_by = auth()->user()->id;
-            // $model->status = QUESTION_STATUS_CREATED;
+            $model->created_by = auth()->user()->id;
+            $model->status = QUESTION_STATUS_CREATED;
         });
+    }
+
+    public function scopeActive($query)
+    {
+        $user = auth()->user();
+        
+        return $query->where('subject_id', $user->subject_id);
     }
 
     public function answers()

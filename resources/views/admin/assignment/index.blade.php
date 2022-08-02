@@ -59,13 +59,13 @@
             <thead>
               <tr style="">
                 <th style="width: 4%;" class="text-center">
-                  <input type="checkbox" class="form-check-input" name="all_question" value="1">
+                  {{-- <input type="checkbox" class="form-check-input" name="all_question" value="1" onclick="checkedAll()"> --}}
                 </th>
-                <th style="width: 10%;" class="text-center">STT</th>
-                <th style="width: 50%" class="text-truncate">Câu hỏi</th>
-                <th style="width: 12%;" class="text-center">Tạo bởi</th>
-                <th style="width: 12%;" class="text-center">Thời gian tạo</th>
-                <th style="width: 12%;" class="text-center">Thao tác</th>
+                <th style="width: 6%;" class="text-center">STT</th>
+                <th style="width: 60%" class="text-truncate">Câu hỏi</th>
+                <th style="width: 10%;" class="text-center">Tạo bởi</th>
+                <th style="width: 10%;" class="text-center">Thời gian tạo</th>
+                <th style="width: 10%;" class="text-center">Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -109,6 +109,14 @@
       } else {
         $('#questionId').val(questionIds);
         $('#assign-teacher').modal('show');
+      }
+    }
+
+    function checkedAll() {
+      if ($("input[name=all_question]").val() == 1) {
+        $("input[type=checkbox]").prop('checked', true);
+      } else {
+        $("input[type=checkbox]").prop('checked', false);
       }
     }
   </script>

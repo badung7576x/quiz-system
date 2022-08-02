@@ -16,7 +16,7 @@
       <div class="block-content block-content-full">
         <div class="row">
           @foreach($examSets as $examSet)
-            <div class="col-sm-6 col-md-3 col-lg-2">
+            <div class="col-sm-6 col-md-4 col-xl-2 col-lg-3">
               <div class="block block-rounded bg-gray-light">
                 <div class="block-content block-content-full text-center bg-success">
                   <div class="item item-2x item-circle py-3 my-3 mx-auto bg-white-10">
