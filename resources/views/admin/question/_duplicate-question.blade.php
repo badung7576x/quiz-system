@@ -4,25 +4,36 @@
     <div class="col-12">
       <div>
         <span style="font-weight: 600">Câu hỏi {{ $num + 1}}: </span>
-        @php
-            $cont = preg_replace('<p>', '', $q->content, 1);
-            $cont = preg_replace('</p>', '', $cont, 1);
-            $cont = $q->content;
-        @endphp
-        <span>{!! $cont !!}</span>
+        <span>{!! $q->content !!}</span>
       </div>
     </div>
-    @foreach ($q->answers as $idx => $answer)
-      <div class="col-12 ps-5">
-        <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{{ config('fixeddata.answer_index')[$idx + 1] }}.</span>
-        @php
-          $ans = preg_replace('<p>', '', $answer->content_1, 1);
-          $ans = preg_replace('</p>', '', $ans, 1);
-        @endphp
-        <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{!! $ans !!}</span>
-      </div>
-    @endforeach
-  </div>
+    @switch($q->type)
+      @case(QUESTION_MULTI_CHOICE)
+        @foreach ($q->answers as $idx => $answer)
+          <div class="col-12 ps-5 mb-1">
+            <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{{ config('fixeddata.answer_index')[$idx + 1] }}.</span>
+            <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{!! $answer->content_1 !!}</span>
+          </div>
+        @endforeach
+        @break
+      @case(QUESTION_TRUE_FALSE)
+        <table class="table table-bordered ms-3 mt-2" style="width: 95%">
+          <tbody>
+            @foreach ($q->answers as $idx => $answer)
+              <tr class="odd">
+                <td class="text-center" style="width: 5%">{{ $idx + 1 }}</td>
+                <td class="fs-sm">{!! $answer->content_1 !!}</td>
+                <td class="fs-sm text-center" style="width: 10%">
+                  {!! $answer->is_correct ? '<span class="text-success">Đúng</span>' : '<span class="text-danger">Sai</span>' !!}
+                </td>
+              </tr>
+            @endforeach
+            </tbody>
+          </table>                
+        @break
+      @default
+    @endswitch
+</div>
 @endforeach
 
 <div class="h5 text-danger text-center">

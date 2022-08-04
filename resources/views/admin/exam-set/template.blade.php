@@ -46,6 +46,16 @@
 						width: 25%;
 				}
 
+				.col-2 {
+						flex: 0 0 auto;
+						width: 20%;
+				}
+
+				.col-10 {
+						flex: 0 0 auto;
+						width: 80%;
+				}
+
 				.box {
 						width: fit-content;
 						height: fit-content;
@@ -126,25 +136,35 @@
 						<div class="col-12">
 								<div>
 										<span class="text-bold">Câu {{ $loop->iteration }}:</span>
-										@php
-												$cont = preg_replace('<p>', 'span', $question->content, 1);
-												$cont = preg_replace('</p>', '/span', $cont, 1);
-										@endphp
-										<span>{!! $cont !!}</span>
+										<span>{!! $question->content !!}</span>
 								</div>
 						</div>
 				</div>
 				<div class="row" style="padding: 2px 40px; margin-bottom: 10px">
-						@foreach ($question->answers as $idx2 => $answer)
-								<div class="{{ $question->format }}">
-										<span class="text-bold">{{ config('fixeddata.answer_index')[$idx2 + 1] }}.</span>
-										@php
-												$ans = preg_replace('<p>', 'span', $answer['content'], 1);
-												$ans = preg_replace('</p>', '/span', $ans, 1);
-										@endphp
-										<span>{!! $ans !!}</span>
-								</div>
-						@endforeach
+						@switch($question->type)
+								@case(QUESTION_MULTI_CHOICE)
+										@foreach ($question->answers as $idx2 => $answer)
+												<div class="{{ $question->format }}">
+														<span class="text-bold">{{ config('fixeddata.answer_index')[$idx2 + 1] }}.</span>
+														<span>{!! $answer['content_1'] !!}</span>
+												</div>
+										@endforeach
+								@break
+
+								@case(QUESTION_TRUE_FALSE)
+										@foreach ($question->answers as $idx2 => $answer)
+												<div class="col-10">
+														<span class="">{{ $idx2 + 1 }}.</span>
+														<span>{!! $answer['content_1'] !!}</span>
+												</div>
+												<div class="col-2">
+													<span class="f-right">.....</span>
+											</div>
+										@endforeach
+								@break
+
+								@default
+						@endswitch
 				</div>
 		@endforeach
 		@if ($setting && $setting->is_display_bottom)
@@ -154,7 +174,7 @@
 						</div>
 				</div>
 		@endif
-		
+
 
 		<br>
 		<br>
@@ -163,17 +183,17 @@
 		<br>
 		<br>
 		<div class="row text-center" style="margin: 5px 0">
-			<div class="col-12" style="margin-bottom: 15px">
-				<span class="text-bold text-underline">ĐÁP ÁN</span>
-			</div>
-			<br>
-			@foreach ($questions as $idx => $question)
-				<div class="col-3 text-left">
-						<span class="text-bold">Câu {{ $loop->iteration }}: </span>
-						<span>{{ config('fixeddata.answer_index')[$question->correct_answer] }}</span>
+				<div class="col-12" style="margin-bottom: 15px">
+						<span class="text-bold text-underline">ĐÁP ÁN</span>
 				</div>
-			@endforeach
-	</div>
+				<br>
+				@foreach ($questions as $idx => $question)
+						<div class="col-3 text-left">
+								<span class="text-bold">Câu {{ $loop->iteration }}: </span>
+								<span>{{ $question->correct_answer }}</span>
+						</div>
+				@endforeach
+		</div>
 		<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 

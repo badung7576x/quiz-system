@@ -88,12 +88,6 @@
         <div class="content-side">
           <ul class="nav-main">
             @can('is_admin')
-              {{-- <li class="nav-main-item">
-                <a class="nav-main-link {{ request()->routeIs('admin.dashboard*') ? 'active' : '' }}" href="{{ route('admin.dashboard.index') }}">
-                  <i class="nav-main-link-icon fa fa-chart-pie"></i>
-                  <span class="nav-main-link-name">Thống kê</span>
-                </a>
-              </li> --}}
               <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->routeIs('admin.teacher*') ? 'active' : '' }}" href="{{ route('admin.teacher.index') }}">
                   <i class="nav-main-link-icon fa fa-users"></i>
@@ -106,12 +100,6 @@
                   <span class="nav-main-link-name">Môn học</span>
                 </a>
               </li>
-              {{-- <li class="nav-main-item">
-                <a class="nav-main-link {{ request()->routeIs('admin.class*') ? 'active' : '' }}" href="{{ route('admin.question.index') }}">
-                  <i class="nav-main-link-icon fa fa-cog"></i>
-                  <span class="nav-main-link-name">Cài đặt hệ thống</span>
-                </a>
-              </li> --}}
             @endcan
             @can('is_teacher')
               <li class="nav-main-item">
@@ -123,35 +111,35 @@
             @endcan
             @can('is_subject_teacher')
               <li class="nav-main-item">
-                <a class="nav-main-link {{ request()->routeIs('admin.question*') ? 'active' : '' }}" href="{{ route('admin.question.index') }}">
-                  <i class="nav-main-link-icon fa fa-question"></i>
-                  <span class="nav-main-link-name">Soạn thảo câu hỏi</span>
-                </a>
-              </li>
-              <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->routeIs('admin.exam-set*') ? 'active' : '' }}" href="{{ route('admin.exam-set.index') }}">
                   <i class="nav-main-link-icon fa fa-layer-group"></i>
                   <span class="nav-main-link-name">Danh sách đề thi</span>
+                </a>
+              </li>
+              <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('admin.question*') ? 'active' : '' }}" href="{{ route('admin.question.index') }}">
+                  <i class="nav-main-link-icon fa fa-question"></i>
+                  <span class="nav-main-link-name">Soạn thảo câu hỏi</span>
                 </a>
               </li>
             @endcan
             @can('is_specialist_teacher')
               <li class="nav-main-item">
-                <a class="nav-main-link {{ request()->routeIs('admin.question*') ? 'active' : '' }}" href="{{ route('admin.question.index') }}">
-                  <i class="nav-main-link-icon fa fa-question"></i>
-                  <span class="nav-main-link-name">Soạn thảo câu hỏi</span>
+                <a class="nav-main-link {{ request()->routeIs('admin.exam-set*') ? 'active' : '' }}" href="{{ route('admin.exam-set.index') }}">
+                  <i class="nav-main-link-icon fa fa-layer-group"></i>
+                  <span class="nav-main-link-name">Danh sách đề thi</span>
                 </a>
               </li>
               <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->routeIs('admin.review.*') ? 'active' : '' }}" href="{{ route('admin.review.question') }}">
                   <i class="nav-main-link-icon fa fa-list-ol"></i>
-                  <span class="nav-main-link-name">Danh sách câu hỏi (chờ review)</span>
+                  <span class="nav-main-link-name">Đánh giá câu hỏi</span>
                 </a>
               </li>
               <li class="nav-main-item">
-                <a class="nav-main-link {{ request()->routeIs('admin.exam-set*') ? 'active' : '' }}" href="{{ route('admin.exam-set.index') }}">
-                  <i class="nav-main-link-icon fa fa-layer-group"></i>
-                  <span class="nav-main-link-name">Danh sách đề thi</span>
+                <a class="nav-main-link {{ request()->routeIs('admin.question*') ? 'active' : '' }}" href="{{ route('admin.question.index') }}">
+                  <i class="nav-main-link-icon fa fa-question"></i>
+                  <span class="nav-main-link-name">Soạn thảo câu hỏi</span>
                 </a>
               </li>
             @endcan
@@ -164,8 +152,8 @@
               </li>
               <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->routeIs('admin.question-bank.*') ? 'active' : '' }}" href="{{ route('admin.question-bank.index') }}">
-                  <i class="nav-main-link-icon fa fa-list-ol"></i>
-                  <span class="nav-main-link-name">Ngân hàng đề</span>
+                  <i class="nav-main-link-icon fa fa-landmark"></i>
+                  <span class="nav-main-link-name">Ngân hàng câu hỏi</span>
                 </a>
               </li>
               <li class="nav-main-item">
@@ -174,12 +162,6 @@
                   <span class="nav-main-link-name">Giáo viên</span>
                 </a>
               </li>
-              {{-- <li class="nav-main-item">
-                <a class="nav-main-link {{ request()->routeIs('admin.subject*') ? 'active' : '' }}" href="{{ route('admin.subject.index') }}">
-                  <i class="nav-main-link-icon fa fa-book-reader"></i>
-                  <span class="nav-main-link-name">Môn học</span>
-                </a>
-              </li> --}}
               <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->routeIs('admin.assignment.*') ? 'active' : '' }}" href="{{ route('admin.assignment.index') }}">
                   <i class="nav-main-link-icon fa fa-user-cog"></i>
@@ -189,7 +171,7 @@
               <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->routeIs('admin.review.question') ? 'active' : '' }}" href="{{ route('admin.review.question') }}">
                   <i class="nav-main-link-icon fa fa-list-ol"></i>
-                  <span class="nav-main-link-name">Câu hỏi chờ duyệt</span>
+                  <span class="nav-main-link-name">Đánh giá câu hỏi</span>
                 </a>
               </li>
               <li class="nav-main-item">

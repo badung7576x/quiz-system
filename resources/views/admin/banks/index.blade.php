@@ -46,13 +46,13 @@
                   <input class="form-check-input" type="radio" id="type1" name="type" value="excel" checked="">
                   <label class="form-check-label" for="type1">Định dạng Excel</label>
                 </div>
-                <div class="form-check">
+                {{-- <div class="form-check">
                   <input class="form-check-input" type="radio" id="type2" name="type" value="csv">
                   <label class="form-check-label" for="type2">Định dạng CSV</label>
-                </div>
+                </div> --}}
                 <div class="form-check">
                   <input class="form-check-input" type="radio" id="type3" name="type" value="aiken">
-                  <label class="form-check-label" for="type3">Định dạng Aiken (Sử dụng cho hệ thống Moodle)</label>
+                  <label class="form-check-label" for="type3">Định dạng Aiken (Sử dụng cho hệ thống Moodle)<br><small class="text-danger">※ Chỉ hỗ trợ câu hỏi dạng "Trắc nghiệm nhiều lựa chọn"</small></label>
                 </div>
                 {{-- <div class="form-check">
                   <input class="form-check-input" type="radio" id="type3" name="type" value="option2" disabled="">
@@ -109,6 +109,14 @@
                 <label class="form-label">　　　　</label>
                 <input type="text" class="js-flatpickr form-control col-6" name="to" data-date-format="d-m-Y" placeholder="Đến ngày" value="{{ request()->to ?? '' }}">
               </div>
+              <div class="col-6 mt-2">
+                <label class="form-label">Loại câu hỏi</label>
+                <select class="js-select2 form-select" name="question_types[]" id="qt" multiple data-placeholder="Lựa chọn loại câu hỏi" style="width: 100%">
+                  @foreach(config('fixeddata.question_type') as $key => $type)
+                    <option value="{{ $key }}" @selected(in_array($key, request()->question_types ?? []))>{{ $type }}</option>
+                  @endforeach
+                </select>
+              </div>
             </div>
           </div>
           <div class="row py-3">
@@ -131,7 +139,7 @@
                 <th style="width: 6%;" class="text-center"></th>
                 <th style="width: 50%;" class="text-center">Câu hỏi</th>
                 <th style="width: 20%;" class="text-center">Nội dung</th>
-                <th style="width: 10%;" class="text-center">Thời gian tạo</th>
+                <th style="width: 10%;" class="text-center">Loại câu hỏi</th>
                 <th style="width: 14%;" class="text-center">Thao tác</th>
               </tr>
             </thead>
@@ -143,7 +151,7 @@
                   </td>
                   <td style="max-width: 450px" class="text-truncate">{!! $question->content !!}</td>
                   <td style="max-width: 250px" class="text-truncate">{{ $question->subject_content->name }}</td>
-                  <td class="text-center">{{ $question->created_at }}</td>
+                  <td class="text-center">{{ config('fixeddata.question_type')[$question->type] }}</td>
                   <td class="text-center">
                     <div class="btn-group">
                       <button class="btn btn-sm btn-alt-secondary show-btn" data-bs-toggle="tooltip" title="Xem thông tin" data-id="{{ $question->id }}">

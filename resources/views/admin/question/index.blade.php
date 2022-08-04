@@ -4,7 +4,7 @@
 
 @section('content')
   <div class="modal" id="modal-import-question" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <div class="block block-rounded block-transparent mb-0">
           <div class="block-header block-header-default">
@@ -26,8 +26,73 @@
               <div class="col-12 mb-4">
                 <div class="row">
                   <div class="col-sm-12">
+                    <h6 class="text-danger mb-2">※  Lưu ý về file câu hỏi</h6>
+                    <ul>
+                      <li>File import phải có định dạng Excel</li>
+                      <li>
+                        File câu hỏi phải có đủ các thông tin như dưới đây
+                        <ul>
+                          <li>Câu hỏi nhiều lựa chọn</li>
+                          <table class="table table-bordered">
+                            <tr>
+                              <th class="text-center" style="width: 15px">STT</th>
+                              <th class="text-center" style="width: 50px">Loại câu hỏi</th>
+                              <th class="text-center" style="width: 200px">Câu hỏi</th>
+                              <th class="text-center" style="width: 80px">Đáp án 1</th>
+                              <th class="text-center" style="width: 80px">Đáp án 2</th>
+                              <th class="text-center" style="width: 80px">Đáp án 3</th>
+                              <th class="text-center" style="width: 80px">Đáp án 4</th>
+                              <th class="text-center" style="width: 30px">Đáp án đúng</th>
+                              <th class="text-center" style="width: 30px">Độ khó</th>
+                            </tr>
+                            <tr>
+                              <td class="text-center">1</td>
+                              <td class="text-center">MULTI_CHOICE</td>
+                              <td class="text-truncate">Nội dung câu hỏi</td>
+                              <td class="text-truncate">Đáp án 1</td>
+                              <td class="text-truncate">Đáp án 2</td>
+                              <td class="text-truncate">Đáp án 3</td>
+                              <td class="text-truncate">Đáp án 4</td>
+                              <td class="text-center">2</td>
+                              <td class="text-center">2</td>
+                            </tr>
+                          </table>
+
+                          <li>Câu hỏi đúng/sai</li>
+                          <table class="table table-bordered">
+                            <tr>
+                              <th class="text-center" style="width: 15px">STT</th>
+                              <th class="text-center" style="width: 50px">Loại câu hỏi</th>
+                              <th class="text-center" style="width: 200px">Nội dung chính</th>
+                              <th class="text-center" style="width: 200px">Câu hỏi</th>
+                              <th class="text-center" style="width: 100px">Đáp án</th>
+                              <th class="text-center" style="width: 100px">Độ khó</th>
+                            </tr>
+                            <tr>
+                              <td class="text-center" style="width: 25px">1</td>
+                              <td class="text-center" style="width: 50px" rowspan="2">TRUE_FALSE</td>
+                              <td class="text-truncate" style="max-width: 200px" rowspan="2">Nội dung câu hỏi</td>
+                              <td class="text-truncate" style="max-width: 240px">Câu hỏi 1</td>
+                              <td class="text-center" style="max-width: 120px">1</td>
+                              <td class="text-center" style="max-width: 120px" rowspan="2">1</td>
+                            </tr>
+                            <tr>
+                              <td class="text-center" style="width: 25px">2</td>
+                              <td class="text-truncate" style="max-width: 240px">Câu hỏi 2</td>
+                              <td class="text-center" style="max-width: 120px">0</td>
+                            </tr>
+                          </table>
+                        </ul>
+                      </li>
+                      <li>Loại câu hỏi: ['MULTI_CHOICE', 'TRUE_FALSE']</li>
+                      <li>Độ khó: ['1: Dễ', '2: Trung bình', '3: Khó']</li>
+                    </ul>
+                  </div>
+                  <hr>
+                  <div class="col-sm-12">
                     <input id="import_file" class="form-control @error('question_file') is-invalid @enderror" type="file"
-                      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="question_file">
+                      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="question_file"
+                      data-buttonText="Chọn file">
                     @error('question_file')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -53,7 +118,7 @@
           <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#modal-import-question">
             <i class="fa fa-file-import"></i> Nhập từ file
           </button>
-          <a href="{{ route('admin.question.create') }}" class="btn btn-outline-primary btn-sm">
+          <a href="{{ route('admin.question.create') . '?type=' . QUESTION_MULTI_CHOICE }}" class="btn btn-outline-primary btn-sm">
             <i class="fa fa-plus"></i> Thêm mới
           </a>
         </div>
@@ -65,6 +130,7 @@
               <tr style="">
                 <th style="width: 6%;" class="text-center">STT</th>
                 <th style="width: 40%" class="text-truncate">Câu hỏi</th>
+                <th style="width: 15%;" class="text-center">Loại câu hỏi</th>
                 <th style="width: 15%;" class="text-center">Trạng thái</th>
                 <th style="width: 15%;" class="text-center">Thời gian tạo</th>
                 <th style="width: 14%;" class="text-center">Thao tác</th>
@@ -75,6 +141,7 @@
                 <tr>
                   <td class="text-center">{{ $loop->iteration }}</td>
                   <td style="max-width: 450px" class="text-truncate">{!! $question->content !!}</td>
+                  <td class="text-center">{!! config('fixeddata.question_type')[$question->type] !!}</td>
                   <td class="text-center">{!! render_status($question->status) !!}</td>
                   <td class="text-center">{{ $question->created_at }}</td>
                   <td class="text-center">

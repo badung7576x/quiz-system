@@ -27,4 +27,8 @@ return [
     'success' => 'Lưu cài đặt thành công',
     'error' => 'Đã có lỗi xảy ra trong quá trình lưu dữ liệu',
   ],
+  'approved_ex' => [
+    'success' => 'Đề thi đã được duyệt thành công',
+    'error' => 'Đã có lỗi xảy ra trong quá trình xử lý',
+  ],
 ];

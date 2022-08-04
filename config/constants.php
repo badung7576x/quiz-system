@@ -8,15 +8,16 @@ $gender = [
 if (!defined('GENDER')) define('GENDER', $gender);
 
 // Question level
-if (!defined('LEVEL_1')) define('LEVEL_1', 1); // Câu hỏi biết
-if (!defined('LEVEL_2')) define('LEVEL_2', 2); // Câu hỏi hiểu
-if (!defined('LEVEL_3')) define('LEVEL_3', 3); // Câu hỏi vận dụng
+if (!defined('LEVEL_1')) define('LEVEL_1', 1); // Dễ
+if (!defined('LEVEL_2')) define('LEVEL_2', 2); // Trung bình
+if (!defined('LEVEL_3')) define('LEVEL_3', 3); // Khó
 
 // Question type
 if (!defined('QUESTION_MULTI_CHOICE')) define('QUESTION_MULTI_CHOICE', 1); // Câu hỏi trắc nghiệm
 if (!defined('QUESTION_SHORT_ANSWER')) define('QUESTION_SHORT_ANSWER', 2); // Câu hỏi trả lời ngắn
 if (!defined('QUESTION_MATCHING')) define('QUESTION_MATCHING', 3); // Câu hỏi nối đáp án
 if (!defined('QUESTION_TRUE_FALSE')) define('QUESTION_TRUE_FALSE', 4); // Câu hỏi đúng sai
+if (!defined('QUESTION_MULTI_ANSWER')) define('QUESTION_MULTI_ANSWER', 5); // Câu hỏi trắc nghiệm
 
 // Question status
 if (!defined('QUESTION_STATUS_CREATED')) define('QUESTION_STATUS_CREATED', 1); // Câu hỏi vừa được tạo
@@ -39,8 +40,10 @@ if (!defined('EXAM_SET_TYPE_CK')) define('EXAM_SET_TYPE_CK', 4);
 if (!defined('EXAM_SET_TYPE_TT')) define('EXAM_SET_TYPE_TT', 5);
 
 if (!defined('EXAM_SET_STATUS_CREATED')) define('EXAM_SET_STATUS_CREATED', 1);
+if (!defined('EXAM_SET_STATUS_APPROVED')) define('EXAM_SET_STATUS_APPROVED', 2);
+if (!defined('EXAM_SET_STATUS_REJECT')) define('EXAM_SET_STATUS_REJECT', 3);
 
 // num of questions need to create exam set
-if (!defined('GENERATE_RATIO')) define('GENERATE_RATIO', 1); 
+if (!defined('GENERATE_RATIO')) define('GENERATE_RATIO', 3); 
 
 

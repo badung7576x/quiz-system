@@ -2,12 +2,13 @@
 
 namespace App\Exports;
 
-use Illuminate\Contracts\View\View;
-use Maatwebsite\Excel\Concerns\FromView;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class QuestionExport implements FromView, ShouldAutoSize
+class QuestionExport implements WithMultipleSheets
 {
+    use Exportable;
+
     protected $data;
 
     public function __construct($questions)
@@ -15,10 +16,19 @@ class QuestionExport implements FromView, ShouldAutoSize
         $this->data = $questions;
     }
 
-    public function view(): View
+    /**
+     * @return array
+     */
+    public function sheets(): array
     {
-        return view('admin.export.question_banks', [
-            'data' => $this->data
-        ]);
+        $sheets = [];
+
+        $types = config('fixeddata.question_type');
+        foreach ($types as $key => $type) {
+            $filteredData = collect($this->data)->filter(fn($item) => $item->type == $key);
+            $sheets[] = new QuestionByTypeSheet($filteredData, $key, $type);
+        }
+
+        return $sheets;
     }
 }

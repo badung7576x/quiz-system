@@ -24,9 +24,10 @@ class DashboardController extends Controller
         $summary = $this->commonService->getSummary();
         $teacherAnalysis = $this->commonService->getAnalysisTeacher();
         $questionBankAnalysis = $this->commonService->getAnalysisQuestionBank();
+        $questionBankAnalysis2 = $this->commonService->getAnalysisQuestionBank2();
         $subject = $this->subjectService->subjectWithContents();
 
 
-        return view('admin.dashboard.index', compact('summary', 'teacherAnalysis', 'questionBankAnalysis', 'subject'));
+        return view('admin.dashboard.index', compact('summary', 'teacherAnalysis', 'questionBankAnalysis', 'questionBankAnalysis2', 'subject'));
     }
 }

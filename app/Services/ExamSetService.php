@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 use Illuminate\Support\Facades\File;
-use PhpOffice\PhpWord\Shared\Html;
 use PhpOffice\PhpWord\Style\Paper;
 
 class ExamSetService
@@ -20,7 +19,17 @@ class ExamSetService
   public function all()
   {
     $user = auth()->user();
-    return ExamSet::where('created_by', $user->id)->latest()->get();
+    return ExamSet::where('created_by', $user->id)->orderBy('status', 'asc')->latest()->get();
+  }
+
+  public function getWaittingList()
+  {
+    return ExamSet::with('examSetDetails:id,exam_set_id')->active()->whereStatus(EXAM_SET_STATUS_CREATED)->latest()->get();
+  }
+
+  public function updateStatus(ExamSet $examSet, $status)
+  {
+    return $examSet->update(['status' => $status]);
   }
 
   public function create($data)
@@ -90,20 +99,32 @@ class ExamSetService
       $ques = [
         'id' => $question->id,
         'content' => $question->content,
-        'level' => $question->level
+        'level' => $question->level,
+        'type' => $question->type
       ];
 
       $maxLength = 0;
-      $correct = 0;
+      $correct = '';
       foreach ($question->answers as $idx => $answer) {
         $maxLength = max($maxLength, strlen($answer->content_1));
         $ques['answers'][] = [
-          'content' => $answer->content_1,
+          'content_1' => $answer->content_1,
+          'content_2' => $answer->content_2
         ];
-        if ($answer->is_correct) $correct =  $idx + 1;
+        if($question->type == QUESTION_MULTI_CHOICE) {
+          if ($answer->is_correct) $correct =  $idx + 1;
+        } else if ($question->type == QUESTION_TRUE_FALSE) {
+          $correct .= $answer->is_correct ? 'Đ' : 'S';
+          $correct .= '/';
+        }
       }
 
-      $ques['correct_answer'] = $correct;
+      if($question->type == QUESTION_MULTI_CHOICE) {
+        $ques['correct_answer'] = config('fixeddata.answer_index')[$correct];
+      } else if ($question->type == QUESTION_TRUE_FALSE) {
+        $ques['correct_answer'] = rtrim($correct, "/");
+      } 
+      
       $ques['length_answer'] = $maxLength;
 
       if ($maxLength < 50) {

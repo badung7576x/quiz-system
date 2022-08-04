@@ -44,7 +44,7 @@ class Question extends BaseModel
 
     public function answers()
     {
-        return $this->hasMany(Answer::class, 'question_id', 'id');
+        return $this->hasMany(Answer::class, 'question_id', 'id')->orderBy('order');
     }
 
     public function teacher()

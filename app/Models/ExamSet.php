@@ -35,9 +35,21 @@ class ExamSet extends Model
         });
     }
 
+    public function scopeActive($query)
+    {
+        $user = auth()->user();
+        
+        return $query->where('subject_id', $user->subject_id);
+    }
+
     public function questions()
     {
         return $this->belongsToMany(QuestionBank::class, 'question_maps', 'exam_set_id', 'question_id');
+    }
+
+    public function create_by()
+    {
+        return $this->belongsTo(Teacher::class, 'created_by', 'id');
     }
 
     public function subject()

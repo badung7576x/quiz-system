@@ -2,10 +2,11 @@
 
 return [
   'question_type' => [
-    QUESTION_MULTI_CHOICE => 'Trắc nghiệm nhiều đáp án',
+    QUESTION_MULTI_CHOICE => 'Trắc nghiệm nhiều lựa chọn',
+    // QUESTION_MULTI_ANSWER => 'Câu hỏi nhiều đáp án',
     // QUESTION_SHORT_ANSWER => 'Trả lời ngắn',
     // QUESTION_MATCHING => 'Nối đáp án',
-    // QUESTION_TRUE_FALSE => 'Đúng sai'
+    QUESTION_TRUE_FALSE => 'Câu hỏi đúng/sai'
   ],
   'question_status' => [
     QUESTION_STATUS_CREATED => 'Tạo mới',
@@ -33,6 +34,11 @@ return [
     EXAM_SET_TYPE_GK => 'Đề kiểm tra giữa kì',
     EXAM_SET_TYPE_CK => 'Đề kiểm cuối kì',
     EXAM_SET_TYPE_TT => 'Đề thi thử',
+  ],
+  'exam_set_status' => [
+    EXAM_SET_STATUS_CREATED => 'Chờ phê duyệt',
+    EXAM_SET_STATUS_APPROVED => 'Đã được duyệt',
+    EXAM_SET_STATUS_REJECT => 'Không được phê duyệt',
   ],
   'answer_index' => [
     1 => 'A',

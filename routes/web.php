@@ -24,14 +24,6 @@ Route::group([
     Route::get('login', 'LoginController@create')->middleware('guest')->name('login');
     Route::post('login', 'LoginController@store')->middleware('guest');
     Route::post('logout', 'LoginController@destroy')->middleware('auth')->name('logout');
-    Route::get('questions/form', 'QuestionController@renderForm')->name('question.form');
-});
-
-Route::group([
-    'prefix' => 'admin',
-    'namespace' => 'App\Http\Controllers\Admin', 'as' => 'admin.'
-], function () {
-    Route::get('questions/form', 'QuestionController@renderForm')->name('question.form');
 });
 
 Route::group([
@@ -47,6 +39,7 @@ Route::group([
     Route::resource('teachers', 'TeacherController')->names('teacher');
 
     // Question
+    Route::post('questions/form', 'QuestionController@renderForm')->name('question.form');
     Route::get('questions/reviews', 'QuestionController@reviews')->name('review.question');
     Route::get('questions/reviews/{question}', 'QuestionController@reviewShow')->name('review.show');
     Route::post('questions/import', 'QuestionController@import')->name('question.import');
@@ -66,6 +59,8 @@ Route::group([
     Route::post('questions/{question}/comments/{comment}/resolved', 'CommentController@resolved')->name('comment.resolved');
 
     // Exam set
+    Route::get('exam-sets/waitting-approve', 'ExamSetController@listApprove')->name('dashboard.approve-list');
+    Route::get('exam-sets/{exam_set}/approved', 'ExamSetController@approved')->name('exam-set.approved');
     Route::get('exam-sets/{exam_set}/pdf/{exam_set_detail}', 'ExamSetController@viewPdf')->name('exam-set.pdf');
     Route::get('exam-sets/{exam_set}/setting', 'ExamSetController@setting')->name('exam-set.setting');
     Route::post('exam-sets/{exam_set}/setting', 'ExamSetController@saveSetting')->name('exam-set.setting.save');

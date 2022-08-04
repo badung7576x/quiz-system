@@ -27,9 +27,9 @@ class QuestionBankService
   {
     $query = QuestionBank::with(['teacher:id,fullname'])->active();
 
-    // if (array_key_exists('content', $filters) && $filters['content']) {
-    //   $query->search($filters['content']);
-    // }
+    if (array_key_exists('question_types', $filters) && count($filters['question_types']) > 0) {
+      $query->whereIn('type', $filters['question_types']);
+    }
 
     if (array_key_exists('subject_content_ids', $filters) && count($filters['subject_content_ids']) > 0) {
       $query->whereIn('subject_content_id', $filters['subject_content_ids']);
@@ -72,7 +72,7 @@ class QuestionBankService
       $searchKey = preg_replace('<p>', '', $question->content);
       $searchKey = preg_replace('/[^A-Za-z0-9 .]/', ' ', $searchKey);
 
-      $duplicateQuestions = QuestionBank::search($searchKey)->active()->take(3)->get();
+      $duplicateQuestions = QuestionBank::search('"' . $searchKey)->take(3)->get();
 
       if (count($duplicateQuestions) > 0 && !$ignore) {
         return [
@@ -82,10 +82,10 @@ class QuestionBankService
         ];
       }
 
-      // $this->addQuestionToBank($question);
-      // $question->update([
-      //   'status' => $status
-      // ]);
+      $this->addQuestionToBank($question);
+      $question->update([
+        'status' => $status
+      ]);
       return [
         'success' => true,
         'message' => "Đã thêm câu hỏi vào ngân hàng câu hỏi.",
@@ -124,6 +124,10 @@ class QuestionBankService
     if (array_key_exists('ids', $filters) && $filters['ids']) {
       $query->whereIn('id', explode(",", $filters['ids']));
     } else {
+      if (array_key_exists('question_types', $filters) && count($filters['question_types']) > 0) {
+        $query->whereIn('type', $filters['question_types']);
+      }
+
       if (array_key_exists('subject_content_ids', $filters) && count($filters['subject_content_ids']) > 0) {
         $query->whereIn('subject_content_id', $filters['subject_content_ids']);
       }
@@ -153,6 +157,7 @@ class QuestionBankService
           return $this->_exportCsv($data);
           break;
         case 'aiken':
+          $data = collect($data)->filter(fn($item) => $item->type == QUESTION_MULTI_CHOICE);
           return $this->_exportAikenFormat($data);
           break;
         default:

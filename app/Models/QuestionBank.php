@@ -65,7 +65,7 @@ class QuestionBank extends Model
 
     public function answers()
     {
-        return $this->hasMany(AnswerBank::class, 'question_id', 'id');
+        return $this->hasMany(AnswerBank::class, 'question_id', 'id')->orderBy('order');
     }
 
     public function teacher()

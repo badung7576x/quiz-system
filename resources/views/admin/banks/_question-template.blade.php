@@ -2,23 +2,35 @@
   <div class="col-12">
     <div>
       <span style="font-weight: 600">Câu hỏi: </span>
-      @php
-          $cont = preg_replace('<p>', '', $question->content, 1);
-          $cont = preg_replace('</p>', '', $cont, 1);
-      @endphp
-      <span>{!! $cont !!}</span> (<span>{{ $question->score }} điểm</span>)
+      <span>{!! $question->content !!}</span> (<span>{{ $question->score }} điểm</span>)
     </div>
   </div>
-  @foreach ($question->answers as $idx => $answer)
-    <div class="col-12 ps-5">
-      <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{{ config('fixeddata.answer_index')[$idx + 1] }}.</span>
-      @php
-        $ans = preg_replace('<p>', '', $answer->content_1, 1);
-        $ans = preg_replace('</p>', '', $ans, 1);
-      @endphp
-      <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{!! $ans !!}</span>
-    </div>
-  @endforeach
+  @switch($question->type)
+    @case(QUESTION_MULTI_CHOICE)
+      @foreach ($question->answers as $idx => $answer)
+        <div class="col-12 ps-5 mb-1">
+          <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{{ config('fixeddata.answer_index')[$idx + 1] }}.</span>
+          <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{!! $answer->content_1 !!}</span>
+        </div>
+      @endforeach
+      @break
+    @case(QUESTION_TRUE_FALSE)
+      <table class="table table-bordered ms-3 mt-2" style="width: 95%">
+        <tbody>
+          @foreach ($question->answers as $idx => $answer)
+            <tr class="odd">
+              <td class="text-center" style="width: 5%">{{ $idx + 1 }}</td>
+              <td class="fs-sm">{!! $answer->content_1 !!}</td>
+              <td class="fs-sm text-center" style="width: 10%">
+                {!! $answer->is_correct ? '<span class="text-success">Đúng</span>' : '<span class="text-danger">Sai</span>' !!}
+              </td>
+            </tr>
+          @endforeach
+          </tbody>
+        </table>                
+      @break
+    @default
+  @endswitch
 </div>
 
 <div class="row" style="font-size: 18px">

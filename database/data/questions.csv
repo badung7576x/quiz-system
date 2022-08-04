@@ -1,8 +1,8 @@
 no,subject_id,subject_content_id,level,type,content,image,answer1,answer2,answer3,answer4,correct_answer,score,created_by
-1,1,1,1,1,"Choose the words that are not stressed in the following sentences: This tour takes you to the outskirts of Hue.",,"tour","takes","outskirts","of",4,1,4
-2,1,1,1,1,"Choose the words that are not stressed in the following sentences: During their stay in Hanoi, most tourists insist on a trip to Van Phuc Silk Village.",,"stay","in","tourists","Van Phuc",2,1,4
-3,1,1,1,1,"Choose the words that are not stressed in the following sentences: Banh chung of Tranh Khuc village is famous for its distinctive flavour.",,"Banh chung","Tranh Khuc","famous","its",4,1,4
-4,1,1,1,1,"Choose the words that are not stressed in the following sentences: Nhat Tan peach flowers have become a brand of Hanoi.",,"peach","brand","a","Ha Noi",3,1,4
+1,1,14,1,1,"Review 2 - Choose the words that are not stressed in the following sentences: This tour takes you to the outskirts of Hue.",,"tour","takes","outskirts","of",4,1,4
+2,1,14,1,1,"Review 2 - Choose the words that are not stressed in the following sentences: During their stay in Hanoi, most tourists insist on a trip to Van Phuc Silk Village.",,"stay","in","tourists","Van Phuc",2,1,4
+3,1,14,1,1,"Review 2 - Choose the words that are not stressed in the following sentences: Banh chung of Tranh Khuc village is famous for its distinctive flavour.",,"Banh chung","Tranh Khuc","famous","its",4,1,4
+4,1,13,1,1,"Unit 12 - Choose the words that are not stressed in the following sentences: Nhat Tan peach flowers have become a brand of Hanoi.",,"peach","brand","a","Ha Noi",3,1,4
 5,1,1,1,1,"Choose the words that are not stressed in the following sentences: Pomelos from Phu Dien Village in Ha Noi is the most famous for its special taste.",,"pomelos","Phu Dien","famous","its",4,1,4
 6,1,1,1,1,"Choose the words that are not stressed in the following sentences: For Hmong women, traditional clothing consists of an outer garment with a colorful and decorative collar.",,"for","Hmong","traditional","garment",1,1,4
 7,1,1,1,1,"Choose the words that are not stressed in the following sentences: Not only domestically famous, products of the village have been in many countries around the world.",,"famous","products","village","the",4,1,4
@@ -57,3 +57,20 @@ no,subject_id,subject_content_id,level,type,content,image,answer1,answer2,answer
 55,1,8,1,1,"Choose the best answer for each of the following sentences:  ...... have enough apples, she’ll make an apple pie this afternoon.",,"Should she","If she","Will she","Unless she",1,1,4
 56,1,8,1,1,"Choose the best answer for each of the following sentences:  If you ...... to me, you wouldn’t have got so much trouble.",,"listened","would listen","had listened","would have listened",3,1,4
 57,1,8,1,1,"Choose the best answer for each of the following sentences:  If you don’t know how to spell a word, you ...... look it up in the dictionary.",,"must","will","should","ought",3,1,4
+58,1,11,1,1,"Unit 10 - Circle the correct answer A, B, C or D. <br> Many children in our village are still_____. They can't read or write.",,"creative","illiterate","unhealthy","traditional",2,1,4
+59,1,11,1,1,"Unit 10 - Circle the correct answer A, B, C or D. <br> I suggest that we _____ the number of tourists visiting them every day.",,"limited","should limit","limiting","limit",2,1,4
+60,1,11,1,1,"Unit 10 - Circle the correct answer A, B, C or D. <br> It _____ that the first temple was built on the current site of Thien Tru in the 15th century during the reign of Le Thanh Tong.",,"thinks","is thinking","is thought","thought",3,1,4
+61,1,11,1,1,"Unit 10 - Choose the word which has a different stress pattern from the others.",,"littering","serious","spacious","abundant",4,1,4
+62,1,11,1,1,"Unit 10 - Choose the word which has a different stress pattern from the others.",,"polite","funny","lovely","busy",1,1,4
+63,1,11,1,1,"Unit 10 - Choose the word which has a different stress pattern from the others.",,"describe","enter","agree","replace",2,1,4
+64,1,11,1,1,"Unit 10 -  Choose the word which has a different stress pattern from the others.",,"station","student","disease","disease",3,1,4
+65,1,10,1,1,"Unit 9 - Complete the sentences using the given words: There are many stores in the ...... area of the city.",,"downtown","suburb","sea","mountain",1,1,4
+66,1,10,1,1,"Unit 9 - Complete the sentences using the given words: The bronze casting craft in Viet Nam dated back from the age of King An Duong Vuong ....... ancient bronze arrowheads were made.",,"because","although","so","when",4,1,4
+67,1,10,1,1,"Unit 9 - Choose the word which has a different stress pattern from the others.",,"empathise","embarrassed","cognitive","adulthood",2,1,4
+68,1,9,1,1,"Unit 8 - Choose the word which has a different stress pattern from the others.",,"neighbourhood","assignment","emotion","supportive",1,1,4
+69,1,9,1,1,"Unit 8 - Choose the word which has a different stress pattern from the others.",,"experience","emotional","emergency","favourable",1,1,4
+70,1,7,1,1,"Review 1 - Choose the word which has a different stress pattern from the others.",,"handicraft","lacquerware","artisan","pottery",4,1,4
+71,1,7,1,1,"Review 1 - Choose the word which has a different stress pattern from the others.",,"historical","embroidery","authority","architecture",4,1,4
+72,1,12,1,1,"Unit 11 - Complete the sentences using the given words: Tourists can see a wide ...... of hand-made things at the event.",,"lot","variety","authority","many",2,1,4
+73,1,12,1,1,"Unit 11 - Complete the sentences using the given words: He was hired for the position because he is .......",,"reliability","reliably","reliable","reliaty",3,1,4
+74,1,12,1,1,"Unit 11 - Complete the sentences using the given words: There are many stores in the ...... area of the city.",,"downtown","suburb","sea","mountain",1,1,4

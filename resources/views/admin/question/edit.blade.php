@@ -66,11 +66,12 @@
               <div class="row mb-3">
                 <label class="col-sm-12 col-form-label">Loại câu hỏi</label>
                 <div class="col-sm-12">
-                  <select id="question-type" class="form-select" name="type" disabled>
+                  <select id="question-type" class="form-select" disabled>
                     @foreach (config('fixeddata.question_type') as $type => $label)
                       <option value="{{ $type }}" @selected(old('level', $question->type) == $type)>{{ $label }}</option>
                     @endforeach
                   </select>
+                  <input type="hidden" name="type" value="{{ $question->type }}">
                 </div>
               </div>
             </div>

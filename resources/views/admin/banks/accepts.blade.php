@@ -27,7 +27,7 @@
 		<div class="content">
 				<div class="block-rounded block">
 						<div class="block-header block-header-default">
-								<h3 class="block-title"> </h3>
+								<h3 class="block-title">Danh sách câu hỏi chờ duyệt </h3>
 								<div class="block-options">
 
 								</div>
@@ -95,6 +95,9 @@
             if (data.success) {
               showNotify("success", data.message)
               $('#show-question').modal('hide');
+							setTimeout(function() {
+								window.location.reload();
+							}, 2000);
             } else {
               $('#duplicate-question').replaceWith(data.data)
             }

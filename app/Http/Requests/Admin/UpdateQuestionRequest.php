@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class QuestionRequest extends FormRequest
+class UpdateQuestionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -59,23 +59,12 @@ class QuestionRequest extends FormRequest
             'level' => 'mức độ câu hỏi',
             'type' => 'loại câu hỏi',
             'score' => 'điểm',
+            'content' => 'nội dung câu hỏi',
+            'answers' => 'các đáp án',
+            'answers.*' => 'đáp án',
+            'correct_answer' => 'đáp án đúng',
         ];
-        if ($this->type == QUESTION_MULTI_CHOICE) {
-            return array_merge($attributes, [
-                'content' => 'nội dung câu hỏi',
-                'answers' => 'các đáp án',
-                'answers.*' => 'đáp án',
-                'correct_answer' => 'đáp án đúng',
-            ]);
-        }
 
-        if ($this->type == QUESTION_TRUE_FALSE) {
-            return array_merge($attributes, [
-                'content' => 'nội dung chính',
-                'answers' => 'các câu hỏi',
-                'answers.*' => 'câu hỏi',
-                'correct_answer' => 'đáp án đúng',
-            ]);
-        }
+        return $attributes;
     }
 }

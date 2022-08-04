@@ -174,6 +174,11 @@ var TablesDatatables = /*#__PURE__*/function () {
       }); // Init full DataTable
 
       jQuery(".js-dataTable-full").dataTable({
+        order: [[1, 'asc']],
+        columnDefs: [{
+          targets: 0,
+          orderable: false
+        }],
         pageLength: 10,
         autoWidth: false
       });

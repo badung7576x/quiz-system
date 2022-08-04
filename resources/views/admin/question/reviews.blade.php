@@ -18,16 +18,18 @@
               <tr style="">
                 <th style="width: 6%;" class="text-center">STT</th>
                 <th style="width: 40%;" class="text-center">Câu hỏi</th>
-                <th style="width: 15%;" class="text-center">Trạng thái</th>
-                <th style="width: 15%;" class="text-center">Thời gian tạo</th>
-                <th style="width: 14%;" class="text-center">Thao tác</th>
+                <th style="width: 20%;" class="text-center">Loại câu hỏi</th>
+                <th style="width: 10%;" class="text-center">Trạng thái</th>
+                <th style="width: 12%;" class="text-center">Thời gian tạo</th>
+                <th style="width: 10%;" class="text-center">Thao tác</th>
               </tr>
             </thead>
             <tbody>
               @foreach ($questions as $question)
                 <tr>
                   <td class="text-center">{{ $loop->iteration }}</td>
-                  <td class="text-truncate">{!! $question->content !!}</td>
+                  <td class="text-truncate" style="max-width: 400px">{!! $question->content !!}</td>
+                  <td class="text-center">{!! config('fixeddata.question_type')[$question->type] !!}</td>
                   <td class="text-center">{!! render_status($question->status) !!}</td>
                   <td class="text-center">{{ $question->created_at }}</td>
                   <td class="text-center">

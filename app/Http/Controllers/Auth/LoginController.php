@@ -51,6 +51,19 @@ class LoginController extends Controller
 
     protected function redirectAfterLogin()
     {
-        return route('admin.dashboard.index');
+        $user = auth()->user();
+        switch($user->role) {
+            case ROLE_ADMIN:
+                return route('admin.teacher.index');
+            case ROLE_PRO_CHIEF:
+                return route('admin.dashboard.index');
+            case ROLE_SPECIALIST_TEACHER:
+            case ROLE_SUBJECT_TEACHER:
+            case ROLE_TEACHER:
+                return route('admin.exam-set.index');
+                
+            default:
+                return route('admin.exam-set.index');
+        }
     }
 }

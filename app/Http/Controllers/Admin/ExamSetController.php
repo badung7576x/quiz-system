@@ -79,6 +79,10 @@ class ExamSetController extends Controller
     public function show(ExamSet $examSet)
     {
         $examSet->load(['subject', 'examSetDetails']);
+        if($examSet->status != EXAM_SET_STATUS_APPROVED || ($examSet->status == EXAM_SET_STATUS_CREATED && auth()->user()->role != ROLE_PRO_CHIEF)) {
+            abort(403);
+        }
+
         return view('admin.exam-set.show', compact('examSet'));
     }
 
@@ -92,6 +96,21 @@ class ExamSetController extends Controller
     {
         //
     }
+
+    public function listApprove()
+    {
+        $examSets = $this->examSetService->getWaittingList();
+
+        return view('admin.exam-set.approve_list', compact('examSets'));
+    }
+
+    public function approved(Request $request, ExamSet $examSet)
+    {
+        $this->examSetService->updateStatus($examSet, $request->get('status'));
+
+        return $this->redirectSuccess('admin.dashboard.approve-list', 'approved_ex');
+    }
+
 
     /**
      * Update the specified resource in storage.

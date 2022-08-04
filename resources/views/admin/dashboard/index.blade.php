@@ -89,16 +89,16 @@
 								<div class="block-rounded d-flex flex-column block">
 										<div class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
 												<dl class="mb-0">
-														<dt class="fs-3 fw-bold">{{ $summary['teacher'] }}</dt>
-														<dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">Giáo viên</dd>
+														<dt class="fs-3 fw-bold">{{ $summary['exam_set_waitting'] }}</dt>
+														<dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">Đề thi chờ duyệt</dd>
 												</dl>
 												<div class="item item-rounded-lg bg-body-light">
-														<i class="far fa-user fs-3 text-primary"></i>
+														<i class="far fa-eye fs-3 text-primary"></i>
 												</div>
 										</div>
 										<div class="bg-body-light rounded-bottom">
-												<a class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between" href="{{ route('admin.teacher.index') }}">
-														<span>Xem danh sách giáo viên</span>
+												<a class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between" href="{{ route('admin.dashboard.approve-list') }}">
+														<span>Xem danh sách đề thi</span>
 														{{-- <i class="fa fa-arrow-alt-circle-right ms-1 fs-base opacity-25"></i> --}}
 												</a>
 										</div>
@@ -118,7 +118,7 @@
 										<div class="block-content block-content-full text-center">
 												<div class="px-xxl-7 py-3">
 														<!-- Radar Chart Container -->
-														<canvas id="js-chartjs-radar2"></canvas>
+														<canvas id="js-chartjs-radar"></canvas>
 												</div>
 										</div>
 								</div>
@@ -138,7 +138,7 @@
 										<div class="block-content block-content-full text-center">
 												<div class="px-xxl-7 py-3">
 														<!-- Radar Chart Container -->
-														<canvas id="js-chartjs-radar"></canvas>
+														<canvas id="js-chartjs-radar2"></canvas>
 												</div>
 										</div>
 								</div>
@@ -156,6 +156,7 @@
 										</div>
 										<div class="block-content block-content-full text-center">
 												<div class="py-3">
+														<p class="mb-2">Tổng số giáo viên: {{ $summary['teacher'] }} giáo viên</p>
 														<canvas id="js-chartjs-bars"></canvas>
 												</div>
 										</div>
@@ -171,17 +172,15 @@
 		<script>
 		  const teacherData = @json($teacherAnalysis);
 		  const questionBankData = @json($questionBankAnalysis);
+		  const questionBankData2 = @json($questionBankAnalysis2);
 
-		  function initBars(input) {
+			console.log(questionBankData2)
+
+		  function initBars(id, input, label) {
 		    const data = {
-		      labels: [
-		        'Giáo viên',
-		        'Giáo viên bộ môn',
-		        'Giáo viên chuyên môn',
-		        'Trưởng nhóm chuyên môn',
-		      ],
+					labels: input['name'],
 		      datasets: [{
-		        label: 'Số lượng giáo viên',
+		        label: label,
 		        backgroundColor: '#65A30D',
 		        borderColor: '#d9e8c3',
 		        data: input['data'],
@@ -201,16 +200,16 @@
 		    };
 
 		    const myChart = new Chart(
-		      document.getElementById('js-chartjs-bars'),
+		      document.getElementById(`${id}`),
 		      config
 		    );
 		  }
 
-		  function initRadars(input) {
+		  function initRadars(id, input, label) {
 		    const data = {
 		      labels: input['name'],
 		      datasets: [{
-		        label: 'Số lượng câu hỏi',
+		        label: label,
 		        data: input['data'],
 		        fill: true,
 		        backgroundColor: 'rgba(255, 99, 132, 0.2)',
@@ -235,17 +234,14 @@
 		    };
 
 		    const myChart2 = new Chart(
-		      document.getElementById('js-chartjs-radar'),
-		      config
-		    );
-		    const myChart3 = new Chart(
-		      document.getElementById('js-chartjs-radar2'),
+		      document.getElementById(`${id}`),
 		      config
 		    );
 		  }
 
-		  initBars(teacherData)
-		  initRadars(questionBankData)
+		  initBars('js-chartjs-bars', teacherData, 'Số lượng giáo viên')
+		  initRadars('js-chartjs-radar', questionBankData, 'Số lượng câu hỏi')
+		  initBars('js-chartjs-radar2', questionBankData2, 'Số lượng câu hỏi')
 
 		  $('#show-btn').on('click', function(e) {
 		    const subject = @json($subject);

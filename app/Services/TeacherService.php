@@ -28,7 +28,7 @@ class TeacherService
 
   public function getSpecialTeachers()
   {
-    return Teacher::active()->whereIn('role', [ROLE_SPECIALIST_TEACHER, ROLE_PRO_CHIEF])->latest()->get();
+    return Teacher::active()->whereIn('role', [ROLE_SPECIALIST_TEACHER, ROLE_PRO_CHIEF])->orderBy('role', 'asc')->get();
   }
 
   public function create(array $data)

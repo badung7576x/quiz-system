@@ -41,24 +41,37 @@
           <!-- Form Horizontal - Default Style -->
           <div class="col-12 mb-2">
             <div>
-              <span class="fw-bold">Câu hỏi: </span>
-              @php
-                  $cont = preg_replace('<p>', 'span', $question->content, 1);
-                  $cont = preg_replace('</p>', '/span', $cont, 1);
-              @endphp
-              <span>{!! $cont !!}</span> (<span>{{ $question->score }} điểm</span>)
+              <span class="h5">Câu hỏi: </span>
+              <span class="h5 fw-normal">{!! $question->content !!}</span> (<span>{{ $question->score }} điểm</span>)
             </div>
           </div>
-          @foreach ($question->answers as $idx => $answer)
-            <div class="col-12 ps-5 mb-1">
-              <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{{ config('fixeddata.answer_index')[$idx + 1] }}.</span>
-              @php
-                $ans = preg_replace('<p>', 'span', $answer->content_1, 1);
-                $ans = preg_replace('</p>', '/span', $ans, 1);
-              @endphp
-              <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{!! $ans !!}</span>
-            </div>
-          @endforeach
+          @switch($question->type)
+            @case(QUESTION_MULTI_CHOICE)
+              @foreach ($question->answers as $idx => $answer)
+                <div class="col-12 ps-5 mb-1">
+                  <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{{ config('fixeddata.answer_index')[$idx + 1] }}.</span>
+                  <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{!! $answer->content_1 !!}</span>
+                </div>
+              @endforeach
+              @break
+            @case(QUESTION_TRUE_FALSE)
+              <table class="table table-bordered ms-3 mt-2" style="width: 95%">
+                <tbody>
+                  @foreach ($question->answers as $idx => $answer)
+                    <tr class="odd">
+                      <td class="text-center" style="width: 5%">{{ $idx + 1 }}</td>
+                      <td class="fs-sm">{!! $answer->content_1 !!}</td>
+                      <td class="fs-sm text-center" style="width: 10%">
+                        {!! $answer->is_correct ? '<span class="text-success">Đúng</span>' : '<span class="text-danger">Sai</span>' !!}
+                      </td>
+                    </tr>
+                  @endforeach
+                  </tbody>
+                </table>                
+              @break
+            @default
+          @endswitch
+          
           <!-- END Form Horizontal - Default Style -->
           <div class="col-12 mt-4">
             <table class="table-borderless table-striped table-vcenter fs-sm table">
@@ -146,7 +159,7 @@
                         <form method="POST" action="{{ route('admin.comment.update', ['question' => $question->id, 'comment' => $comment->id]) }}">
                           @csrf
                           @method('PUT')
-                          <textarea class="ckeditor1 form-control" name="comment">{!! old('comment', $comment->content) !!}</textarea>
+                          <textarea class="ckeditor1 form-control" name="comment" rows="4">{!! old('comment', $comment->content) !!}</textarea>
                           <div class="pt-2">
                             <button type="submit" class="btn btn-sm btn-success">
                               Cập nhật
@@ -155,7 +168,7 @@
                         </form>
                       </div>
                       <div id="reply_comment_{{ $comment->id }}" class="pt-3 d-none">
-                        <textarea class="ckeditor1 form-control" name="comment"></textarea>
+                        <textarea class="ckeditor1 form-control" name="comment" rows="4"></textarea>
                         <div class="pt-2">
                           <button type="submit" class="btn btn-sm btn-success">
                             Nhận xét
@@ -179,7 +192,7 @@
           <div class="fw-semibold">Thêm nhận xét mới</div>
           <form method="POST" action="{{ route('admin.comment.store', ['question' => $question->id]) }}">
             @csrf
-            <textarea class="ckeditor1 form-control" name="new_comment">{{ old('new_comment') }}</textarea>
+            <textarea class="ckeditor1 form-control" name="new_comment" rows="4">{{ old('new_comment') }}</textarea>
             <div class="pt-2">
               <button type="submit" class="btn btn-sm btn-success">
                 Nhận xét
@@ -198,7 +211,7 @@
   <script src="{{ asset('js/plugins/ckeditor/ckeditor.js') }}"></script>
   <script>
     $(document).ready(function() {
-      initCkeditor();
+      // initCkeditor();
     });
 
     function initCkeditor() {

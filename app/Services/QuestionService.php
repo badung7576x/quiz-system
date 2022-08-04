@@ -36,6 +36,7 @@ class QuestionService
   public function allReviewQuestions()
   {
     return Question::with('subject:name,id')
+      ->where('status', '<=', QUESTION_STATUS_REJECTED)
       ->where('review_by', auth()->user()->id)
       ->orderBy('status', 'asc')
       ->latest()->get();
@@ -45,11 +46,20 @@ class QuestionService
   {
     $question = Question::create($data);
     foreach ($data['answers'] as $key => $answer) {
-      $answer = [
-        'order' => $key + 1,
-        'content_1' => $answer,
-        'is_correct' => $data['correct_answer'] == $key + 1,
-      ];
+      if($question->type == QUESTION_MULTI_CHOICE) {
+        $answer = [
+          'order' => $key + 1,
+          'content_1' => $answer,
+          'is_correct' => $data['correct_answer'] == $key + 1,
+        ];
+      }
+      if($question->type == QUESTION_TRUE_FALSE) {
+        $answer = [
+          'order' => $key + 1,
+          'content_1' => $answer,
+          'is_correct' => $data['correct_answer'][$key]
+        ];
+      } 
       $question->answers()->create($answer);
     }
   }

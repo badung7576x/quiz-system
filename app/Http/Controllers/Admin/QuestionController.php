@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ImportQuestionRequest;
 use App\Http\Requests\Admin\QuestionRequest;
+use App\Http\Requests\Admin\UpdateQuestionRequest;
 use App\Services\QuestionService;
 use App\Services\SubjectService;
 use Illuminate\Http\Request;
@@ -60,17 +61,22 @@ class QuestionController extends Controller
 
     public function renderForm(Request $request)
     {
+        $data = $request->all();
         switch ($request->type) {
             case QUESTION_MULTI_CHOICE:
-                $form = view('admin.question._multichoice')->render();
+                $form = view('admin.question._multichoice.create', $data)->render();
+                break;
             // case QUESTION_SHORT_ANSWER:
             //     return view('admin.question.short-answer')->render();
-            // case QUESTION_MATCHING:
-            //     return view('admin.question.matching')->render();
-            // case QUESTION_TRUE_FALSE:
-            //     return view('admin.question.true-false')->render();
+            case QUESTION_MATCHING:
+                $form = view('admin.question._matching.create')->render();
+                break;
+            case QUESTION_TRUE_FALSE:
+                $form = view('admin.question._truefalse.create')->render();
+                break;
             default:
-                $form = view('admin.question._multichoice')->render();
+                $form = view('admin.question._multichoice.create')->render();
+                break;
         }
 
         return response()->json(['html' => $form]);
@@ -132,6 +138,9 @@ class QuestionController extends Controller
     public function edit(Question $question)
     {
         $question->load('answers');
+        if ($question->status >= QUESTION_STATUS_REVIEWED) {
+            abort(404);
+        }
         $subject = $this->subjectService->subjectWithContents();
         return view('admin.question.edit', compact('subject', 'question'));
     }
@@ -139,11 +148,11 @@ class QuestionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  QuestionRequest $request
+     * @param  UpdateQuestionRequest $request
      * @param  Question $question
      * @return \Illuminate\Http\Response
      */
-    public function update(QuestionRequest $request, Question $question)
+    public function update(UpdateQuestionRequest $request, Question $question)
     {
         $data = $request->validated();
         try {
