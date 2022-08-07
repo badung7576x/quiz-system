@@ -74,7 +74,7 @@ class SubjectService
       
       DB::beginTransaction();
         try {
-          // update old subject content
+          // update old answer content
           $newSubjectContentIds = [];
           foreach ($updateSubjectContent as $key => $each) {
             $newSubjectContentIds[] = $key;
@@ -83,14 +83,14 @@ class SubjectService
               'name' => $each
             ]);
           }
-          // delete old subject content not in new subject content
+          // delete old answer not in new answer content
           $oldSubjectContentIds = array_diff($oldSubjectContentIds, $newSubjectContentIds);
           foreach ($oldSubjectContentIds as $each) {
             $subjectContent = SubjectContent::find($each);
             $subjectContent->delete();
           }
 
-          // add new subject content
+          // add new answer content
           $subjectContents = [];
           $contentData = array_unique($newSubjectContent);
           foreach ($contentData as $index => $each) {

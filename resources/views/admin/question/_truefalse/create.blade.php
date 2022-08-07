@@ -2,9 +2,6 @@
   <div class="row">
     <div class="col-12">
       <div class="row mb-3">
-        @error('correct_answer')
-          <div class="text-danger text-center">{{ $message }}</div>
-        @enderror
         <label class="col-sm-12 col-form-label">Nội dung chính <span style="color: red">*</span></label>
         <div class="col-sm-12">
           <textarea class="ckeditor1 form-control @error('content') is-invalid @enderror" name="content" rows="5">{!! old('content', '') !!}</textarea>

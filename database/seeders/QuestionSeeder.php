@@ -25,8 +25,7 @@ class QuestionSeeder extends Seeder
             'level' => 1,
             'type' => 1,
             'content' => 'In the past, local______were chosen to make sophisticated embroidered costumes for the Vietnamese King, Queen and other Royal family members',
-            'created_by' => 2,
-            'review_by' => 3,
+            'created_by' => rand(3,6),
             'status' => 1,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
@@ -64,8 +63,7 @@ class QuestionSeeder extends Seeder
             'level' => 1,
             'type' => 1,
             'content' => 'Villages are becoming popular________in Viet Nam',
-            'created_by' => 2,
-            'review_by' => 3,
+            'created_by' => rand(3,6),
             'status' => 1,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
@@ -103,8 +101,7 @@ class QuestionSeeder extends Seeder
             'level' => 1,
             'type' => 1,
             'content' => 'One of my favourite cities is Verona in northern Italy. It is a very ______ city',
-            'created_by' => 2,
-            'review_by' => 3,
+            'created_by' => rand(3,6),
             'status' => 1,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
@@ -143,8 +140,7 @@ class QuestionSeeder extends Seeder
             'level' => 1,
             'type' => 1,
             'content' => 'Singapore is the first on the list of most ______ cities in Southeast Asia.',
-            'created_by' => 2,
-            'review_by' => 3,
+            'created_by' => rand(3,6),
             'status' => 1,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')

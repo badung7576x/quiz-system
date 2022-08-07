@@ -19,10 +19,12 @@ return new class extends Migration
             $table->tinyInteger('type')->comment('Loại đề thi');
             $table->integer('subject_id')->comment('Môn học');
             $table->string('subject_content_ids')->comment('Nội dung môn học');
+            $table->string('question_types')->comment('Loại câu hỏi');
             $table->integer('execute_time')->comment('Thời gian làm bài');
             $table->integer('total_question')->comment('Tổng số câu hỏi');
             $table->integer('status')->comment('Trạng thái');
             $table->integer('created_by')->comment('Người tạo');
+            $table->integer('approved_by')->nullable()->comment('Người tạo');
             $table->softDeletes();
             $table->timestamps();
         });

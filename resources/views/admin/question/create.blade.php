@@ -94,11 +94,18 @@
 								</div>
 								<div class="block-content block-content-full">
 										<div class="row" id="question-form">
-											@if(request()->type == QUESTION_MULTI_CHOICE)
-												@include('admin.question._multichoice.create')
-											@else
-												@include('admin.question._truefalse.create')
-											@endif
+												@switch(request()->type)
+														@case(QUESTION_MULTI_CHOICE)
+																@include('admin.question._multichoice.create')
+														@break
+
+														@case(QUESTION_TRUE_FALSE)
+																@include('admin.question._truefalse.create')
+														@break
+
+														@default
+																@include('admin.question._multichoice.create')
+												@endswitch
 										</div>
 								</div>
 						</div>
@@ -116,7 +123,7 @@
 		  const subjects = [];
 		  $(document).ready(function() {
 		    changeQuestionType()
-				renderOldValue()
+		    renderOldValue()
 		  });
 
 		  function initCkeditor() {
@@ -159,30 +166,30 @@
 		  }
 
 		  function changeQuestionType() {
-				$('#question-type').on('change', (event) => {
-					
-					window.location.href = "{{ route('admin.question.create') . "?type=:type" }}".replace(':type',  event.target.value)
-				})
+		    $('#question-type').on('change', (event) => {
+
+		      window.location.href = "{{ route('admin.question.create') . '?type=:type' }}".replace(':type', event.target.value)
+		    })
 		  }
 
 		  function renderOldValue() {
-        const questionType = @json(old('type', QUESTION_MULTI_CHOICE));
+		    const questionType = @json(old('type', QUESTION_MULTI_CHOICE));
 
-				if (questionType == @json(QUESTION_TRUE_FALSE)) {
-					const oldAnswers = @json(old('answers'));
-					const oldErrorAnswers = @json($errors->get('answers.*'));
-					const oldCorrectAnswers = @json(old('correct_answer'));
-	
-					oldAnswers && oldAnswers.forEach(function(content, index) {
-						if (index != 0) {
-							if (oldErrorAnswers['answers.' + index]) {
-								addContent(content, oldErrorAnswers['answers.' + index][0], oldCorrectAnswers[index]);
-							} else {
-								addContent(content, null, oldCorrectAnswers[index]);
-							}
-						}
-					});
-				}
-      }
+		    if (questionType == @json(QUESTION_TRUE_FALSE)) {
+		      const oldAnswers = @json(old('answers'));
+		      const oldErrorAnswers = @json($errors->get('answers.*'));
+		      const oldCorrectAnswers = @json(old('correct_answer'));
+
+		      oldAnswers && oldAnswers.forEach(function(content, index) {
+		        if (index != 0) {
+		          if (oldErrorAnswers['answers.' + index]) {
+		            addContent(content, oldErrorAnswers['answers.' + index][0], oldCorrectAnswers[index]);
+		          } else {
+		            addContent(content, null, oldCorrectAnswers[index]);
+		          }
+		        }
+		      });
+		    }
+		  }
 		</script>
 @endsection

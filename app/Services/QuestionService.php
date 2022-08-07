@@ -72,13 +72,52 @@ class QuestionService
 
     $question->update($data);
     
-    foreach ($data['answers'] as $id => $answer) {
-      $oldAnswer = Answer::find($id);
-      $order = $oldAnswer->order;
-      $oldAnswer->update([
-        'content_1' => $answer,
-        'is_correct' => $data['correct_answer'] == $order,
-      ]);
+    if ($question->type == QUESTION_MULTI_CHOICE) {
+      foreach ($data['answers'] as $id => $answer) {
+        $oldAnswer = Answer::find($id);
+        $order = $oldAnswer->order;
+        $oldAnswer->update([
+          'content_1' => $answer,
+          'is_correct' => $data['correct_answer'] == $order,
+        ]);
+      }
+    } else if ($question->type == QUESTION_TRUE_FALSE) {
+      $updateAnswerContent = array_key_exists('answers', $data) ? $data['answers'] : [];
+      $updateCorrectAnswer = array_key_exists('correct_answer', $data) ? $data['correct_answer'] : [];
+      $newAnswerContent = array_key_exists('new_answers', $data) ? $data['new_answers'] : [];
+      $newCorrectAnswer = array_key_exists('new_correct_answer', $data) ? $data['new_correct_answer'] : [];
+
+      $oldAnswerIds = $question->answers->pluck('id')->toArray();
+      $count = count($updateAnswerContent);
+
+      // update old answer content
+      $newAnswerIds = [];
+      foreach ($updateAnswerContent as $key => $each) {
+        $newAnswerIds[] = $key;
+        $oldAnswer = Answer::find($key);
+        $oldAnswer->update([
+          'content_1' => $each,
+          'is_correct' => $updateCorrectAnswer[$key]
+        ]);
+      }
+      // delete old answer content not in new answer content
+      $oldAnswerNeedDeleteIds = array_diff($oldAnswerIds, $newAnswerIds);
+      foreach ($oldAnswerNeedDeleteIds as $each) {
+        Answer::where('id', $each)->delete();
+      }
+
+      // add new answer content
+      $tmp = [];
+      $contentData = array_unique($newAnswerContent);
+      foreach ($contentData as $index => $each) {
+        $tmp[] = [
+          'order' => $count + $index + 1,
+          'content_1' => $each,
+          'is_correct' => $newCorrectAnswer[$index+$count+9999]
+        ];
+      }
+      
+      $question->answers()->createMany($tmp);
     }
   }
 

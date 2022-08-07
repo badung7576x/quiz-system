@@ -29,7 +29,10 @@ class ExamSetService
 
   public function updateStatus(ExamSet $examSet, $status)
   {
-    return $examSet->update(['status' => $status]);
+    return $examSet->update([
+      'status' => $status,
+      'approved_by' => auth()->user()->id
+    ]);
   }
 
   public function create($data)
@@ -49,12 +52,14 @@ class ExamSetService
       $numOfDifficult = floor($numOfQuestions * 0.2);
       $difficultQuestionIds = QuestionBank::inRandomOrder()
         ->whereIn('subject_content_id', $data['subject_content_ids'])
+        ->whereIn('type', $data['question_types'])
         ->where('level', LEVEL_3)
         ->orderBy('level', 'desc')
         ->limit($numOfDifficult)->pluck('id')->toArray();
 
       $normalQuestionIds = QuestionBank::inRandomOrder()
         ->whereIn('subject_content_id', $data['subject_content_ids'])
+        ->whereIn('type', $data['question_types'])
         ->whereIn('level', [LEVEL_1, LEVEL_2])
         ->orderBy('level', 'desc')
         ->limit($numOfQuestions - $numOfDifficult)->pluck('id')->toArray();

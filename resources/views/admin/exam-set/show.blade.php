@@ -35,7 +35,19 @@
                 </tr>
                 <tr>
                   <td class="fw-semibold" style="width: 30%"> Loại đề thi</td>
-                  <td><span class="badge bg-success">{{ config('fixeddata.exam_set_type')[$examSet->type] }}</span></td>
+                  <td>{{ config('fixeddata.exam_set_type')[$examSet->type] }}</td>
+                </tr>
+                <tr>
+                  <td class="fw-semibold" style="width: 30%"> Dạng câu hỏi</td>
+                  <td>
+                    @foreach($examSet->question_type_label as $type)
+                      <span class="badge bg-success">{{ $type }}</span>
+                    @endforeach
+                  </td>
+                </tr>
+                <tr>
+                  <td class="fw-semibold" style="width: 30%"> Người phê duyệt</td>
+                  <td>{{ $examSet->approvedUser->fullname }}</td>
                 </tr>
               </tbody>
             </table>

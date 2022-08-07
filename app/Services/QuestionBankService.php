@@ -154,6 +154,7 @@ class QuestionBankService
           return Excel::download(new QuestionExport($data), 'questions.xlsx');
           break;
         case 'csv':
+          $data = collect($data)->filter(fn($item) => $item->type == QUESTION_MULTI_CHOICE);
           return $this->_exportCsv($data);
           break;
         case 'aiken':

@@ -30,6 +30,7 @@ class ExamSetRequest extends FormRequest
             'type' => 'required|numeric',
             'subject_id' => 'required|integer',
             'subject_content_ids' => 'required|array',
+            'question_types' => 'required|array',
             'execute_time' => 'required|numeric|min:1',
             'total_question' => 'required|integer|min:1',
         ];
@@ -44,6 +45,7 @@ class ExamSetRequest extends FormRequest
             'type' => 'loại đề thi',
             'subject_id' => 'môn học',
             'subject_content_ids' => 'nội dung môn học',
+            'question_types' => 'dạng câu hỏi',
             'execute_time' => 'thời gian làm bài',
             'total_question' => 'số lượng câu hỏi',
         ];

@@ -19,10 +19,16 @@ class ExamSet extends Model
         'type',
         'subject_id',
         'subject_content_ids',
+        'question_types',
         'execute_time',
         'total_question',
         'status',
         'created_by',
+        'approved_by'
+    ];
+
+    protected $appends = [
+        'question_type_label'
     ];
 
     public static function boot()
@@ -82,6 +88,28 @@ class ExamSet extends Model
                 return SubjectContent::whereIn('id', $subjectContentIds)->pluck('name');
             },
         );
+    }
+
+    public function questionTypes(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => implode(',', $value),
+        );
+    }
+
+    public function questionTypeLabel(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value, $attributes) {
+                $types = explode(',', $attributes['question_types']);
+                return collect($types)->map(fn($item) => config('fixeddata.question_type')[$item]);
+            },
+        );
+    }
+
+    public function approvedUser()
+    {
+        return $this->belongsTo(Teacher::class, 'approved_by', 'id');
     }
 
     public function createdAt(): Attribute

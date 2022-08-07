@@ -150,11 +150,23 @@
                   <span class="nav-main-link-name">Trang thống kê</span>
                 </a>
               </li>
-              <li class="nav-main-item">
-                <a class="nav-main-link {{ request()->routeIs('admin.question-bank.*') ? 'active' : '' }}" href="{{ route('admin.question-bank.index') }}">
+              <li class="nav-main-item {{ request()->routeIs('admin.question-bank.*') ? 'open' : '' }}">
+                <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
                   <i class="nav-main-link-icon fa fa-landmark"></i>
                   <span class="nav-main-link-name">Ngân hàng câu hỏi</span>
                 </a>
+                <ul class="nav-main-submenu">
+                  <li class="nav-main-item">
+                    <a class="nav-main-link {{ request()->routeIs('admin.question-bank.index') ? 'active' : '' }}" href="{{ route('admin.question-bank.index') }}">
+                      <span class="nav-main-link-name">Danh sách câu hỏi</span>
+                    </a>
+                  </li>
+                  <li class="nav-main-item">
+                    <a class="nav-main-link {{ request()->routeIs('admin.question-bank.wait-accept') ? 'active' : '' }}" href="{{ route('admin.question-bank.wait-accept') }}">
+                      <span class="nav-main-link-name">Câu hỏi chờ duyệt</span>
+                    </a>
+                  </li>
+                </ul>
               </li>
               <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->routeIs('admin.teacher*') ? 'active' : '' }}" href="{{ route('admin.teacher.index') }}">
@@ -270,7 +282,7 @@
       <div class="content py-2">
         <div class="row fs-sm">
           <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
-            Được phát triển bởi <a class="fw-semibold" href="#" target="_blank">badung7576x</a>
+            Được phát triển bởi <a class="fw-semibold" href="#" target="_blank">Đặng Bá Dũng - 20176731</a>
           </div>
           <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
             <a class="fw-semibold" href="javascript:void(0)"><strong>{{ config('setting.app_name') }}</strong></a> &copy; <span data-toggle="year-copy"></span>

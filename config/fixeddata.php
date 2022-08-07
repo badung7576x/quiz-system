@@ -23,7 +23,7 @@ return [
   ],
   'role' => [
     ROLE_ADMIN => 'Quản trị viên',
-    ROLE_PRO_CHIEF => 'Trưởng bộ môn',
+    ROLE_PRO_CHIEF => 'Trưởng nhóm chuyên môn',
     ROLE_SPECIALIST_TEACHER => 'Giáo viên chuyên môn',
     ROLE_SUBJECT_TEACHER => 'Giáo viên bộ môn',
     ROLE_TEACHER => 'Giáo viên'

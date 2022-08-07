@@ -118,7 +118,6 @@
     const contentArea = document.getElementById('content-area');
     const index = contentArea.childElementCount;
 
-    console.log(data)
     var newDiv = `
       <div class="row mb-2">
         <label class="col-2 col-form-label">Nội dung ${index + 1} <span style="color: red">*</span></label>
@@ -149,8 +148,6 @@
     let oldContent = @json(old('subject_contents', $subject->contents));
     let newContent = @json(old('new_subject_contents', []));
     const newErrorContent = @json($errors->get('new_subject_contents.*'));
-
-    console.log(newContent, newErrorContent);
 
     if (!Array.isArray(oldContent)) {
       const oldErrorContent = @json($errors->get('subject_contents.*'));

@@ -44,6 +44,10 @@ class UpdateQuestionRequest extends FormRequest
                 'answers.*' => 'required|string',
                 'correct_answer' => 'required|array',
                 'correct_answer.*' => 'required|numeric',
+                'new_answers' => 'nullable|array',
+                'new_answers.*' => 'required|string',
+                'new_correct_answer' => 'nullable|array',
+                'new_correct_answer.*' => 'required|numeric',
             ];
             $rule = array_merge($rule, $otherRule);
         }
@@ -59,12 +63,29 @@ class UpdateQuestionRequest extends FormRequest
             'level' => 'mức độ câu hỏi',
             'type' => 'loại câu hỏi',
             'score' => 'điểm',
-            'content' => 'nội dung câu hỏi',
-            'answers' => 'các đáp án',
-            'answers.*' => 'đáp án',
-            'correct_answer' => 'đáp án đúng',
         ];
+        if ($this->type == QUESTION_MULTI_CHOICE) {
+            return array_merge($attributes, [
+                'content' => 'nội dung câu hỏi',
+                'answers' => 'các đáp án',
+                'answers.*' => 'đáp án',
+                'correct_answer' => 'đáp án đúng',
+            ]);
+        }
 
-        return $attributes;
+        if ($this->type == QUESTION_TRUE_FALSE) {
+            return array_merge($attributes, [
+                'content' => 'nội dung chính',
+                'answers' => 'các câu hỏi',
+                'answers.*' => 'câu hỏi',
+                'correct_answer' => 'đáp án đúng',
+                'correct_answer.*' => 'đáp án đúng',
+                'content' => 'nội dung chính',
+                'new_answers' => 'các câu hỏi',
+                'new_answers.*' => 'câu hỏi',
+                'new_correct_answer' => 'đáp án đúng',
+                'new_correct_answer.*' => 'đáp án đúng',
+            ]);
+        }
     }
 }

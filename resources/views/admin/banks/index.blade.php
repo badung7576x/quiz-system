@@ -46,10 +46,10 @@
                   <input class="form-check-input" type="radio" id="type1" name="type" value="excel" checked="">
                   <label class="form-check-label" for="type1">Định dạng Excel</label>
                 </div>
-                {{-- <div class="form-check">
+                <div class="form-check">
                   <input class="form-check-input" type="radio" id="type2" name="type" value="csv">
                   <label class="form-check-label" for="type2">Định dạng CSV</label>
-                </div> --}}
+                </div>
                 <div class="form-check">
                   <input class="form-check-input" type="radio" id="type3" name="type" value="aiken">
                   <label class="form-check-label" for="type3">Định dạng Aiken (Sử dụng cho hệ thống Moodle)<br><small class="text-danger">※ Chỉ hỗ trợ câu hỏi dạng "Trắc nghiệm nhiều lựa chọn"</small></label>

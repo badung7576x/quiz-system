@@ -86,6 +86,7 @@
                       </li>
                       <li>Loại câu hỏi: ['MULTI_CHOICE', 'TRUE_FALSE']</li>
                       <li>Độ khó: ['1: Dễ', '2: Trung bình', '3: Khó']</li>
+                      <li>Mỗi loại câu hỏi ở một file riêng biệt, không gộp nhiều loại câu hỏi với nhau.</li>
                     </ul>
                   </div>
                   <hr>

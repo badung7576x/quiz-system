@@ -111,6 +111,21 @@
                     </div>
                   </div>
                 </div>
+                <div class="col-12">
+                  <div class="row mb-3">
+                    <label class="col-sm-12 col-form-label">Dạng câu hỏi (chọn nhiều) <span style="color: red">*</span></label>
+                    <div class="col-sm-12">
+                      <select id="question-type" class="js-select2 form-select @error('question_types') is-invalid @enderror" name="question_types[]" multiple value="">
+                        @foreach (config('fixeddata.question_type') as $key => $type)
+                          <option value="{{ $key }}" @selected(in_array($key, old('question_types', [])))>{{ $type }}</option>
+                        @endforeach
+                      </select>
+                      @error('question_types')
+                        <span class="text-danger">{{ $message }}</span>
+                      @enderror
+                    </div>
+                  </div>
+                </div>
               </div>
             </form>
           </div>
