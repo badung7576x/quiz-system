@@ -27,5 +27,8 @@ clean:
 destroy:
 	docker-compose down
 
+docker-view:
+	docker-compose ps -a
+
 index:
 	docker-compose exec -T php sh -c "php artisan scout:import 'App\Models\QuestionBank'"

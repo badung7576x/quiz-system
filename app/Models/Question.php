@@ -30,8 +30,10 @@ class Question extends BaseModel
     {
         parent::boot();
         static::creating(function ($model) {
-            $model->created_by = auth()->user()->id;
-            $model->status = QUESTION_STATUS_CREATED;
+            if(auth()->user()) {
+                $model->created_by = auth()->user()->id;
+                $model->status = QUESTION_STATUS_CREATED;
+            }
         });
     }
 
