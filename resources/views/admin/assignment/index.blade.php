@@ -3,6 +3,28 @@
 @section('title', 'Phân công nhiệm vụ')
 
 @section('content')
+
+  <div class="modal" id="show-question" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="block-rounded block-transparent mb-0 block">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">Duyệt câu hỏi vào ngân hàng đề</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="block-content fs-sm">
+                    <div id='question-table'>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
   <div class="modal" id="assign-teacher" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -80,9 +102,9 @@
                   <td class="text-center">{{ $question->created_at }}</td>
                   <td class="text-center">
                     <div class="btn-group">
-                      <a href="{{ route('admin.question.show', ['question' => $question->id]) }}" class="btn btn-sm btn-alt-secondary" title="{{ __('Xem') }}">
+                      <button class="btn btn-sm btn-alt-secondary show-btn" data-bs-toggle="tooltip" title="Xem thông tin" data-id="{{ $question->id }}">
                         <i class="fa fa-fw fa-eye"></i>
-                      </a>
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -119,5 +141,18 @@
         $("input[type=checkbox]").prop('checked', false);
       }
     }
+
+    const questions = @json($questions);
+
+    $('.show-btn').on('click', function(e) {
+      const questionId = $(this).data('id');
+      const question = questions.find(question => question.id == questionId);
+      fetch('{{ route('admin.question.template', ['question' => ':id']) }}'.replace(':id', questionId))
+        .then(res => res.json())
+        .then(data => {
+          $('#question-table').html(data.html);
+          $('#show-question').modal('show');
+        });
+    });
   </script>
 @endsection

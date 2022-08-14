@@ -39,15 +39,15 @@
       <tbody>
         <tr>
           <td class="fw-semibold" style="width: 30%">Nội dung môn học</td>
-          <td>{{ $question->subject_content->name }}</td>
+          <td>{{ $question->subject_content->name ?? '' }}</td>
         </tr>
         <tr>
           <td class="fw-semibold" style="width: 30%">Người tạo</td>
-          <td>{{ $question->teacher->fullname }}</td>
+          <td>{{ $question->teacher->fullname ?? ''}}</td>
         </tr>
         <tr>
           <td class="fw-semibold" style="width: 30%">Người đánh giá</td>
-          <td>{{ $question->reviewer->fullname }}</td>
+          <td>{{ $question->reviewer->fullname ?? ''}}</td>
         </tr>
         <tr>
           <td class="fw-semibold" style="width: 30%">Ngày tạo</td>

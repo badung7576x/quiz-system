@@ -181,7 +181,7 @@
                 </a>
               </li>
               <li class="nav-main-item">
-                <a class="nav-main-link {{ request()->routeIs('admin.review.question') ? 'active' : '' }}" href="{{ route('admin.review.question') }}">
+                <a class="nav-main-link {{ request()->routeIs('admin.review.*') ? 'active' : '' }}" href="{{ route('admin.review.question') }}">
                   <i class="nav-main-link-icon fa fa-list-ol"></i>
                   <span class="nav-main-link-name">Đánh giá câu hỏi</span>
                 </a>

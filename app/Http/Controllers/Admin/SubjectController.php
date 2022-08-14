@@ -111,7 +111,11 @@ class SubjectController extends Controller
             return $this->redirectError('update');
         }
 
-        return $this->redirectSuccess('admin.subject.index', 'update');
+        if(auth()->user()->role == ROLE_PRO_CHIEF) {
+            return $this->redirectSuccess('admin.dashboard.index', 'update');
+        } else {
+            return $this->redirectSuccess('admin.subject.index', 'update');
+        }
     }
 
     /**

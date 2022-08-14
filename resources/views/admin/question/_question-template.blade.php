@@ -39,15 +39,15 @@
       <tbody>
         <tr>
           <td class="fw-semibold" style="width: 30%">Phạm vi câu hỏi</td>
-          <td>{{ $question->subject_content->name }}</td>
+          <td>{{ $question->subject_content->name ?? ''}}</td>
         </tr>
         <tr>
           <td class="fw-semibold" style="width: 30%">Người tạo</td>
-          <td>{{ $question->teacher->fullname }}</td>
+          <td>{{ $question->teacher->fullname ?? ''}}</td>
         </tr>
         <tr>
           <td class="fw-semibold" style="width: 30%">Người đánh giá</td>
-          <td>{{ $question->reviewer->fullname }}</td>
+          <td>{{ $question->reviewer->fullname ?? ''}}</td>
         </tr>
         <tr>
           <td class="fw-semibold" style="width: 30%">Ngày tạo</td>
@@ -58,6 +58,7 @@
   </div>
 </div>
 
+@if($question->status == QUESTION_STATUS_REVIEWED)
 <div id="duplicate-question">
   <div class="row mt-2 mb-4" style="font-size: 18px">
     <div class="col-12 text-center">
@@ -70,5 +71,6 @@
     </div>
   </div>
 </div>
+@endif
 
 

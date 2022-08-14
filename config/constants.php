@@ -23,7 +23,7 @@ if (!defined('QUESTION_MULTI_ANSWER')) define('QUESTION_MULTI_ANSWER', 5); // C�
 if (!defined('QUESTION_STATUS_CREATED')) define('QUESTION_STATUS_CREATED', 1); // Câu hỏi vừa được tạo
 if (!defined('QUESTION_STATUS_WAITING_REVIEW')) define('QUESTION_STATUS_WAITING_REVIEW', 2); // Câu hỏi vừa được tạo
 if (!defined('QUESTION_STATUS_REVIEWED')) define('QUESTION_STATUS_REVIEWED', 3); // Câu hỏi đã được duyệt
-if (!defined('QUESTION_STATUS_REJECTED')) define('QUESTION_STATUS_REJECTED', 4); // Câu hỏi đã được duyệt
+if (!defined('QUESTION_STATUS_REJECTED')) define('QUESTION_STATUS_REJECTED', 4); // Câu hỏi bị từ chối
 if (!defined('QUESTION_STATUS_APPROVED')) define('QUESTION_STATUS_APPROVED', 5); // Câu hỏi đã được duyệt
 if (!defined('QUESTION_STATUS_DELETED')) define('QUESTION_STATUS_DELETED', 6); // Câu hỏi đã được xóa
 
