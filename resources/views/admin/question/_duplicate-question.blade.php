@@ -7,6 +7,13 @@
         <span>{!! $q->content !!}</span>
       </div>
     </div>
+    @if($question->image)
+      <div class="col-12 mb-2">
+        <div class="" style="height: 350px">
+          <img src="{{ $question->image }}" style="max-width: 100%; max-height: 100%">
+        </div>
+      </div>
+    @endif
     @switch($q->type)
       @case(QUESTION_MULTI_CHOICE)
         @foreach ($q->answers as $idx => $answer)

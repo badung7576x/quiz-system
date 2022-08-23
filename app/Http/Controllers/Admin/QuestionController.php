@@ -59,29 +59,6 @@ class QuestionController extends Controller
         return view('admin.question.create', compact('subject'));
     }
 
-    public function renderForm(Request $request)
-    {
-        $data = $request->all();
-        switch ($request->type) {
-            case QUESTION_MULTI_CHOICE:
-                $form = view('admin.question._multichoice.create', $data)->render();
-                break;
-            // case QUESTION_SHORT_ANSWER:
-            //     return view('admin.question.short-answer')->render();
-            case QUESTION_MATCHING:
-                $form = view('admin.question._matching.create')->render();
-                break;
-            case QUESTION_TRUE_FALSE:
-                $form = view('admin.question._truefalse.create')->render();
-                break;
-            default:
-                $form = view('admin.question._multichoice.create')->render();
-                break;
-        }
-
-        return response()->json(['html' => $form]);
-    }
-
     /**
      * Store a newly created resource in storage.
      *

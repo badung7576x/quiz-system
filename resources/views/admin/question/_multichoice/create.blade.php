@@ -13,6 +13,19 @@
           @enderror
         </div>
       </div>
+      <div class="row mb-3">
+        <label class="col-sm-12 col-form-label">Hình ảnh cho câu hỏi </label>
+        <div class="col-sm-12">
+            <div class="avatar-edit">
+                <input type='file' name="image" id="imageUpload" accept=".png, .jpg, .jpeg" />
+            </div>
+            <div class="avatar-preview" style="height: 250px">
+                <img id="imagePreview" src="" style="max-width:100%;
+                max-height:100%;">
+                </img>
+            </div>
+        </div>
+    </div>
     </div>
     <div class="col-12">
       <div class="row mb-3">

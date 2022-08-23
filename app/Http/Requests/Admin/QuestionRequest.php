@@ -30,6 +30,7 @@ class QuestionRequest extends FormRequest
             'type' => 'required',
             'score' => 'required',
             'content' => 'required|string',
+            'image' => 'nullable',
         ];
         if ($this->type == QUESTION_MULTI_CHOICE) {
             $otherRule = [
@@ -44,6 +45,12 @@ class QuestionRequest extends FormRequest
                 'answers.*' => 'required|string',
                 'correct_answer' => 'required|array',
                 'correct_answer.*' => 'required|numeric',
+            ];
+            $rule = array_merge($rule, $otherRule);
+        } else if ($this->type == QUESTION_SHORT_ANSWER) {
+            $otherRule = [
+                'answers' => 'required|array',
+                'answers.*' => 'required|string',
             ];
             $rule = array_merge($rule, $otherRule);
         }
@@ -75,6 +82,14 @@ class QuestionRequest extends FormRequest
                 'answers' => 'các câu hỏi',
                 'answers.*' => 'câu hỏi',
                 'correct_answer' => 'đáp án đúng',
+            ]);
+        }
+
+        if ($this->type == QUESTION_SHORT_ANSWER) {
+            return array_merge($attributes, [
+                'content' => 'nội dung câu hỏi',
+                'answers' => 'nội dung đáp án',
+                'answers.*' => 'nội dung đáp án',
             ]);
         }
     }

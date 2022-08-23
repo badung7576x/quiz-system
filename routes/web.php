@@ -39,7 +39,7 @@ Route::group([
     Route::resource('teachers', 'TeacherController')->names('teacher');
 
     // Question
-    Route::post('questions/form', 'QuestionController@renderForm')->name('question.form');
+    // Route::post('questions/form', 'QuestionController@renderForm')->name('question.form');
     Route::get('questions/reviews', 'QuestionController@reviews')->name('review.question');
     Route::get('questions/reviews/{question}', 'QuestionController@reviewShow')->name('review.show');
     Route::post('questions/import', 'QuestionController@import')->name('question.import');

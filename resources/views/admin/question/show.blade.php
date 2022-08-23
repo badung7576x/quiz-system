@@ -45,12 +45,27 @@
               <span class="h5 fw-normal">{!! $question->content !!}</span> (<span>{{ $question->score }} điểm</span>)
             </div>
           </div>
+          @if($question->image)
+          <div class="col-12 mb-2">
+            <div class="" style="height: 350px">
+              <img src="{{ $question->image }}" style="max-width: 100%; max-height: 100%">
+            </div>
+          </div>
+          @endif
           @switch($question->type)
             @case(QUESTION_MULTI_CHOICE)
               @foreach ($question->answers as $idx => $answer)
                 <div class="col-12 ps-5 mb-1">
                   <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{{ config('fixeddata.answer_index')[$idx + 1] }}.</span>
                   <span class="{{ $answer->is_correct ? 'fw-bold text-success' : '' }}">{!! $answer->content_1 !!}</span>
+                </div>
+              @endforeach
+              @break
+            @case(QUESTION_SHORT_ANSWER)
+              @foreach ($question->answers as $idx => $answer)
+                <div class="col-12 mb-1 h5 fw-normal">
+                  <span class="fw-bold">Đáp án: </span>
+                  <span >{!! $answer->content_1 !!}</span>
                 </div>
               @endforeach
               @break

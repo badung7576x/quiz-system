@@ -44,6 +44,11 @@ class QuestionService
 
   public function createQuestion(array $data)
   {
+    if(isset($data['image'])){
+      $uploadImageService = new UploadImageService();
+      $data['image'] = $uploadImageService->upload($data['image']->get())['url'];
+    }
+
     $question = Question::create($data);
     foreach ($data['answers'] as $key => $answer) {
       if($question->type == QUESTION_MULTI_CHOICE) {
@@ -60,6 +65,13 @@ class QuestionService
           'is_correct' => $data['correct_answer'][$key]
         ];
       } 
+      if($question->type == QUESTION_SHORT_ANSWER) {
+        $answer = [
+          'order' => $key + 1,
+          'content_1' => $answer,
+          'is_correct' => true
+        ];
+      } 
       $question->answers()->create($answer);
     }
   }
@@ -70,6 +82,11 @@ class QuestionService
       abort(403);
     }
 
+    if(isset($data['image'])){
+      $uploadImageService = new UploadImageService();
+      $data['image'] = $uploadImageService->upload($data['image']->get())['url'];
+    }
+    
     $question->update($data);
     
     if ($question->type == QUESTION_MULTI_CHOICE) {
@@ -79,6 +96,14 @@ class QuestionService
         $oldAnswer->update([
           'content_1' => $answer,
           'is_correct' => $data['correct_answer'] == $order,
+        ]);
+      }
+    } else if ($question->type == QUESTION_SHORT_ANSWER) {
+      foreach ($data['answers'] as $id => $answer) {
+        $oldAnswer = Answer::find($id);
+        $oldAnswer->update([
+          'content_1' => $answer,
+          'is_correct' => true
         ]);
       }
     } else if ($question->type == QUESTION_TRUE_FALSE) {

@@ -101,7 +101,9 @@
 														@case(QUESTION_MULTI_CHOICE)
 																@include('admin.question._multichoice.edit')
 														@break
-
+														@case(QUESTION_SHORT_ANSWER)
+															@include('admin.question._shortanswer.edit')
+														@break
 														@case(QUESTION_TRUE_FALSE)
 																@include('admin.question._truefalse.edit')
 														@break

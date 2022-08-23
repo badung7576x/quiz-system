@@ -14,6 +14,14 @@
         </div>
       @endforeach
       @break
+    @case(QUESTION_SHORT_ANSWER)
+      @foreach ($question->answers as $idx => $answer)
+        <div class="col-12 ps-5 mb-1">
+          <span class="">Đáp án: </span>
+          <span class="">{!! $answer->content_1 !!}</span>
+        </div>
+      @endforeach
+      @break
     @case(QUESTION_TRUE_FALSE)
       <table class="table table-bordered ms-3 mt-2" style="width: 95%">
         <tbody>

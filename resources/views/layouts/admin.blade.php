@@ -232,6 +232,54 @@
 
         <!-- Right Section -->
         <div class="d-flex align-items-center">
+
+          <div class="dropdown d-inline-block ms-2">
+            <button type="button" class="btn btn-sm btn-alt-secondary" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-fw fa-bell"></i>
+              <span class="text-danger">1</span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0 border-0 fs-sm" aria-labelledby="page-header-notifications-dropdown" style="">
+              <div class="p-2 bg-body-light border-bottom text-center rounded-top">
+                <h5 class="dropdown-header text-uppercase">Thông báo</h5>
+              </div>
+              <ul class="nav-items mb-0">
+                <li>
+                  <a class="text-dark d-flex py-2" href="javascript:void(0)">
+                    <div class="flex-shrink-0 me-2 ms-3">
+                      <i class="fa fa-fw fa-plus-circle text-success"></i>
+                    </div>
+                    <div class="flex-grow-1 pe-2">
+                      <div class="fw-semibold">Giáo viên Hoàng Thanh Tâm vừa thêm một câu hỏi mới. <span class="badge bg-danger">mới</span></div>
+                      <span class="fw-medium text-muted">15 min ago</span>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="text-dark d-flex py-2" href="javascript:void(0)">
+                    <div class="flex-shrink-0 me-2 ms-3">
+                      <i class="fa fa-fw fa-check-circle text-primary"></i>
+                    </div>
+                    <div class="flex-grow-1 pe-2">
+                      <div class="fw-semibold">Giáo viên Lê Hoàng Mạnh đã đánh giá câu hỏi được phân công.</div>
+                      <span class="fw-medium text-muted">22 min ago</span>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="text-dark d-flex py-2" href="javascript:void(0)">
+                    <div class="flex-shrink-0 me-2 ms-3">
+                      <i class="fa fa-fw fa-times-circle text-danger"></i>
+                    </div>
+                    <div class="flex-grow-1 pe-2">
+                      <div class="fw-semibold">Giáo viên Lê Hoàng Mạnh đã từ chối phê duyệt câu hỏi.</div>
+                      <span class="fw-medium text-muted">26 min ago</span>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
           <!-- User Dropdown -->
           <div class="dropdown d-inline-block ms-2">
             @php $avatar = auth()->user()->avatar != '' ? auth()->user()->avatar : asset('images/default_avatar.png') @endphp
@@ -264,6 +312,8 @@
               </div>
             </div>
           </div>
+
+          
           <!-- END User Dropdown -->
         </div>
         <!-- END Right Section -->

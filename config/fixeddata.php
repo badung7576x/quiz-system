@@ -4,7 +4,7 @@ return [
   'question_type' => [
     QUESTION_MULTI_CHOICE => 'Trắc nghiệm nhiều lựa chọn',
     // QUESTION_MULTI_ANSWER => 'Câu hỏi nhiều đáp án',
-    // QUESTION_SHORT_ANSWER => 'Trả lời ngắn',
+    QUESTION_SHORT_ANSWER => 'Câu trả lời ngắn',
     // QUESTION_MATCHING => 'Nối đáp án',
     QUESTION_TRUE_FALSE => 'Câu hỏi đúng/sai'
   ],

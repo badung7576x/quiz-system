@@ -50,6 +50,12 @@ class UpdateQuestionRequest extends FormRequest
                 'new_correct_answer.*' => 'required|numeric',
             ];
             $rule = array_merge($rule, $otherRule);
+        } else if ($this->type == QUESTION_SHORT_ANSWER) {
+            $otherRule = [
+                'answers' => 'required|array',
+                'answers.*' => 'required|string',
+            ];
+            $rule = array_merge($rule, $otherRule);
         }
 
         return $rule;
@@ -85,6 +91,14 @@ class UpdateQuestionRequest extends FormRequest
                 'new_answers.*' => 'câu hỏi',
                 'new_correct_answer' => 'đáp án đúng',
                 'new_correct_answer.*' => 'đáp án đúng',
+            ]);
+        }
+
+        if ($this->type == QUESTION_SHORT_ANSWER) {
+            return array_merge($attributes, [
+                'content' => 'nội dung câu hỏi',
+                'answers' => 'nội dung đáp án',
+                'answers.*' => 'nội dung đáp án',
             ]);
         }
     }

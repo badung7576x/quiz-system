@@ -98,7 +98,9 @@
 														@case(QUESTION_MULTI_CHOICE)
 																@include('admin.question._multichoice.create')
 														@break
-
+														@case(QUESTION_SHORT_ANSWER)
+																@include('admin.question._shortanswer.create')
+														@break
 														@case(QUESTION_TRUE_FALSE)
 																@include('admin.question._truefalse.create')
 														@break
@@ -191,5 +193,22 @@
 		      });
 		    }
 		  }
+
+			function readURL(input) {
+				if (input.files && input.files[0]) {
+						var reader = new FileReader();
+						reader.onload = function(e) {
+								$('#imagePreview').attr('src', e.target.result);
+                $('#imagePreview').attr('src', e.target.result);
+								$('#imagePreview').hide();
+								$('#imagePreview').fadeIn(650);
+						}
+						reader.readAsDataURL(input.files[0]);
+				}
+			}
+
+			$("#imageUpload").change(function() {
+				readURL(this);
+			});
 		</script>
 @endsection
